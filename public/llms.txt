@@ -1,0 +1,35 @@
+# Orivion
+
+Orivion provides two connected service groups: UAE Business Setup Services and Digital & Technology services.
+
+## Business Setup Services
+
+- Company Formation: Mainland, Free Zone and Offshore formation support.
+- Trade Licensing: New licences, renewals, amendments and activity changes.
+- PRO Services: Company, investor, employee and dependant government paperwork.
+- Compliance & Regulatory: UBO, AML, Corporate Tax registration and recurring record support.
+- Accounting & Tax: Bookkeeping, VAT, Corporate Tax, payroll and audit coordination.
+- Banking Support: Business bank account preparation and KYC coordination.
+- Office Solutions: Registered address, flexi-desk and physical workspace support.
+- Additional Services: Document clearing, business planning, restructuring and closure support.
+
+## Digital & Technology
+
+- Websites & Platforms: UX, design, development, CMS, accessibility, SEO and performance.
+- Custom Software: Web applications, portals, internal tools, APIs and integrations.
+- CRM & Automation: CRM setup, sales workflows, business automation and dashboards.
+- Digital Marketing: SEO, paid media, email, analytics and conversion improvement.
+- Social Media: Strategy, content production, channel management and reporting.
+- AI Integration: Assistants, document workflows, automation, evaluation and guardrails.
+
+## Important URLs
+
+- Homepage: https://orivion.ae/
+- Services: https://orivion.ae/services
+- UAE setup options: https://orivion.ae/jurisdictions
+- Why Dubai: https://orivion.ae/why-dubai
+- FAQs: https://orivion.ae/faqs
+- Insights: https://orivion.ae/blog
+- Contact: https://orivion.ae/contact
+
+Contact: contact@orivion.ae | +971 55 516 6383 | WhatsApp: https://wa.me/971555166383
