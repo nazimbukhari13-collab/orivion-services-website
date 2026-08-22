@@ -61,16 +61,13 @@ function readAttribution(): Attribution | null {
   }
 }
 
+/**
+ * Sends an analytics event only after Google Analytics has been initialized.
+ * This intentionally does not queue pre-consent events for later transmission.
+ */
 export function trackEvent(name: string, params: Record<string, string | number | boolean> = {}) {
-  if (typeof window === "undefined") return;
-
-  if (window.gtag) {
-    window.gtag("event", name, params);
-    return;
-  }
-
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: name, ...params });
+  if (typeof window === "undefined" || !window.gtag) return;
+  window.gtag("event", name, params);
 }
 
 export function loadGoogleAnalytics(measurementId: string) {
