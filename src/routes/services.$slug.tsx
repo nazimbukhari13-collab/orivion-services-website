@@ -1,5 +1,5 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { CheckCircle2, ArrowRight, ExternalLink } from "lucide-react";
+import { CheckCircle2, ArrowRight, ExternalLink, ChevronDown } from "lucide-react";
 import { services, siteConfig } from "@/lib/site-data";
 import { serviceDetails } from "@/lib/service-details";
 import { CTASection, OButton } from "@/components/orivion/ui";
@@ -66,6 +66,19 @@ export const Route = createFileRoute("/services/$slug")({
                       { "@type": "ListItem", position: 3, name: loaderData.title, item: url },
                     ],
                   },
+                  ...(serviceDetails[loaderData.slug]?.faqs?.length
+                    ? [
+                        {
+                          "@type": "FAQPage",
+                          "@id": `${url}#faq`,
+                          mainEntity: serviceDetails[loaderData.slug]!.faqs!.map((f) => ({
+                            "@type": "Question",
+                            name: f.q,
+                            acceptedAnswer: { "@type": "Answer", text: f.a },
+                          })),
+                        },
+                      ]
+                    : []),
                 ],
               }),
             },
@@ -94,17 +107,25 @@ function ServicePage() {
 
   return (
     <>
-      <section className="o-hero">
-        <div className="aura" aria-hidden="true" />
+      <section className="o-hero o-hero--media">
+        <div className="o-hero-bg" aria-hidden="true">
+          <img
+            src={`/media/services/${svc.slug}.jpg`}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="o-hero-veil" />
+        </div>
         <div className="wrap">
-          <div className="sec-tag">Service</div>
+          <div className="sec-tag">{isDigital ? "Digital & technology" : "Business setup"}</div>
           <h1>{svc.title}</h1>
           <p className="sub">{svc.summary}</p>
           <div className="actions">
-            <OButton to="/consultation" variant="fill" big>
+            <OButton to="/consultation" variant="fillw" big>
               Start a conversation
             </OButton>
-            <OButton to="/services" big>
+            <OButton to="/services" variant="light" big>
               All services
             </OButton>
           </div>
@@ -207,6 +228,30 @@ function ServicePage() {
           </div>
         </div>
       </section>
+
+      {detail.faqs && detail.faqs.length > 0 && (
+        <section className="o-alt">
+          <div className="wrap">
+            <div className="sec-head rv">
+              <div>
+                <div className="sec-tag">FAQs</div>
+                <h2>Questions we hear on {svc.title.toLowerCase()}</h2>
+              </div>
+            </div>
+            <div className="o-faq rv" style={{ maxWidth: "820px" }}>
+              {detail.faqs.map((f) => (
+                <details key={f.q}>
+                  <summary>
+                    <span>{f.q}</span>
+                    <ChevronDown className="chev h-5 w-5" />
+                  </summary>
+                  <p className="ans">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection />
     </>

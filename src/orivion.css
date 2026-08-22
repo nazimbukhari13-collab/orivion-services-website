@@ -1917,6 +1917,58 @@
   align-items: center;
 }
 
+/* ---------- service hero with background image ---------- */
+.orivion .o-hero--media {
+  color: #fff;
+  background: #06090e;
+  border-radius: 0 0 32px 32px;
+}
+.orivion .o-hero--media .o-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.orivion .o-hero--media .o-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.orivion .o-hero--media .o-hero-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(6, 9, 14, 0.93) 0%,
+      rgba(6, 9, 14, 0.82) 38%,
+      rgba(6, 9, 14, 0.5) 70%,
+      rgba(6, 9, 14, 0.32) 100%
+    ),
+    linear-gradient(0deg, rgba(6, 9, 14, 0.78) 0%, rgba(6, 9, 14, 0.05) 55%, rgba(6, 9, 14, 0.4) 100%);
+}
+.orivion .o-hero--media > .wrap {
+  position: relative;
+  z-index: 1;
+}
+.orivion .o-hero--media .sec-tag {
+  color: rgba(255, 255, 255, 0.72);
+}
+.orivion .o-hero--media h1 {
+  color: #fff;
+}
+.orivion .o-hero--media .sub {
+  color: rgba(255, 255, 255, 0.84);
+}
+@media (max-width: 760px) {
+  .orivion .o-hero--media {
+    border-radius: 0 0 22px 22px;
+  }
+}
+
 /* ---------- section modifiers ---------- */
 .orivion .o-alt {
   background: var(--bg2);

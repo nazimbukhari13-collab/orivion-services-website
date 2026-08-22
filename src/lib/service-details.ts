@@ -5,12 +5,18 @@ export type ReferenceLink = {
   url: string;
 };
 
+export type ServiceFaq = {
+  q: string;
+  a: string;
+};
+
 export type ServiceDetail = {
   overview: string;
   suitableFor: readonly string[];
   considerations: readonly string[];
   approach: readonly string[];
   references: readonly ReferenceLink[];
+  faqs?: readonly ServiceFaq[];
 };
 
 export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
@@ -40,6 +46,28 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://u.ae/en/information-and-services/business",
       },
       { label: "Invest in Dubai business setup", url: "https://app.invest.dubai.ae/" },
+    ],
+    faqs: [
+      {
+        q: "Mainland, Free Zone or Offshore — which one is right for me?",
+        a: "It depends on where your customers are, the activity you will run and your visa and office needs. Mainland suits companies selling directly into the UAE market; Free Zones suit export, services and 100% foreign ownership with a defined activity list; Offshore suits holding and international structuring without a UAE trade presence. We compare the three against your actual operating plan before recommending a route.",
+      },
+      {
+        q: "How long does company formation in the UAE take?",
+        a: "A straightforward Free Zone company can be ready in a few working days once documents and payment are in place. Mainland setups and any activity needing external regulator approval take longer. Timing depends on the jurisdiction, activity, applicant documents and third-party approvals, so we give a realistic timeline in writing before you commit.",
+      },
+      {
+        q: "Can I own 100% of my company as a foreign national?",
+        a: "In most cases, yes. All Free Zones allow full foreign ownership, and many Mainland activities now permit 100% foreign ownership as well. A limited set of strategic-impact activities still require an Emirati partner or agent. We confirm the ownership position for your specific activity before you decide.",
+      },
+      {
+        q: "What documents do I need to get started?",
+        a: "Typically passport copies for each shareholder, a proposed company name and activity, and basic KYC details. Corporate shareholders, regulated activities and certain nationalities may need additional attested documents. We give you a tailored checklist up front so nothing stalls the application.",
+      },
+      {
+        q: "Do you help with visas, banking and tax after the licence is issued?",
+        a: "Yes. Formation is one connected process — we coordinate post-licence steps including establishment records, investor and employee visas, bank account readiness, and Corporate Tax and VAT registration where they apply, so the company is genuinely ready to operate, not just registered.",
+      },
     ],
   },
   "trade-licensing": {
@@ -72,6 +100,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://app.invest.dubai.ae/search-license",
       },
     ],
+    faqs: [
+      {
+        q: "What's the difference between a commercial, professional and industrial licence?",
+        a: "The licence type follows your activity. Commercial licences cover trading and general commerce, professional licences cover service and expertise-based work, and industrial licences cover manufacturing and production. Some businesses need more than one activity, and we confirm the correct type and wording before applying.",
+      },
+      {
+        q: "Can I add or change activities on an existing licence?",
+        a: "Yes. Activities can be added, removed or amended, though some changes need authority or regulator approval and may affect your office, visa or tenancy requirements. We check those knock-on effects before submitting an amendment.",
+      },
+      {
+        q: "How does licence renewal work, and what happens if I miss it?",
+        a: "Trade licences are renewed annually and usually require a valid tenancy and up-to-date documents. Late renewal can trigger fines and block visa and banking processes, so we track expiry dates and prepare renewals ahead of time.",
+      },
+      {
+        q: "How many activities can sit on one licence?",
+        a: "Many authorities allow several related activities on a single licence, but there are limits and some activities cannot be combined. We shortlist compatible activities that match how you actually earn revenue.",
+      },
+    ],
   },
   "pro-services": {
     overview:
@@ -101,6 +147,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
       {
         label: "ICP residence permit service",
         url: "https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e64",
+      },
+    ],
+    faqs: [
+      {
+        q: "What does PRO stand for and what does it cover?",
+        a: "PRO means Public Relations Officer — the role that handles a company's government and immigration paperwork. In practice it covers establishment cards, entry permits, residence visas, Emirates ID, medical coordination, attestation and status changes.",
+      },
+      {
+        q: "How long does an employee or investor visa take?",
+        a: "Once the establishment file is ready, a residence visa runs through entry permit, status change, medical and Emirates ID steps, usually over a couple of weeks depending on the authority and applicant. We sequence the steps and track each appointment.",
+      },
+      {
+        q: "Can you handle visas for my family and dependants?",
+        a: "Yes. Once you hold a valid residence visa and meet the salary or housing conditions, we coordinate dependant applications for spouse, children and, where eligible, parents or domestic staff.",
+      },
+      {
+        q: "Do you provide ongoing PRO support or one-off applications?",
+        a: "Both. We can run a single application or maintain a recurring schedule that tracks establishment cards, visas and identity documents so nothing lapses.",
       },
     ],
   },
@@ -138,6 +202,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://www.moet.gov.ae/documents/20121/465917/DNFBP%2BGuidelines%2B-%2BMarch%2B2026.pdf/6e46414b-0878-bcf0-6054-235a86336f41?t=1781345717581",
       },
     ],
+    faqs: [
+      {
+        q: "Does my company need to register for Corporate Tax?",
+        a: "Most UAE businesses must register for Corporate Tax regardless of profit level, with tax applying at 9% on taxable income above the threshold. Registration deadlines depend on your licence, so we confirm your position and timeline early.",
+      },
+      {
+        q: "What is a beneficial owner (UBO) record and do I need one?",
+        a: "A UBO register records the individuals who ultimately own or control the company. Most UAE entities must maintain and update it, and we help prepare and keep it current alongside other statutory records.",
+      },
+      {
+        q: "Which businesses have AML obligations?",
+        a: "Designated non-financial businesses and professions — such as real estate, dealers in precious metals and certain corporate service providers — carry AML duties including registration and internal controls. We help identify whether the rules apply and coordinate specialist support where needed.",
+      },
+      {
+        q: "How do you keep track of all the deadlines?",
+        a: "We turn your obligations into a single operating calendar covering registrations, renewals and filings, with reminders ahead of each date so recurring work is handled in good time rather than at the last minute.",
+      },
+    ],
   },
   "accounting-tax": {
     overview:
@@ -167,6 +249,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
       {
         label: "FTA Corporate Tax FAQs",
         url: "https://tax.gov.ae/en/taxes/corporate.tax/faqs.aspx",
+      },
+    ],
+    faqs: [
+      {
+        q: "When does my business need to register for VAT?",
+        a: "VAT registration is mandatory once taxable turnover passes AED 375,000 in a 12-month period, and voluntary registration is available above AED 187,500. We assess your supplies and turnover to confirm whether and when you must register.",
+      },
+      {
+        q: "What is the difference between VAT and Corporate Tax?",
+        a: "VAT is a 5% tax on most goods and services collected from customers; Corporate Tax is a 9% tax on business profit above the threshold. They have separate registrations, returns and deadlines, and we coordinate both from the same set of records.",
+      },
+      {
+        q: "Do you provide monthly bookkeeping or only year-end accounts?",
+        a: "Both. We can maintain regular bookkeeping with management reporting through the year, or prepare periodic accounts. Connected records through the year make VAT, Corporate Tax and audit far smoother than a year-end scramble.",
+      },
+      {
+        q: "Will my company need an audit?",
+        a: "Some free zones and licence types require audited financial statements, and audits also support financing and Corporate Tax positions. We confirm whether an audit applies and keep records ready for it.",
       },
     ],
   },
@@ -200,6 +300,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://rulebook.centralbank.ae/en/rulebook/guidance-licensed-financial-institutions-customer-due-diligenceknow-your-customer-and",
       },
     ],
+    faqs: [
+      {
+        q: "Can you guarantee my business bank account will be approved?",
+        a: "No adviser can. Banks run their own risk-based due diligence and make the final decision. What we can do is present a clear, consistent file — ownership, activity, expected transactions and source of funds — that gives the application the best chance.",
+      },
+      {
+        q: "How long does opening a corporate account take?",
+        a: "It varies by bank and by how complete the file is, typically from a couple of weeks to longer for complex structures. A well-prepared, consistent application is the single biggest factor in avoiding delays.",
+      },
+      {
+        q: "What documents do banks usually ask for?",
+        a: "Commonly the trade licence, incorporation and ownership documents, shareholder and signatory IDs, and evidence of expected activity such as contracts, invoices or a business plan. We prepare and cross-check the pack before submission.",
+      },
+      {
+        q: "Can a non-resident or newly formed company open an account?",
+        a: "Often yes, though options and requirements differ and some banks favour companies with local substance. We compare digital, local and international options against your profile and expected transactions.",
+      },
+    ],
   },
   "office-solutions": {
     overview:
@@ -229,6 +347,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
       {
         label: "UAE Government free-zone operations guide",
         url: "https://u.ae/en/information-and-services/business/Doing-business/doing-business-in-free-zones/running-a-business-in-a-free-zone-",
+      },
+    ],
+    faqs: [
+      {
+        q: "Do I need a physical office to get a licence?",
+        a: "Not always. Depending on the jurisdiction and activity, a registered address or flexi-desk can satisfy licensing, while other activities require a fitted office, retail unit or warehouse. We match the workspace to what the licence actually requires.",
+      },
+      {
+        q: "Does my office affect how many visas I can get?",
+        a: "Often yes. Visa allocation is frequently tied to office type or size, so we factor your expected headcount into the workspace decision rather than treating them separately.",
+      },
+      {
+        q: "What is Ejari and when do I need it?",
+        a: "Ejari is the registration of a tenancy contract in Dubai, usually required to license or renew at a physical address. We coordinate the tenancy evidence your licence needs.",
+      },
+      {
+        q: "What costs should I plan for beyond rent?",
+        a: "Deposits, fit-out, utilities, service charges and renewal costs all add to occupancy. We give a total cost view, not just the headline rent, before you commit.",
       },
     ],
   },
@@ -262,6 +398,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://u.ae/en/information-and-services/business/important-digital-services/inquire-about-licences-names-and-activities",
       },
     ],
+    faqs: [
+      {
+        q: "Can you change my company's shareholders or manager?",
+        a: "Yes. Ownership and management changes involve resolutions, amended legal documents, notarisation and authority approvals, plus updates across licensing, immigration, tax and banking records. We coordinate the full chain so nothing is left inconsistent.",
+      },
+      {
+        q: "Do you handle document attestation and legal translation?",
+        a: "Yes. We coordinate attestation, notarisation and certified legal translation for the corporate and personal documents used in UAE processes.",
+      },
+      {
+        q: "How does closing or deregistering a company work?",
+        a: "Closure follows a defined sequence — settling liabilities, cancelling visas and permits, obtaining clearances and formally deregistering the licence. We map the steps and prepare the closure evidence each authority requires.",
+      },
+      {
+        q: "What if my requirement does not fit your other services?",
+        a: "That is what Additional Services is for. We confirm the outcome you need, identify every affected record and any specialist involvement, and coordinate the work with a clear scope agreed up front.",
+      },
+    ],
   },
   websites: {
     overview:
@@ -290,6 +444,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
       },
       { label: "W3C WCAG 2 overview", url: "https://www.w3.org/WAI/standards-guidelines/wcag/" },
       { label: "Google Core Web Vitals", url: "https://web.dev/articles/vitals" },
+    ],
+    faqs: [
+      {
+        q: "How long does a website project take?",
+        a: "A focused marketing site is usually a matter of weeks; larger platforms, portals or e-commerce builds take longer. We set the timeline against scope and content readiness, and deliver in reviewable stages rather than one final reveal.",
+      },
+      {
+        q: "Will I be able to update the site myself?",
+        a: "Yes. We build on a content management system suited to your team and hand over documentation, so day-to-day edits do not depend on a developer.",
+      },
+      {
+        q: "Do you handle SEO and performance, or just design?",
+        a: "Both are built in from the start — semantic structure, technical SEO, structured data, accessibility and Core Web Vitals performance — rather than added afterwards.",
+      },
+      {
+        q: "Can you redesign an existing site without losing our search rankings?",
+        a: "Yes. We preserve URL structure or map redirects, keep content equity intact and monitor after launch, so a redesign protects rather than resets your search visibility.",
+      },
     ],
   },
   "custom-software": {
@@ -322,6 +494,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://www.w3.org/WAI/standards-guidelines/wcag/",
       },
     ],
+    faqs: [
+      {
+        q: "When is custom software worth it over off-the-shelf tools?",
+        a: "When a workflow creates real competitive value, or when existing products force awkward workarounds. If a standard tool fits, we will say so — custom software earns its place where the process is genuinely yours.",
+      },
+      {
+        q: "How do you keep a build from overrunning?",
+        a: "We prototype the riskiest interactions and integrations first, then develop in tested increments with clear acceptance criteria, so scope and cost stay visible rather than surfacing at the end.",
+      },
+      {
+        q: "Who owns the code and the data?",
+        a: "You do. Ownership, hosting and access are agreed up front, and we hand over source code, documentation and credentials.",
+      },
+      {
+        q: "Will it integrate with the systems we already use?",
+        a: "That is part of the design. We map the systems that must connect and the reliability of their APIs before building, then test those integrations with representative data.",
+      },
+    ],
   },
   "crm-automation": {
     overview:
@@ -349,6 +539,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://support.google.com/analytics/answer/9267735?hl=en",
       },
       { label: "NIST Privacy Framework", url: "https://www.nist.gov/privacy-framework" },
+    ],
+    faqs: [
+      {
+        q: "Which CRM should we use?",
+        a: "The one that fits your process and team, not the one with the longest feature list. We define how leads and customers should move through the business first, then choose or configure the CRM around that.",
+      },
+      {
+        q: "What can realistically be automated?",
+        a: "Repetitive, rule-based steps — routing, reminders, follow-ups, handovers and reporting — while decisions that need human judgement stay with people. We are deliberate about where automation helps and where it does not.",
+      },
+      {
+        q: "Will this work with our website forms and other tools?",
+        a: "Yes. Connecting forms, CRM, finance and support tools is usually the point — we integrate and test them so records flow through without re-keying.",
+      },
+      {
+        q: "What about our messy existing data?",
+        a: "We address data quality as part of the work — de-duplication, a clear data model, permissions and consent — so the CRM starts clean rather than carrying old problems forward.",
+      },
     ],
   },
   "digital-marketing": {
@@ -385,6 +593,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data",
       },
     ],
+    faqs: [
+      {
+        q: "How soon will we see results?",
+        a: "Paid channels can generate demand quickly; SEO and content compound over months. We set expectations per channel and tie everything to defined conversion events, so progress is measured rather than assumed.",
+      },
+      {
+        q: "Do you focus on SEO or paid ads?",
+        a: "Whichever fits your audience, buying cycle and economics — usually a considered mix. We give each channel a clear role rather than defaulting to one.",
+      },
+      {
+        q: "How do you measure whether it is working?",
+        a: "Against real business outcomes — qualified leads and conversions — not vanity metrics. We define the conversion events up front and review lead quality alongside volume.",
+      },
+      {
+        q: "Do you handle tracking and analytics setup?",
+        a: "Yes. Reliable conversion tracking and analytics come first; without them, spend cannot be judged. We set these up within consent and platform-policy requirements.",
+      },
+    ],
   },
   "social-media": {
     overview:
@@ -416,6 +642,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://developers.facebook.com/documentation/ads-commerce/marketing-api/insights",
       },
     ],
+    faqs: [
+      {
+        q: "Which platforms should we be on?",
+        a: "The ones your audience actually uses and that you can sustain with quality — not all of them. We give each channel a defined role rather than posting everywhere at once.",
+      },
+      {
+        q: "Who creates the content?",
+        a: "We do, built from your real expertise, products and people, with an approval workflow that keeps you in control while staying practical to run.",
+      },
+      {
+        q: "How often will you post?",
+        a: "To a calendar you can sustain, prioritising consistent quality over volume. Cadence is set per channel and content pillar.",
+      },
+      {
+        q: "How do you measure social media success?",
+        a: "Beyond reach and likes, we look at the downstream actions that matter — profile visits, enquiries and conversions — and refine the mix from what actually performs.",
+      },
+    ],
   },
   "ai-integration": {
     overview:
@@ -443,6 +687,24 @@ export const serviceDetails: Record<Service["slug"], ServiceDetail> = {
         url: "https://www.nist.gov/itl/ai-risk-management-framework",
       },
       { label: "NIST AI RMF Playbook", url: "https://airc.nist.gov/airmf-resources/playbook/" },
+    ],
+    faqs: [
+      {
+        q: "Do we need AI, or is this just hype?",
+        a: "Only where it improves a defined workflow — retrieval, classification, drafting, extraction or decision support. If a use case does not earn its place, we will say so; a generic chatbot for its own sake rarely does.",
+      },
+      {
+        q: "Is our company data safe with AI tools?",
+        a: "Data boundaries come first. What the system may access, retain, generate and disclose is defined before anything is built, with permissions, logging and provider choices set around that.",
+      },
+      {
+        q: "Can we trust the output?",
+        a: "We design for it: accuracy thresholds, evaluation cases, human review and clear fallback paths, so AI assists people rather than making unchecked decisions.",
+      },
+      {
+        q: "How do we start without a big commitment?",
+        a: "With a controlled prototype on representative, approved data for one prioritised use case. We evaluate quality and risk before integrating gradually, not all at once.",
+      },
     ],
   },
 };

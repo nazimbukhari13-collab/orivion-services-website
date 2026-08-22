@@ -36,7 +36,7 @@ export const services = [
     icon: Building2,
     category: "Business Setup Services",
     summary:
-      "End-to-end support for forming a Mainland, Free Zone or Offshore company around your activity, ownership and operating plans.",
+      "Get incorporated in the right structure the first time — end-to-end support to form a Mainland, Free Zone or Offshore company around your activity, ownership and operating plans.",
     bullets: [
       "Jurisdiction and legal structure comparison",
       "Business activity and ownership planning",
@@ -50,7 +50,7 @@ export const services = [
     icon: FileBadge,
     category: "Business Setup Services",
     summary:
-      "Support with new trade licences, renewals, amendments and activity changes across relevant UAE licensing authorities.",
+      "Keep your licence aligned with how you actually trade — new trade licences, renewals, amendments and activity changes across the relevant UAE authorities.",
     bullets: [
       "Commercial, professional and industrial licences",
       "Licence renewals and expiry tracking",
@@ -64,7 +64,7 @@ export const services = [
     icon: UsersRound,
     category: "Business Setup Services",
     summary:
-      "Coordinated government and immigration paperwork for companies, investors, employees and their dependants.",
+      "Move visas and government paperwork forward without the back-and-forth — coordinated immigration and PRO work for companies, investors, employees and their dependants.",
     bullets: [
       "Investor, employee and dependant visa support",
       "Emirates ID, medical and immigration coordination",
@@ -78,7 +78,7 @@ export const services = [
     icon: ShieldCheck,
     category: "Business Setup Services",
     summary:
-      "Practical coordination for the registrations, records and recurring obligations that keep a UAE company in good standing.",
+      "Stay in good standing without last-minute surprises — practical coordination of the registrations, records and recurring obligations a UAE company must keep.",
     bullets: [
       "UBO and corporate record support",
       "AML and goAML setup coordination where applicable",
@@ -92,7 +92,7 @@ export const services = [
     icon: Calculator,
     category: "Business Setup Services",
     summary:
-      "Access to coordinated bookkeeping, VAT, Corporate Tax and reporting support matched to the size and needs of the business.",
+      "Keep clean books and meet every deadline — coordinated bookkeeping, VAT, Corporate Tax and reporting matched to the size and needs of the business.",
     bullets: [
       "Bookkeeping and management reporting",
       "VAT registration and return support",
@@ -106,7 +106,7 @@ export const services = [
     icon: Landmark,
     category: "Business Setup Services",
     summary:
-      "Preparation and coordination for UAE business bank account applications, including documentation and KYC readiness.",
+      "Open your UAE business account with less friction — prepared applications, documentation and KYC readiness for the bank that fits your company.",
     bullets: [
       "Bank and account-type comparison",
       "Application and KYC document preparation",
@@ -120,7 +120,7 @@ export const services = [
     icon: Briefcase,
     category: "Business Setup Services",
     summary:
-      "Help identifying a registered address, flexi-desk or physical workspace that fits the licence and visa requirements.",
+      "Meet your licence and visa requirements with the right address — a registered office, flexi-desk or physical workspace matched to your setup.",
     bullets: [
       "Registered address and virtual office options",
       "Flexi-desk and shared workspace options",
@@ -134,7 +134,7 @@ export const services = [
     icon: FileText,
     category: "Business Setup Services",
     summary:
-      "Supporting corporate work that falls outside routine formation, from documents and planning to restructuring and closure.",
+      "Handle the corporate work that falls between the gaps — from documents and planning to restructuring and closure, coordinated end to end.",
     bullets: [
       "Document clearing and translation coordination",
       "Business plans and feasibility support",
@@ -148,7 +148,7 @@ export const services = [
     icon: LayoutTemplate,
     category: "Digital & Technology",
     summary:
-      "Strategy, UX, design and development for marketing websites, portals and digital platforms that are fast, accessible and easy to manage.",
+      "Launch a site that loads fast and is easy to run — strategy, UX, design and development for marketing websites, portals and platforms that are fast, accessible and simple to manage.",
     bullets: [
       "Discovery, information architecture and UX",
       "Responsive UI design and frontend development",
@@ -162,7 +162,7 @@ export const services = [
     icon: Code2,
     category: "Digital & Technology",
     summary:
-      "Purpose-built applications, portals and internal tools designed around your workflows rather than forcing the business into generic software.",
+      "Get software shaped around your workflow, not the other way round — purpose-built applications, portals and internal tools designed around how your business actually works.",
     bullets: [
       "Product discovery and workflow mapping",
       "Web applications and customer portals",
@@ -176,7 +176,7 @@ export const services = [
     icon: Workflow,
     category: "Digital & Technology",
     summary:
-      "CRM design, sales workflows and operational automation that reduce repetitive work and give teams a clearer view of customers and activity.",
+      "Give your team back the hours routine work eats — CRM design, sales workflows and automation that cut repetitive tasks and clarify every customer and activity.",
     bullets: [
       "CRM selection, setup and customisation",
       "Lead capture, routing and follow-up automation",
@@ -190,7 +190,7 @@ export const services = [
     icon: Megaphone,
     category: "Digital & Technology",
     summary:
-      "Search, paid media and lifecycle campaigns tied to useful business outcomes rather than surface-level activity.",
+      "Spend on marketing that ties back to results — search, paid media and lifecycle campaigns measured against real business outcomes, not surface activity.",
     bullets: [
       "SEO: technical fixes, content and links",
       "Paid search and paid social on Google and Meta",
@@ -204,7 +204,7 @@ export const services = [
     icon: Share2,
     category: "Digital & Technology",
     summary:
-      "Strategy, content and channel management that gives your brand a consistent and credible presence.",
+      "Show up consistently and credibly across every channel — strategy, content and channel management that give your brand a presence people trust.",
     bullets: [
       "Channel strategy and content calendars",
       "Short-form video, graphics and copy",
@@ -218,7 +218,7 @@ export const services = [
     icon: Bot,
     category: "Digital & Technology",
     summary:
-      "Practical AI assistants, document workflows and automations integrated into the systems your team already uses.",
+      "Put AI to work inside the tools you already use — practical assistants, document workflows and automations integrated into your existing systems.",
     bullets: [
       "AI opportunity and workflow assessment",
       "Knowledge assistants using your approved content",
