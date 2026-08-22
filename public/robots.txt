@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://orivion.ae/sitemap.xml
+Host: orivion.ae
