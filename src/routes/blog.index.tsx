@@ -23,6 +23,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Insights"
+        image="/media/pages/insights.jpg"
         title={
           <>
             Business and digital <em>knowledge base.</em>

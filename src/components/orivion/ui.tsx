@@ -52,16 +52,27 @@ export function PageHero({
   eyebrow,
   title,
   sub,
+  image,
+  imageAlt = "",
   children,
 }: {
   eyebrow: string;
   title: ReactNode;
   sub?: string;
+  image?: string;
+  imageAlt?: string;
   children?: ReactNode;
 }) {
   return (
-    <section className="o-hero">
-      <div className="aura" aria-hidden="true" />
+    <section className={image ? "o-hero o-hero--media" : "o-hero"}>
+      {image ? (
+        <div className="o-hero-bg" aria-hidden="true">
+          <img src={image} alt={imageAlt} loading="eager" fetchPriority="high" />
+          <div className="o-hero-veil" />
+        </div>
+      ) : (
+        <div className="aura" aria-hidden="true" />
+      )}
       <div className="wrap">
         <div className="sec-tag">{eyebrow}</div>
         <h1>{title}</h1>

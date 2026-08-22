@@ -1963,6 +1963,38 @@
 .orivion .o-hero--media .sub {
   color: rgba(255, 255, 255, 0.84);
 }
+.orivion .o-hero--media .link {
+  color: rgba(255, 255, 255, 0.82);
+}
+.orivion .o-hero--media .link:hover {
+  color: #fff;
+}
+/* Buttons read on the dark ground regardless of the caller's variant */
+.orivion .o-hero--media .btn {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.orivion .o-hero--media .btn::before {
+  background: #fff;
+}
+.orivion .o-hero--media .btn:hover {
+  color: #06090e;
+  border-color: #fff;
+}
+.orivion .o-hero--media .btn.fill,
+.orivion .o-hero--media .btn.fillw {
+  background: #fff;
+  color: #06090e;
+  border-color: #fff;
+}
+.orivion .o-hero--media .btn.fill::before,
+.orivion .o-hero--media .btn.fillw::before {
+  background: rgba(0, 0, 0, 0.16);
+}
+.orivion .o-hero--media .btn.fill:hover,
+.orivion .o-hero--media .btn.fillw:hover {
+  color: #06090e;
+}
 @media (max-width: 760px) {
   .orivion .o-hero--media {
     border-radius: 0 0 22px 22px;

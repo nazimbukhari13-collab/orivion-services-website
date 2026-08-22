@@ -41,6 +41,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="FAQs"
+        image="/media/pages/faqs.jpg"
         title={
           <>
             The questions our clients <em>ask most.</em>

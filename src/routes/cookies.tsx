@@ -8,7 +8,12 @@ export const Route = createFileRoute("/cookies")({
   }),
   component: () => (
     <>
-      <PageHero eyebrow="Legal" title="Cookie Policy" sub="What cookies this site uses and why." />
+      <PageHero
+        eyebrow="Legal"
+        image="/media/pages/cookies.jpg"
+        title="Cookie Policy"
+        sub="What cookies this site uses and why."
+      />
       <section style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className="o-prose">

@@ -67,8 +67,16 @@ function Page() {
 
   return (
     <>
-      <section className="o-hero">
-        <div className="aura" aria-hidden="true" />
+      <section className="o-hero o-hero--media">
+        <div className="o-hero-bg" aria-hidden="true">
+          <img
+            src={`/media/jurisdictions/${j.slug}.jpg`}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="o-hero-veil" />
+        </div>
         <div className="wrap">
           <div className="sec-tag">Jurisdiction</div>
           <h1>{j.title} company setup</h1>

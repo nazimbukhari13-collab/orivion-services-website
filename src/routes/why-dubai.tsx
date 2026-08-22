@@ -83,6 +83,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Why Dubai"
+        image="/media/pages/why-dubai.jpg"
         title={
           <>
             A serious place to <em>build a business.</em>

@@ -31,6 +31,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Start a conversation"
+        image="/media/pages/consultation.jpg"
         title={
           <>
             Tell us what needs to <em>move forward.</em>

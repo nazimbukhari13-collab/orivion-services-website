@@ -42,6 +42,7 @@ function ServicesIndex() {
     <>
       <PageHero
         eyebrow="Services"
+        image="/media/pages/services.jpg"
         title={
           <>
             Business setup and <em>digital technology.</em>

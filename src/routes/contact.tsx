@@ -25,6 +25,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Contact"
+        image="/media/pages/contact.jpg"
         title={
           <>
             Let's talk about what needs to <em>move forward.</em>

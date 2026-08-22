@@ -56,8 +56,16 @@ function Page() {
   const detail = articleDetails[post.slug];
   return (
     <>
-      <section className="o-hero">
-        <div className="aura" aria-hidden="true" />
+      <section className="o-hero o-hero--media">
+        <div className="o-hero-bg" aria-hidden="true">
+          <img
+            src={`/media/insights/${post.slug}.jpg`}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="o-hero-veil" />
+        </div>
         <div className="wrap" style={{ maxWidth: "820px" }}>
           <Link
             to="/blog"
@@ -79,7 +87,7 @@ function Page() {
               marginTop: "20px",
               fontFamily: "var(--mono)",
               fontSize: "12px",
-              color: "var(--faint)",
+              color: "rgba(255, 255, 255, 0.6)",
             }}
           >
             {new Date(post.date).toLocaleDateString("en-GB", {
