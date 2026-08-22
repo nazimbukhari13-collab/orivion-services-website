@@ -1,0 +1,86 @@
+name: Live Lighthouse audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/live-lighthouse-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check live site
+        run: |
+          curl --fail --location --retry 3 --retry-delay 3 --max-time 30 https://orivion.ae/ -o /dev/null
+
+      - name: Run mobile Lighthouse
+        run: |
+          npx -y lighthouse https://orivion.ae/ \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=./lighthouse-mobile.json
+
+      - name: Run desktop Lighthouse
+        run: |
+          npx -y lighthouse https://orivion.ae/ \
+            --quiet \
+            --preset=desktop \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=./lighthouse-desktop.json
+
+      - name: Print audit summary
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const files = [
+            ['MOBILE', 'lighthouse-mobile.json'],
+            ['DESKTOP', 'lighthouse-desktop.json'],
+          ];
+          const pct = value => Math.round((value || 0) * 100);
+          const metric = (audits, id) => audits[id]?.displayValue || 'n/a';
+          for (const [label, file] of files) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const c = report.categories;
+            const a = report.audits;
+            console.log(`\n=== ${label} ===`);
+            console.log(`Performance: ${pct(c.performance.score)}`);
+            console.log(`Accessibility: ${pct(c.accessibility.score)}`);
+            console.log(`Best Practices: ${pct(c['best-practices'].score)}`);
+            console.log(`SEO: ${pct(c.seo.score)}`);
+            console.log(`FCP: ${metric(a, 'first-contentful-paint')}`);
+            console.log(`LCP: ${metric(a, 'largest-contentful-paint')}`);
+            console.log(`Speed Index: ${metric(a, 'speed-index')}`);
+            console.log(`TBT: ${metric(a, 'total-blocking-time')}`);
+            console.log(`CLS: ${metric(a, 'cumulative-layout-shift')}`);
+            console.log(`TTI: ${metric(a, 'interactive')}`);
+
+            const opportunities = Object.values(a)
+              .filter(x => x && x.details && x.details.type === 'opportunity' && typeof x.numericValue === 'number' && x.numericValue > 0)
+              .sort((x, y) => (y.numericValue || 0) - (x.numericValue || 0))
+              .slice(0, 8);
+            if (opportunities.length) {
+              console.log('Top opportunities:');
+              for (const item of opportunities) {
+                console.log(`- ${item.title}: ${item.displayValue || ''}`);
+              }
+            }
+          }
+          NODE
+
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-live-reports
+          path: |
+            lighthouse-mobile.json
+            lighthouse-desktop.json
+          retention-days: 7
