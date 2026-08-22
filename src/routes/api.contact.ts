@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { services } from "@/lib/site-data";
 
 const MAX_BODY_BYTES = 20_000;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
 const allowedServices = new Set([...services.map((service) => service.title), "Other"]);
+const rateBuckets = new Map<string, { count: number; resetAt: number }>();
 
 export const Route = createFileRoute("/api/contact")({
   server: {
@@ -13,9 +16,22 @@ export const Route = createFileRoute("/api/contact")({
           return Response.json({ error: "Request too large." }, { status: 413 });
         }
 
+        const requestUrl = new URL(request.url);
         const origin = request.headers.get("origin");
-        if (origin && origin !== new URL(request.url).origin) {
+        if (origin && origin !== requestUrl.origin) {
           return Response.json({ error: "Invalid request origin." }, { status: 403 });
+        }
+
+        const ip = request.headers.get("cf-connecting-ip") || "unknown";
+        const rateLimit = checkRateLimit(ip);
+        if (!rateLimit.allowed) {
+          return Response.json(
+            { error: "Too many enquiries were sent from this connection. Please try again later." },
+            {
+              status: 429,
+              headers: { "Retry-After": String(rateLimit.retryAfterSeconds) },
+            },
+          );
         }
 
         let body: Record<string, unknown>;
@@ -37,6 +53,14 @@ export const Route = createFileRoute("/api/contact")({
         const service = clean(body.service, 100);
         const location = clean(body.location, 120);
         const message = clean(body.message, 1000);
+        const turnstileToken = clean(body.turnstileToken, 2048);
+        const landingPage = clean(body.landingPage, 500);
+        const referrer = clean(body.referrer, 500);
+        const utmSource = clean(body.utmSource, 120);
+        const utmMedium = clean(body.utmMedium, 120);
+        const utmCampaign = clean(body.utmCampaign, 160);
+        const utmTerm = clean(body.utmTerm, 160);
+        const utmContent = clean(body.utmContent, 160);
 
         if (!name) {
           return Response.json({ error: "Please enter your name." }, { status: 400 });
@@ -46,6 +70,24 @@ export const Route = createFileRoute("/api/contact")({
         }
         if (service && !allowedServices.has(service)) {
           return Response.json({ error: "Please choose a valid service." }, { status: 400 });
+        }
+
+        const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+        if (turnstileSecret) {
+          if (!turnstileToken) {
+            return Response.json(
+              { error: "Please complete the security check before sending." },
+              { status: 400 },
+            );
+          }
+
+          const verified = await verifyTurnstile(turnstileSecret, turnstileToken, ip);
+          if (!verified) {
+            return Response.json(
+              { error: "The security check could not be verified. Please try again." },
+              { status: 403 },
+            );
+          }
         }
 
         const apiKey = process.env.RESEND_API_KEY;
@@ -62,6 +104,16 @@ export const Route = createFileRoute("/api/contact")({
         const subject = `New Orivion enquiry — ${service || "General"}`;
         const submittedAt = new Date().toISOString();
 
+        const attributionLines = [
+          `Landing page: ${landingPage || "Not captured"}`,
+          `Referrer: ${referrer || "Direct / not available"}`,
+          `UTM source: ${utmSource || "Not provided"}`,
+          `UTM medium: ${utmMedium || "Not provided"}`,
+          `UTM campaign: ${utmCampaign || "Not provided"}`,
+          `UTM term: ${utmTerm || "Not provided"}`,
+          `UTM content: ${utmContent || "Not provided"}`,
+        ];
+
         const text = [
           "New enquiry from orivion.ae",
           "",
@@ -74,6 +126,9 @@ export const Route = createFileRoute("/api/contact")({
           "",
           "Message:",
           message || "No message provided.",
+          "",
+          "Attribution:",
+          ...attributionLines,
           "",
           `Submitted: ${submittedAt}`,
         ].join("\n");
@@ -90,6 +145,16 @@ export const Route = createFileRoute("/api/contact")({
           </table>
           <h3>Message</h3>
           <p style="white-space:pre-wrap">${escapeHtml(message || "No message provided.")}</p>
+          <h3>Attribution</h3>
+          <table cellpadding="6" cellspacing="0" style="border-collapse:collapse">
+            ${row("Landing page", landingPage || "Not captured")}
+            ${row("Referrer", referrer || "Direct / not available")}
+            ${row("UTM source", utmSource || "Not provided")}
+            ${row("UTM medium", utmMedium || "Not provided")}
+            ${row("UTM campaign", utmCampaign || "Not provided")}
+            ${row("UTM term", utmTerm || "Not provided")}
+            ${row("UTM content", utmContent || "Not provided")}
+          </table>
           <hr />
           <p style="font-size:12px;color:#666">Submitted ${escapeHtml(submittedAt)}</p>
         `;
@@ -99,6 +164,7 @@ export const Route = createFileRoute("/api/contact")({
           headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json",
+            "Idempotency-Key": crypto.randomUUID(),
           },
           body: JSON.stringify({
             from,
@@ -125,6 +191,56 @@ export const Route = createFileRoute("/api/contact")({
     },
   },
 });
+
+async function verifyTurnstile(secret: string, token: string, remoteIp: string) {
+  try {
+    const form = new FormData();
+    form.set("secret", secret);
+    form.set("response", token);
+    if (remoteIp !== "unknown") form.set("remoteip", remoteIp);
+
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: form,
+    });
+    if (!response.ok) return false;
+
+    const result = (await response.json()) as { success?: boolean };
+    return result.success === true;
+  } catch (error) {
+    console.error("Turnstile verification failed:", error);
+    return false;
+  }
+}
+
+function checkRateLimit(key: string) {
+  const now = Date.now();
+  const current = rateBuckets.get(key);
+
+  if (!current || now >= current.resetAt) {
+    rateBuckets.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    cleanupRateBuckets(now);
+    return { allowed: true, retryAfterSeconds: 0 };
+  }
+
+  if (current.count >= RATE_LIMIT_MAX) {
+    return {
+      allowed: false,
+      retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1000)),
+    };
+  }
+
+  current.count += 1;
+  rateBuckets.set(key, current);
+  return { allowed: true, retryAfterSeconds: 0 };
+}
+
+function cleanupRateBuckets(now: number) {
+  if (rateBuckets.size < 500) return;
+  for (const [key, bucket] of rateBuckets) {
+    if (now >= bucket.resetAt) rateBuckets.delete(key);
+  }
+}
 
 function clean(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
