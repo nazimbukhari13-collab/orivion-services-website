@@ -613,8 +613,7 @@
   inset: 0;
   z-index: -2;
   overflow: hidden;
-  background: #080b11 url("/media/orivion-business-technology-hero-poster.webp") center/cover
-    no-repeat;
+  background: #080b11 url("/media/orivion-hero-desktop-poster.webp") center/cover no-repeat;
 }
 .orivion .home-hero-video {
   width: 100%;
@@ -622,6 +621,9 @@
   object-fit: cover;
   object-position: center;
   display: block;
+}
+.orivion .home-hero-video--mobile {
+  display: none;
 }
 .orivion .home-hero-scrim {
   position: absolute;
@@ -746,8 +748,17 @@
     margin-top: 82px;
     border-radius: 0 0 22px 22px;
   }
+  .orivion .home-hero-media {
+    background-image: url("/media/orivion-hero-mobile-poster.webp");
+  }
   .orivion .home-hero-video {
-    object-position: 64% center;
+    object-position: center;
+  }
+  .orivion .home-hero-video--desktop {
+    display: none;
+  }
+  .orivion .home-hero-video--mobile {
+    display: block;
   }
   .orivion .home-hero-scrim {
     background:
@@ -1050,7 +1061,9 @@
 }
 
 /* ---------- sections ---------- */
-.orivion section {
+/* :not([aria-live]) excludes the sonner Toaster's notification <section>,
+   which is otherwise inflated by this padding into dead space below the footer. */
+.orivion section:not([aria-live]) {
   padding: clamp(90px, 12vw, 170px) clamp(20px, 4vw, 56px);
 }
 .orivion .wrap {

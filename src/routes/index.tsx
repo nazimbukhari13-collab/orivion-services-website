@@ -137,17 +137,28 @@ function Home() {
       <header className="home-hero">
         <div className="home-hero-media" aria-hidden="true">
           <video
-            className="home-hero-video"
+            className="home-hero-video home-hero-video--desktop"
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
-            poster="/media/orivion-business-technology-hero-poster.webp"
+            preload="auto"
+            poster="/media/orivion-hero-desktop-poster.webp"
             tabIndex={-1}
           >
-            <source src="/media/orivion-business-technology-hero.webm" type="video/webm" />
-            <source src="/media/orivion-business-technology-hero.mp4" type="video/mp4" />
+            <source src="/media/orivion-hero-desktop.mp4" type="video/mp4" />
+          </video>
+          <video
+            className="home-hero-video home-hero-video--mobile"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/media/orivion-hero-mobile-poster.webp"
+            tabIndex={-1}
+          >
+            <source src="/media/orivion-hero-mobile.mp4" type="video/mp4" />
           </video>
           <div className="home-hero-scrim" />
         </div>
