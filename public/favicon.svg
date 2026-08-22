@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="orivion-mark" x1="5" y1="6" x2="27" y2="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6ea8ff"/>
+      <stop offset="0.5" stop-color="#9a7bff"/>
+      <stop offset="1" stop-color="#ff9d5c"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#0e1116"/>
+  <circle cx="16" cy="16" r="9.6" fill="none" stroke="url(#orivion-mark)" stroke-width="5.2"/>
+</svg>
