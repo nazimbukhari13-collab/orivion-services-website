@@ -7,13 +7,16 @@ on:
       - ".github/workflows/live-lighthouse-audit.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Check live site
         run: |
           curl --fail --location --retry 3 --retry-delay 3 --max-time 30 https://orivion.ae/ -o /dev/null
@@ -37,43 +40,81 @@ jobs:
             --output=json \
             --output-path=./lighthouse-desktop.json
 
-      - name: Print audit summary
+      - name: Build audit summary
         run: |
           node <<'NODE'
           const fs = require('fs');
           const files = [
-            ['MOBILE', 'lighthouse-mobile.json'],
-            ['DESKTOP', 'lighthouse-desktop.json'],
+            ['Mobile', 'lighthouse-mobile.json'],
+            ['Desktop', 'lighthouse-desktop.json'],
           ];
           const pct = value => Math.round((value || 0) * 100);
           const metric = (audits, id) => audits[id]?.displayValue || 'n/a';
+          const lines = [
+            '# Orivion live Lighthouse audit',
+            '',
+            `Generated: ${new Date().toISOString()}`,
+            '',
+            'Target: https://orivion.ae/',
+            '',
+          ];
+
           for (const [label, file] of files) {
             const report = JSON.parse(fs.readFileSync(file, 'utf8'));
             const c = report.categories;
             const a = report.audits;
-            console.log(`\n=== ${label} ===`);
-            console.log(`Performance: ${pct(c.performance.score)}`);
-            console.log(`Accessibility: ${pct(c.accessibility.score)}`);
-            console.log(`Best Practices: ${pct(c['best-practices'].score)}`);
-            console.log(`SEO: ${pct(c.seo.score)}`);
-            console.log(`FCP: ${metric(a, 'first-contentful-paint')}`);
-            console.log(`LCP: ${metric(a, 'largest-contentful-paint')}`);
-            console.log(`Speed Index: ${metric(a, 'speed-index')}`);
-            console.log(`TBT: ${metric(a, 'total-blocking-time')}`);
-            console.log(`CLS: ${metric(a, 'cumulative-layout-shift')}`);
-            console.log(`TTI: ${metric(a, 'interactive')}`);
+            lines.push(`## ${label}`);
+            lines.push('');
+            lines.push('| Category | Score |');
+            lines.push('| --- | ---: |');
+            lines.push(`| Performance | ${pct(c.performance.score)} |`);
+            lines.push(`| Accessibility | ${pct(c.accessibility.score)} |`);
+            lines.push(`| Best Practices | ${pct(c['best-practices'].score)} |`);
+            lines.push(`| SEO | ${pct(c.seo.score)} |`);
+            lines.push('');
+            lines.push('| Metric | Result |');
+            lines.push('| --- | ---: |');
+            lines.push(`| First Contentful Paint | ${metric(a, 'first-contentful-paint')} |`);
+            lines.push(`| Largest Contentful Paint | ${metric(a, 'largest-contentful-paint')} |`);
+            lines.push(`| Speed Index | ${metric(a, 'speed-index')} |`);
+            lines.push(`| Total Blocking Time | ${metric(a, 'total-blocking-time')} |`);
+            lines.push(`| Cumulative Layout Shift | ${metric(a, 'cumulative-layout-shift')} |`);
+            lines.push(`| Time to Interactive | ${metric(a, 'interactive')} |`);
+            lines.push('');
 
             const opportunities = Object.values(a)
               .filter(x => x && x.details && x.details.type === 'opportunity' && typeof x.numericValue === 'number' && x.numericValue > 0)
               .sort((x, y) => (y.numericValue || 0) - (x.numericValue || 0))
               .slice(0, 8);
-            if (opportunities.length) {
-              console.log('Top opportunities:');
+            lines.push('### Highest-impact opportunities');
+            lines.push('');
+            if (!opportunities.length) {
+              lines.push('- No material Lighthouse opportunities were reported.');
+            } else {
               for (const item of opportunities) {
-                console.log(`- ${item.title}: ${item.displayValue || ''}`);
+                lines.push(`- ${item.title}${item.displayValue ? ` — ${item.displayValue}` : ''}`);
               }
             }
+            lines.push('');
+
+            const failed = Object.values(a)
+              .filter(x => x && x.score !== null && x.score < 1 && x.scoreDisplayMode !== 'notApplicable' && x.scoreDisplayMode !== 'manual')
+              .sort((x, y) => (x.score ?? 0) - (y.score ?? 0))
+              .slice(0, 12);
+            lines.push('### Other failed or partial audits');
+            lines.push('');
+            if (!failed.length) {
+              lines.push('- None.');
+            } else {
+              for (const item of failed) {
+                lines.push(`- ${item.title}${item.displayValue ? ` — ${item.displayValue}` : ''}`);
+              }
+            }
+            lines.push('');
           }
+
+          fs.writeFileSync('lighthouse-summary.md', lines.join('\n') + '\n');
+          console.log(lines.join('\n'));
           NODE
 
       - name: Upload Lighthouse reports
@@ -83,4 +124,17 @@ jobs:
           path: |
             lighthouse-mobile.json
             lighthouse-desktop.json
+            lighthouse-summary.md
           retention-days: 7
+
+      - name: Commit latest summary
+        run: |
+          git config user.name "orivion-audit"
+          git config user.email "actions@users.noreply.github.com"
+          git add lighthouse-summary.md
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: record live Lighthouse audit"
+          git pull --rebase origin main
+          git push origin HEAD:main
