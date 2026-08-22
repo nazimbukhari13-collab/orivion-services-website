@@ -1,0 +1,2642 @@
+/* ==========================================================================
+   Orivion homepage — self-contained styles.
+   Ported from the standalone reference. Fonts are loaded via Google Fonts in
+   the route <head> instead of embedded base64. The multi-megabyte hero video
+   is replaced with a CSS aurora (the reference already treats an animated
+   visual as the default layer).
+   Scoped to the home route: the route only mounts this stylesheet on "/".
+   ========================================================================== */
+
+.orivion {
+  --bg: #f4f5f7;
+  --bg2: #eceef1;
+  --ink: #0e1116;
+  --muted: #6f7681;
+  --faint: #a7adb6;
+  --line: #e0e3e8;
+  --blue: #6ea8ff;
+  --violet: #9a7bff;
+  --peach: #ff9d5c;
+  --grad: linear-gradient(100deg, var(--blue), var(--violet) 50%, var(--peach));
+  --sans: "Space Grotesk", sans-serif;
+  --serif: "Instrument Serif", serif;
+  --mono: "JetBrains Mono", monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+.orivion * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.orivion .skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10000;
+  padding: 10px 14px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--ease);
+}
+.orivion .skip-link:focus {
+  transform: translateY(0);
+}
+.orivion ::selection {
+  background: #dfe6ff;
+  color: var(--ink);
+}
+@media (pointer: fine) {
+  .orivion.cursor-hidden,
+  .orivion.cursor-hidden a,
+  .orivion.cursor-hidden button {
+    cursor: none;
+  }
+}
+
+/* ---------- grain ---------- */
+.orivion::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: o-grain 7s steps(8) infinite;
+}
+@keyframes o-grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  12% {
+    transform: translate(-4%, 3%);
+  }
+  25% {
+    transform: translate(3%, -5%);
+  }
+  37% {
+    transform: translate(-3%, -2%);
+  }
+  50% {
+    transform: translate(5%, 4%);
+  }
+  62% {
+    transform: translate(-5%, 1%);
+  }
+  75% {
+    transform: translate(2%, 5%);
+  }
+  87% {
+    transform: translate(4%, -3%);
+  }
+}
+
+/* ---------- cursor ---------- */
+.orivion .cur-dot,
+.orivion .cur-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+@media (pointer: fine) {
+  .orivion .cur-dot,
+  .orivion .cur-ring {
+    display: block;
+  }
+}
+.orivion .cur-dot,
+.orivion .cur-ring {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.orivion.mouse-on .cur-dot,
+.orivion.mouse-on .cur-ring {
+  opacity: 1;
+}
+.orivion .cur-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+}
+.orivion .cur-ring {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(14, 17, 22, 0.35);
+  transition:
+    width 0.35s var(--ease),
+    height 0.35s var(--ease),
+    border-color 0.35s,
+    background 0.35s;
+}
+.orivion .cur-ring.hov {
+  width: 64px;
+  height: 64px;
+  border-color: transparent;
+  background: radial-gradient(
+    circle,
+    rgba(110, 168, 255, 0.16),
+    rgba(154, 123, 255, 0.1) 60%,
+    transparent 70%
+  );
+}
+.orivion .cur-ring.hov::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: var(--grad) border-box;
+  -webkit-mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+}
+
+/* ---------- preloader ---------- */
+.orivion #loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9995;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 26px;
+  transition:
+    opacity 0.7s var(--ease),
+    visibility 0.7s;
+}
+.orivion #loader.done {
+  opacity: 0;
+  visibility: hidden;
+}
+.orivion #loader .word {
+  font-family: var(--mono);
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.55em;
+  color: var(--ink);
+  text-indent: 0.55em;
+}
+.orivion #loader .word span {
+  opacity: 0;
+  animation: o-lfade 0.5s var(--ease) forwards;
+}
+@keyframes o-lfade {
+  to {
+    opacity: 1;
+  }
+}
+.orivion #loader .bar {
+  width: 180px;
+  height: 1px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.orivion #loader .bar i {
+  position: absolute;
+  inset: 0;
+  background: var(--grad);
+  transform: translateX(-100%);
+  animation: o-lbar 1.15s var(--ease) forwards;
+}
+@keyframes o-lbar {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ---------- nav ---------- */
+.orivion nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px clamp(20px, 4vw, 56px);
+  transition:
+    background 0.5s,
+    backdrop-filter 0.5s,
+    padding 0.5s,
+    border-color 0.5s;
+  border-bottom: 1px solid transparent;
+}
+.orivion nav.scrolled {
+  background: rgba(244, 245, 247, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-color: var(--line);
+}
+.orivion .brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.orivion .brand .mark {
+  width: 26px;
+  height: 26px;
+  position: relative;
+}
+.orivion .brand .mark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, var(--blue), var(--violet), var(--peach), var(--blue));
+  -webkit-mask: radial-gradient(circle, transparent 55%, #000 56%);
+  mask: radial-gradient(circle, transparent 55%, #000 56%);
+  animation: o-spin 9s linear infinite;
+}
+.orivion .brand .mark::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+@keyframes o-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orivion .brand b {
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+}
+.orivion .nav-links {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+.orivion .nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+  position: relative;
+  transition: color 0.3s;
+}
+.orivion .nav-links a:hover {
+  color: var(--ink);
+}
+.orivion .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 1px;
+  width: 100%;
+  background: var(--grad);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.orivion .nav-links a:hover::after {
+  transform: scaleX(1);
+}
+.orivion .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 100px;
+  padding: 11px 22px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color 0.35s 0.05s,
+    border-color 0.35s;
+}
+.orivion .btn i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grad);
+  transition: transform 0.4s var(--ease);
+}
+.orivion .btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  border-radius: 100px;
+  transform: translateY(102%);
+  transition: transform 0.45s var(--ease);
+}
+.orivion .btn:hover::before {
+  transform: translateY(0);
+}
+.orivion .btn:hover {
+  color: #fff;
+}
+.orivion .btn:hover i {
+  transform: scale(1.6);
+}
+.orivion .btn span,
+.orivion .btn i {
+  position: relative;
+  z-index: 1;
+}
+.orivion .btn.big {
+  padding: 18px 36px;
+  font-size: 15px;
+}
+.orivion .btn.light {
+  border-color: #fff;
+  color: #fff;
+}
+.orivion .btn.light::before {
+  background: #fff;
+}
+.orivion .btn.light:hover {
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .orivion .nav-links a {
+    display: none;
+  }
+  .orivion .nav-links .btn {
+    display: inline-flex;
+  }
+}
+
+/* ---------- hero ---------- */
+.orivion header {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.orivion .hero-aura {
+  position: absolute;
+  top: 50%;
+  left: 66%;
+  width: min(115vh, 1050px);
+  max-width: 120vw;
+  aspect-ratio: 16/9;
+  transform: translate(-50%, -52%);
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 45%, transparent 78%);
+  mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 45%, transparent 78%);
+}
+.orivion .hero-aura::before {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(110, 168, 255, 0.55),
+    rgba(154, 123, 255, 0.5),
+    rgba(255, 157, 92, 0.45),
+    rgba(110, 168, 255, 0.55)
+  );
+  filter: blur(60px);
+  animation: o-spin 24s linear infinite;
+}
+.orivion .hero-aura::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0) 62%);
+  filter: blur(28px);
+  animation: o-pulse 7s ease-in-out infinite;
+}
+@media (max-width: 900px) {
+  .orivion .hero-aura {
+    left: 50%;
+    opacity: 0.6;
+    width: 150vw;
+  }
+}
+.orivion .hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 0 clamp(20px, 4vw, 56px);
+  width: 100%;
+  max-width: 1460px;
+  margin: 0 auto;
+}
+.orivion .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 30px;
+}
+.orivion h1 {
+  font-weight: 300;
+  font-size: clamp(52px, 9.2vw, 138px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+.orivion h1 .l {
+  display: block;
+  overflow: hidden;
+}
+.orivion h1 .l span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 1.1s var(--ease);
+}
+.orivion.loaded h1 .l span {
+  transform: translateY(0);
+}
+.orivion h1 .l:nth-child(2) span {
+  transition-delay: 0.1s;
+}
+.orivion h1 .l:nth-child(3) span {
+  transition-delay: 0.2s;
+}
+.orivion h1 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.06em;
+}
+.orivion .hero-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-top: 44px;
+  flex-wrap: wrap;
+}
+.orivion .hero-sub {
+  max-width: 430px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s var(--ease) 0.5s,
+    transform 1s var(--ease) 0.5s;
+}
+.orivion.loaded .hero-sub {
+  opacity: 1;
+  transform: none;
+}
+.orivion .hero-cta {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s var(--ease) 0.65s,
+    transform 1s var(--ease) 0.65s;
+}
+.orivion.loaded .hero-cta {
+  opacity: 1;
+  transform: none;
+}
+.orivion .ghost {
+  font-size: 13.5px;
+  color: var(--muted);
+  text-decoration: none;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  transition: color 0.3s;
+}
+.orivion .ghost:hover {
+  color: var(--ink);
+}
+.orivion .ghost svg {
+  transition: transform 0.35s var(--ease);
+}
+.orivion .ghost:hover svg {
+  transform: translateX(4px);
+}
+
+.orivion .scroll-cue {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--faint);
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.orivion .scroll-cue i {
+  width: 1px;
+  height: 44px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+.orivion .scroll-cue i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -40%;
+  width: 100%;
+  height: 40%;
+  background: var(--ink);
+  animation: o-drip 1.8s var(--ease) infinite;
+}
+@keyframes o-drip {
+  to {
+    top: 110%;
+  }
+}
+
+/* ---------- homepage hero: cinematic business + technology ---------- */
+.orivion header.home-hero {
+  min-height: calc(100svh - 96px);
+  margin-top: 96px;
+  color: #fff;
+  background: #080b11;
+  isolation: isolate;
+  border-radius: 0 0 32px 32px;
+}
+.orivion .home-hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background: #080b11 url("/media/orivion-business-technology-hero-poster.webp") center/cover
+    no-repeat;
+}
+.orivion .home-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.orivion .home-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 8, 13, 0.94) 0%,
+      rgba(5, 8, 13, 0.83) 34%,
+      rgba(5, 8, 13, 0.38) 67%,
+      rgba(5, 8, 13, 0.16) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(5, 8, 13, 0.62) 0%,
+      rgba(5, 8, 13, 0.03) 52%,
+      rgba(5, 8, 13, 0.28) 100%
+    );
+}
+.orivion .home-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: clamp(70px, 9vw, 128px) clamp(20px, 4vw, 56px) clamp(120px, 12vw, 170px);
+}
+.orivion .home-hero-copy {
+  max-width: 1120px;
+}
+.orivion .home-hero h1 {
+  color: #fff;
+  font-size: clamp(48px, 7.2vw, 110px);
+  line-height: 0.96;
+  max-width: 11.5em;
+  text-wrap: balance;
+  text-shadow: 0 12px 50px rgba(0, 0, 0, 0.4);
+}
+.orivion .home-hero h1 .l:nth-child(2) {
+  margin-top: 0.08em;
+}
+.orivion .home-hero-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 36px;
+  margin-top: clamp(32px, 5vw, 58px);
+  max-width: 1060px;
+}
+.orivion .home-hero-sub {
+  max-width: 510px;
+  color: #c8ced8;
+  font-size: clamp(15px, 1.35vw, 18px);
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s var(--ease) 0.5s,
+    transform 1s var(--ease) 0.5s;
+}
+.orivion.loaded .home-hero-sub {
+  opacity: 1;
+  transform: none;
+}
+.orivion .home-hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1s var(--ease) 0.65s,
+    transform 1s var(--ease) 0.65s;
+}
+.orivion.loaded .home-hero-actions {
+  opacity: 1;
+  transform: none;
+}
+.orivion .home-hero-scroll {
+  position: absolute;
+  left: clamp(20px, 4vw, 56px);
+  bottom: 26px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #aeb6c4;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+.orivion .home-hero-scroll i {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+.orivion .home-hero-scroll i::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--violet));
+  animation: o-hero-line 2.2s var(--ease) infinite;
+}
+@keyframes o-hero-line {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(360%);
+  }
+}
+@media (max-width: 760px) {
+  .orivion header.home-hero {
+    min-height: calc(100svh - 82px);
+    margin-top: 82px;
+    border-radius: 0 0 22px 22px;
+  }
+  .orivion .home-hero-video {
+    object-position: 64% center;
+  }
+  .orivion .home-hero-scrim {
+    background:
+      linear-gradient(90deg, rgba(5, 8, 13, 0.92), rgba(5, 8, 13, 0.55)),
+      linear-gradient(0deg, rgba(5, 8, 13, 0.74), rgba(5, 8, 13, 0.08) 70%);
+  }
+  .orivion .home-hero-inner {
+    padding-top: 72px;
+    padding-bottom: 118px;
+  }
+  .orivion .home-hero h1 {
+    font-size: clamp(43px, 12.8vw, 64px);
+    line-height: 0.98;
+  }
+  .orivion .home-hero-foot {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 32px;
+    gap: 26px;
+  }
+  .orivion .home-hero-actions {
+    justify-content: flex-start;
+  }
+  .orivion .home-hero-actions .btn.big {
+    padding: 15px 24px;
+    font-size: 13.5px;
+  }
+}
+
+/* ---------- hero: two-column with studio mock ---------- */
+.orivion .hero-grid {
+  display: grid;
+  gap: clamp(30px, 5vw, 64px);
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1000px) {
+  .orivion .hero-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+}
+.orivion .hero-grid h1 {
+  font-size: clamp(42px, 6.2vw, 100px);
+}
+.orivion .hero-visual {
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 999px) {
+  .orivion .hero-visual {
+    display: none;
+  }
+}
+.orivion .mock {
+  position: relative;
+  max-width: 460px;
+  margin-left: auto;
+  opacity: 0;
+  transform: translateY(30px) scale(0.97);
+  transition:
+    opacity 1s var(--ease) 0.7s,
+    transform 1s var(--ease) 0.7s;
+}
+.orivion.loaded .mock {
+  opacity: 1;
+  transform: none;
+}
+.orivion .mock-win {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 50px 90px -40px rgba(20, 30, 60, 0.32);
+}
+.orivion .mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.orivion .mock-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.orivion .mock-bar i:first-child {
+  background: linear-gradient(135deg, var(--blue), var(--violet));
+}
+.orivion .mock-bar em {
+  margin-left: auto;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+}
+.orivion .mock-screen {
+  aspect-ratio: 16/10.5;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(from 200deg at 60% 40%, #e8efff, #d3e2ff, #e4d9ff, #ffe6d4, #e8efff);
+}
+.orivion .system-card .mock-screen {
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #f9faff 0, #e7edff 36%, #e7dcff 66%, #ffeadb 100%);
+}
+.orivion .system-card .mock-screen::before {
+  content: "";
+  position: absolute;
+  width: 68%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(14, 17, 22, 0.14);
+  border-radius: 50%;
+}
+.orivion .system-core {
+  position: relative;
+  z-index: 2;
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(14, 17, 22, 0.12);
+  box-shadow: 0 18px 50px rgba(67, 73, 105, 0.12);
+  backdrop-filter: blur(12px);
+}
+.orivion .system-core span {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  max-width: 16ch;
+  line-height: 1.5;
+}
+.orivion .system-core strong {
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-top: 8px;
+}
+.orivion .system-orbit {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  animation: o-spin 28s linear infinite;
+}
+.orivion .system-orbit i {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-style: normal;
+  box-shadow: 0 8px 22px rgba(14, 17, 22, 0.18);
+}
+.orivion .system-orbit i:nth-child(1) {
+  transform: translateY(clamp(-148px, -11vw, -105px));
+}
+.orivion .system-orbit i:nth-child(2) {
+  transform: translate(clamp(100px, 10vw, 140px), clamp(-48px, -4vw, -32px));
+}
+.orivion .system-orbit i:nth-child(3) {
+  transform: translate(clamp(62px, 6vw, 88px), clamp(82px, 8vw, 116px));
+}
+.orivion .system-orbit i:nth-child(4) {
+  transform: translate(clamp(-88px, -6vw, -62px), clamp(82px, 8vw, 116px));
+}
+.orivion .system-orbit i:nth-child(5) {
+  transform: translate(clamp(-140px, -10vw, -100px), clamp(-48px, -4vw, -32px));
+}
+.orivion .system-orbit i:nth-child(odd) {
+  background: linear-gradient(135deg, #5d8fe0, #8a6fe3);
+}
+.orivion .service-tracks {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 26px;
+}
+.orivion .service-tracks div {
+  width: 112px;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid rgba(14, 17, 22, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 28px rgba(67, 73, 105, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.orivion .service-tracks b {
+  font-family: var(--mono);
+  font-size: 17px;
+  font-weight: 400;
+}
+.orivion .service-tracks span {
+  font-family: var(--mono);
+  font-size: 8px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.orivion .service-tracks div:first-child {
+  transform: translateY(-86px);
+}
+.orivion .service-tracks div:last-child {
+  transform: translateY(86px);
+}
+.orivion .mock-glyph {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(30px, 3vw, 46px);
+  color: rgba(14, 17, 22, 0.82);
+}
+.orivion .mock-chip {
+  position: absolute;
+  left: -16px;
+  bottom: -16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.5);
+}
+.orivion .mock-chip .mock-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--grad);
+}
+
+/* ---------- marquee ---------- */
+.orivion .marquee {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  padding: 20px 0;
+  background: var(--bg);
+}
+.orivion .home-marquee {
+  margin-top: 0;
+}
+.orivion .home-services {
+  padding-top: clamp(96px, 10vw, 140px);
+}
+.orivion .marquee .track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: o-mq 28s linear infinite;
+}
+.orivion .marquee span {
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.orivion .marquee span::after {
+  content: "✦";
+  font-size: 11px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@keyframes o-mq {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- sections ---------- */
+.orivion section {
+  padding: clamp(90px, 12vw, 170px) clamp(20px, 4vw, 56px);
+}
+.orivion .wrap {
+  max-width: 1460px;
+  margin: 0 auto;
+}
+.orivion .sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: clamp(48px, 6vw, 90px);
+  flex-wrap: wrap;
+}
+.orivion .sec-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.orivion h2 {
+  font-weight: 300;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+.orivion h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .sec-note {
+  max-width: 340px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* reveal */
+.orivion .rv {
+  opacity: 0;
+  transform: translateY(38px);
+  filter: blur(6px);
+  transition:
+    opacity 1s var(--ease),
+    transform 1s var(--ease),
+    filter 1s var(--ease);
+}
+.orivion .rv.in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ---------- services ---------- */
+.orivion .svc {
+  border-top: 1px solid var(--line);
+}
+.orivion .svc-row {
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.orivion .svc-row .top {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 32px 8px;
+  transition: padding 0.5s var(--ease);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+}
+.orivion .svc-row .top:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: -2px;
+}
+.orivion .svc-row .num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+  letter-spacing: 0.1em;
+}
+.orivion .svc-row h3 {
+  font-weight: 300;
+  font-size: clamp(24px, 3.4vw, 46px);
+  letter-spacing: -0.02em;
+  transition: transform 0.5s var(--ease);
+}
+.orivion .svc-row .arrow {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition:
+    transform 0.5s var(--ease),
+    background 0.4s,
+    border-color 0.4s;
+}
+.orivion .svc-row .arrow svg {
+  transition: transform 0.5s var(--ease);
+}
+.orivion .svc-row .body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s var(--ease);
+}
+.orivion .svc-row .body-in {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 20px;
+  padding: 0 8px 38px;
+}
+.orivion .svc-row .desc {
+  max-width: 560px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+  grid-column: 2;
+}
+.orivion .svc-row .tags {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.orivion .svc-row .tags b {
+  font-weight: 400;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 7px 14px;
+}
+.orivion .svc-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--grad);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s var(--ease);
+}
+.orivion .svc-row.open::before,
+.orivion .svc-row:hover::before {
+  transform: scaleY(1);
+}
+.orivion .svc-row:hover h3 {
+  transform: translateX(10px);
+}
+.orivion .svc-row:hover .arrow,
+.orivion .svc-row.open .arrow {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.orivion .svc-row:hover .arrow svg,
+.orivion .svc-row.open .arrow svg {
+  stroke: #fff;
+}
+.orivion .svc-row.open .arrow svg {
+  transform: rotate(45deg);
+}
+.orivion .svc-row.open .body {
+  max-height: 320px;
+}
+@media (max-width: 640px) {
+  .orivion .svc-row .top {
+    grid-template-columns: 44px 1fr auto;
+  }
+  .orivion .svc-row .body-in {
+    grid-template-columns: 1fr;
+  }
+  .orivion .svc-row .desc {
+    grid-column: 1;
+  }
+}
+
+/* ---------- intelligence ---------- */
+.orivion .intel {
+  background: var(--ink);
+  color: #eef0f4;
+  border-radius: 32px;
+  margin: 0 clamp(12px, 2vw, 32px);
+  position: relative;
+  overflow: hidden;
+}
+.orivion .intel::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(110, 168, 255, 0.18),
+    rgba(154, 123, 255, 0.08) 55%,
+    transparent 70%
+  );
+  filter: blur(10px);
+}
+.orivion .intel .wrap {
+  position: relative;
+  z-index: 1;
+}
+.orivion .intel .sec-tag {
+  color: #8b93a1;
+}
+.orivion .intel h2 {
+  color: #fff;
+}
+.orivion .intel-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: center;
+}
+.orivion .intel-copy p {
+  color: #9aa2b0;
+  font-size: 16.5px;
+  line-height: 1.75;
+  max-width: 480px;
+  margin-top: 26px;
+}
+.orivion .intel-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.09);
+  margin-top: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+@media (max-width: 600px) {
+  .orivion .intel-stats {
+    grid-template-columns: 1fr;
+  }
+}
+.orivion .intel-stats div {
+  background: var(--ink);
+  padding: 26px 24px;
+}
+.orivion .intel-stats b {
+  display: block;
+  font-weight: 300;
+  font-size: clamp(30px, 3vw, 44px);
+  letter-spacing: -0.02em;
+  background: linear-gradient(100deg, #fff, #c9d6ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .intel-stats span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7c8493;
+  display: block;
+  margin-top: 8px;
+}
+.orivion .console {
+  background: #12151b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.6);
+}
+.orivion .console .bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.orivion .console .bar i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2a2f38;
+}
+.orivion .console .bar i:first-child {
+  background: linear-gradient(135deg, var(--blue), var(--violet));
+}
+.orivion .console .bar em {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  color: #7c8493;
+  letter-spacing: 0.12em;
+  margin-left: auto;
+}
+.orivion .console .out {
+  padding: 22px 20px 26px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 2.15;
+  min-height: 290px;
+}
+.orivion .console .ln {
+  display: block;
+  white-space: pre-wrap;
+  color: #aeb6c4;
+}
+.orivion .console .ln.ok::before {
+  content: "✓ ";
+  color: #7ee2a8;
+}
+.orivion .console .ln.cmd {
+  color: #eef0f4;
+}
+.orivion .console .ln.cmd::before {
+  content: "➜ ";
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .console .ln.dim {
+  color: #5d6570;
+}
+.orivion .console .caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: var(--blue);
+  vertical-align: middle;
+  animation: o-blink 1s steps(1) infinite;
+  margin-left: 2px;
+}
+@keyframes o-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (max-width: 980px) {
+  .orivion .intel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- process ---------- */
+.orivion .proc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(18px, 2vw, 28px);
+  position: relative;
+}
+.orivion .proc-grid::before {
+  content: "";
+  position: absolute;
+  top: 31px;
+  left: 4%;
+  right: 4%;
+  height: 1px;
+  background: var(--line);
+}
+.orivion .proc {
+  position: relative;
+  padding-top: 70px;
+}
+.orivion .proc .dot {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  display: grid;
+  place-items: center;
+}
+.orivion .proc .dot::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--grad);
+  transform: scale(0);
+  transition: transform 0.5s var(--ease) 0.3s;
+}
+.orivion .proc.in .dot::after {
+  transform: scale(1);
+}
+.orivion .proc h3 {
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 26px);
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.orivion .proc p {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.7;
+  max-width: 280px;
+}
+@media (max-width: 860px) {
+  .orivion .proc-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .orivion .proc-grid::before {
+    display: none;
+  }
+}
+@media (max-width: 520px) {
+  .orivion .proc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- work ---------- */
+.orivion .work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 3vw, 40px);
+}
+.orivion .card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: #fff;
+  transition:
+    transform 0.6s var(--ease),
+    box-shadow 0.6s var(--ease);
+}
+.orivion .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 40px 80px -40px rgba(20, 30, 60, 0.25);
+}
+.orivion .card .thumb {
+  aspect-ratio: 16/10.5;
+  position: relative;
+  overflow: hidden;
+}
+.orivion .card .thumb i {
+  position: absolute;
+  inset: -20%;
+  transition: transform 1.2s var(--ease);
+}
+.orivion .card:hover .thumb i {
+  transform: scale(1.08) rotate(2deg);
+}
+.orivion .card.c1 .thumb i {
+  background: conic-gradient(from 200deg at 60% 40%, #e8efff, #d3e2ff, #e4d9ff, #ffe6d4, #e8efff);
+}
+.orivion .card.c2 .thumb i {
+  background: conic-gradient(from 20deg at 30% 70%, #e6f4ef, #d5ecf7, #e3ddff, #f6e3e9, #e6f4ef);
+}
+.orivion .card.c3 .thumb i {
+  background: conic-gradient(from 120deg at 70% 60%, #fff0e2, #ffe0e6, #e7deff, #dcecff, #fff0e2);
+}
+.orivion .card.c4 .thumb i {
+  background: conic-gradient(from 300deg at 40% 30%, #dfe9ff, #e8ddff, #ffe3d1, #e2f2ea, #dfe9ff);
+}
+.orivion .card .thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+.orivion .card .glyph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+.orivion .card .glyph b {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 4.6vw, 64px);
+  letter-spacing: -0.02em;
+  color: rgba(14, 17, 22, 0.82);
+}
+.orivion .card .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 24px;
+}
+.orivion .card .meta h3 {
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.orivion .card .meta span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 760px) {
+  .orivion .work-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- cta ---------- */
+.orivion .cta {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.orivion .cta h2 {
+  font-size: clamp(44px, 7.5vw, 110px);
+}
+.orivion .cta p {
+  color: var(--muted);
+  max-width: 440px;
+  margin: 28px auto 44px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.orivion .cta .orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(70vw, 680px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(110, 168, 255, 0.12),
+    rgba(154, 123, 255, 0.07) 45%,
+    transparent 65%
+  );
+  filter: blur(8px);
+  pointer-events: none;
+  animation: o-pulse 6s ease-in-out infinite;
+}
+@keyframes o-pulse {
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+.orivion .cta .wrap {
+  position: relative;
+  z-index: 1;
+}
+.orivion .magnet {
+  display: inline-block;
+  transition: transform 0.3s var(--ease);
+}
+
+/* ---------- footer ---------- */
+.orivion footer {
+  border-top: 1px solid var(--line);
+  padding: 60px clamp(20px, 4vw, 56px) 40px;
+}
+.orivion .foot-grid {
+  max-width: 1460px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.orivion .foot-grid .col span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 16px;
+}
+.orivion .foot-grid a {
+  display: block;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+.orivion .foot-grid a:hover {
+  color: var(--ink);
+}
+.orivion .foot-grid .mail {
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.orivion .foot-grid .mail:hover {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .foot-base {
+  max-width: 1460px;
+  margin: 56px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  padding-top: 26px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orivion *,
+  .orivion *::before,
+  .orivion *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   Site-wide additions — shared primitives for the inner pages
+   (navigation dropdown + mobile menu, page heroes, feature grids, prose,
+   tables, FAQ, forms, testimonials, footer brand, CTA panel, float button).
+   Everything stays scoped under .orivion.
+   ========================================================================== */
+
+/* ---------- nav: right cluster, dropdown, mobile ---------- */
+.orivion .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.orivion .nav-item {
+  position: relative;
+}
+.orivion .nav-item > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.orivion .nav-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.orivion .nav-item:hover .nav-menu {
+  opacity: 1;
+  visibility: visible;
+}
+.orivion .nav-menu .inner {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  min-width: 520px;
+  box-shadow: 0 30px 60px -30px rgba(20, 30, 60, 0.28);
+}
+.orivion .nav-menu a {
+  display: block;
+  padding: 11px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ink);
+}
+.orivion .nav-menu a::after {
+  display: none;
+}
+.orivion .nav-menu a:hover {
+  background: var(--bg2);
+}
+.orivion .nav-menu a b {
+  display: block;
+  font-weight: 500;
+  font-size: 13.5px;
+}
+.orivion .nav-menu a span {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.orivion .nav-col {
+  display: flex;
+  flex-direction: column;
+}
+.orivion .nav-col-head {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: 10px 14px 6px;
+}
+.orivion .o-burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--ink);
+  padding: 6px;
+  cursor: pointer;
+}
+@media (max-width: 1024px) {
+  .orivion nav .nav-links {
+    display: none;
+  }
+  .orivion .o-burger {
+    display: inline-flex;
+  }
+}
+.orivion .o-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(244, 245, 247, 0.98);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  padding: 96px clamp(24px, 7vw, 48px) 44px;
+  gap: 2px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.35s var(--ease);
+}
+.orivion .o-mobile.open {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.orivion .o-mobile a {
+  font-weight: 300;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.orivion .o-mobile .btn {
+  margin-top: 24px;
+  align-self: flex-start;
+}
+.orivion .o-mobile .mob-close {
+  position: absolute;
+  top: 24px;
+  right: clamp(20px, 4vw, 40px);
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 6px;
+}
+
+/* ---------- inner page hero ---------- */
+.orivion .o-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(128px, 17vh, 186px) clamp(20px, 4vw, 56px) clamp(54px, 7vw, 84px);
+}
+.orivion .o-hero .aura {
+  position: absolute;
+  top: -32%;
+  right: -8%;
+  width: 52%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(110, 168, 255, 0.2),
+    rgba(154, 123, 255, 0.1) 55%,
+    transparent 72%
+  );
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+}
+.orivion .o-hero > .wrap {
+  position: relative;
+  z-index: 1;
+}
+.orivion .o-hero h1 {
+  font-weight: 300;
+  font-size: clamp(40px, 6.2vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  max-width: 17ch;
+  margin-top: 10px;
+}
+.orivion .o-hero h1 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .o-hero .sub {
+  max-width: 600px;
+  margin-top: 26px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+.orivion .o-hero .actions {
+  margin-top: 34px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ---------- section modifiers ---------- */
+.orivion .o-alt {
+  background: var(--bg2);
+}
+.orivion .o-dark {
+  background: var(--ink);
+  color: #eef0f4;
+}
+.orivion .o-dark h2 {
+  color: #fff;
+}
+.orivion .o-dark .sec-tag,
+.orivion .o-dark .sec-note {
+  color: #8b93a1;
+}
+
+/* ---------- buttons: extra variants ---------- */
+.orivion .btn.fill {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.orivion .btn.fill::before {
+  background: #fff;
+}
+.orivion .btn.fill:hover {
+  color: var(--ink);
+}
+.orivion .btn.fillw {
+  background: #fff;
+  color: var(--ink);
+  border-color: #fff;
+}
+.orivion .btn.fillw::before {
+  background: var(--ink);
+}
+.orivion .btn.fillw:hover {
+  color: #fff;
+}
+
+/* ---------- feature grid + cards ---------- */
+.orivion .o-grid {
+  display: grid;
+  gap: clamp(16px, 2vw, 22px);
+}
+.orivion .o-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.orivion .o-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.orivion .o-grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+@media (max-width: 900px) {
+  .orivion .o-grid.cols-3,
+  .orivion .o-grid.cols-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .orivion .o-grid.cols-2,
+  .orivion .o-grid.cols-3,
+  .orivion .o-grid.cols-4 {
+    grid-template-columns: 1fr;
+  }
+}
+.orivion .o-feature {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+  padding: clamp(22px, 2.4vw, 30px);
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease),
+    border-color 0.4s;
+}
+.orivion .o-feature:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px -40px rgba(20, 30, 60, 0.25);
+  border-color: rgba(154, 123, 255, 0.4);
+}
+.orivion .o-feature .ic {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--bg2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+.orivion .o-feature h3 {
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+.orivion .o-feature p {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+.orivion .o-feature .link {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-family: var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--violet);
+  text-decoration: none;
+}
+.orivion a.o-feature {
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
+}
+.orivion .o-dark .o-feature {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.orivion .o-dark .o-feature p {
+  color: #9aa2b0;
+}
+.orivion .o-dark .o-feature .ic {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* ---------- check list ---------- */
+.orivion .o-checks {
+  display: grid;
+  gap: 13px;
+}
+.orivion .o-checks li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.orivion .o-checks li svg {
+  color: var(--violet);
+  flex: none;
+  margin-top: 2px;
+}
+.orivion .o-dark .o-checks li {
+  color: #c3cad6;
+}
+.orivion .o-dark .o-checks li svg {
+  color: var(--blue);
+}
+
+/* ---------- stats (light) ---------- */
+.orivion .o-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.orivion .o-stats > div {
+  background: var(--bg);
+  padding: 26px 22px;
+}
+.orivion .o-stats b {
+  display: block;
+  font-weight: 300;
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -0.02em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .o-stats span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+  display: block;
+}
+@media (max-width: 700px) {
+  .orivion .o-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- prose ---------- */
+.orivion .o-prose {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.orivion .o-prose > *:first-child {
+  margin-top: 0;
+}
+.orivion .o-prose h2 {
+  font-weight: 400;
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 38px 0 14px;
+}
+.orivion .o-prose h3 {
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--ink);
+  margin: 28px 0 12px;
+}
+.orivion .o-prose p {
+  margin-bottom: 18px;
+}
+.orivion .o-prose strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.orivion .o-prose ol,
+.orivion .o-prose ul {
+  margin: 0 0 18px 20px;
+  display: grid;
+  gap: 10px;
+}
+.orivion .o-prose a {
+  color: var(--violet);
+  text-decoration: underline;
+}
+.orivion .o-prose .o-source-list {
+  margin-left: 0;
+  list-style: none;
+}
+.orivion .o-source-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+}
+.orivion .o-source-list svg {
+  flex: none;
+}
+.orivion .o-lede {
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 720px;
+}
+.orivion .o-article-section {
+  padding: 0;
+  margin: 0;
+}
+
+/* ---------- tables ---------- */
+.orivion .o-tablewrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+}
+.orivion table.o-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+  font-size: 14.5px;
+}
+.orivion .o-table th {
+  text-align: left;
+  padding: 16px 18px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.orivion .o-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.orivion .o-table tr:last-child td {
+  border-bottom: none;
+}
+.orivion .o-table td.k,
+.orivion .o-table th.k {
+  font-weight: 500;
+  color: var(--ink);
+}
+.orivion .o-table a {
+  color: var(--violet);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ---------- FAQ ---------- */
+.orivion .o-faq {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+}
+.orivion .o-faq details {
+  border-bottom: 1px solid var(--line);
+}
+.orivion .o-faq details:last-child {
+  border-bottom: none;
+}
+.orivion .o-faq summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding: 22px 24px;
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 16px;
+}
+.orivion .o-faq summary::-webkit-details-marker {
+  display: none;
+}
+.orivion .o-faq summary .chev {
+  transition: transform 0.4s var(--ease);
+  color: var(--violet);
+  flex: none;
+}
+.orivion .o-faq details[open] summary .chev {
+  transform: rotate(180deg);
+}
+.orivion .o-faq .ans {
+  padding: 0 24px 24px;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.7;
+  max-width: 74ch;
+}
+
+/* ---------- forms ---------- */
+.orivion .o-form {
+  display: grid;
+  gap: 18px;
+}
+.orivion .o-2col {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 600px) {
+  .orivion .o-2col {
+    grid-template-columns: 1fr;
+  }
+}
+.orivion .o-field {
+  display: block;
+}
+.orivion .o-field > span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.orivion .o-input {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.orivion .o-input::placeholder {
+  color: var(--faint);
+}
+.orivion .o-input:focus {
+  outline: none;
+  border-color: var(--violet);
+  box-shadow: 0 0 0 3px rgba(154, 123, 255, 0.15);
+}
+.orivion textarea.o-input {
+  min-height: 120px;
+  resize: vertical;
+}
+.orivion select.o-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) 20px,
+    calc(100% - 15px) 20px;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+}
+.orivion .o-note {
+  font-size: 12.5px;
+  color: var(--faint);
+  line-height: 1.6;
+}
+.orivion .o-panel {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  padding: clamp(24px, 3vw, 36px);
+}
+
+/* ---------- blog / post cards ---------- */
+.orivion .o-post {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+  padding: 26px;
+  text-decoration: none;
+  color: var(--ink);
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease),
+    border-color 0.4s;
+}
+.orivion .o-post:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px -40px rgba(20, 30, 60, 0.25);
+  border-color: rgba(154, 123, 255, 0.4);
+}
+.orivion .o-post .cat {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet);
+}
+.orivion .o-post h3 {
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 14px 0 10px;
+}
+.orivion .o-post p {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  flex: 1;
+}
+.orivion .o-post .date {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- testimonials ---------- */
+.orivion .o-quote {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+  padding: 28px;
+}
+.orivion .o-quote .mk {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 52px;
+  line-height: 0.5;
+  height: 26px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .o-quote blockquote {
+  margin: 20px 0;
+  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.7;
+  flex: 1;
+}
+.orivion .o-quote .who {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.orivion .o-quote .who b {
+  font-weight: 500;
+}
+.orivion .o-quote .who span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ---------- CTA panel ---------- */
+.orivion .o-cta {
+  background: var(--ink);
+  color: #eef0f4;
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(50px, 7vw, 92px) clamp(24px, 5vw, 72px);
+  text-align: center;
+}
+.orivion .o-cta::before {
+  content: "";
+  position: absolute;
+  top: -42%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(110, 168, 255, 0.18),
+    rgba(154, 123, 255, 0.08) 55%,
+    transparent 70%
+  );
+  filter: blur(10px);
+}
+.orivion .o-cta .in {
+  position: relative;
+  z-index: 1;
+}
+.orivion .o-cta .sec-tag {
+  justify-content: center;
+  color: #8b93a1;
+}
+.orivion .o-cta h2 {
+  color: #fff;
+  font-weight: 300;
+  font-size: clamp(32px, 5vw, 62px);
+  letter-spacing: -0.025em;
+}
+.orivion .o-cta h2 em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.orivion .o-cta p {
+  color: #9aa2b0;
+  max-width: 520px;
+  margin: 20px auto 32px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.orivion .o-cta .actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- split (image / content) ---------- */
+.orivion .o-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(30px, 5vw, 72px);
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .orivion .o-split {
+    grid-template-columns: 1fr;
+  }
+}
+.orivion .o-split img {
+  width: 100%;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+}
+
+/* ---------- footer brand ---------- */
+.orivion .foot-brand {
+  max-width: 300px;
+}
+.orivion .foot-brand .brand {
+  margin-bottom: 16px;
+}
+.orivion .foot-brand p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+.orivion .foot-social {
+  display: flex;
+  gap: 10px;
+}
+.orivion .foot-social a {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  transition:
+    color 0.3s,
+    border-color 0.3s;
+  margin: 0;
+}
+.orivion .foot-social a:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.orivion .foot-contact {
+  display: grid;
+  gap: 12px;
+}
+.orivion .foot-contact li {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.orivion .foot-contact svg {
+  color: var(--faint);
+  flex: none;
+  margin-top: 2px;
+}
+
+/* ---------- floating WhatsApp ---------- */
+.orivion .o-wa {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45);
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s;
+}
+.orivion .o-wa:hover {
+  transform: translateY(-3px);
+}
+.orivion .o-wa:focus-visible {
+  outline: 3px solid var(--violet);
+  outline-offset: 3px;
+}
+@media (pointer: fine) {
+  .orivion .o-wa {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orivion .home-hero-video {
+    display: none;
+  }
+  .orivion .home-hero-scroll i::after,
+  .orivion .marquee .track,
+  .orivion .brand .mark::before,
+  .orivion::after {
+    animation: none;
+  }
+  .orivion h1 .l span,
+  .orivion .home-hero-sub,
+  .orivion .home-hero-actions {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* ---------- misc ---------- */
+.orivion .o-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.orivion .o-pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 7px 14px;
+  background: #fff;
+}
+.orivion .o-center {
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+}
