@@ -1,3 +1,4 @@
+# Post-optimization audit trigger: 2026-08-23
 name: Live Lighthouse audit
 
 on:
