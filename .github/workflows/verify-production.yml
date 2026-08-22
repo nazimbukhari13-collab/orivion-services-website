@@ -1,0 +1,38 @@
+name: Verify production build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/verify-production.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production application
+        run: npm run build
+
+      - name: Record successful verification
+        run: |
+          echo "Verified source commit: $GITHUB_SHA" > .build-verified
+          git config user.name "orivion-automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add .build-verified
+          git commit -m "chore: verify production build"
+          git push
