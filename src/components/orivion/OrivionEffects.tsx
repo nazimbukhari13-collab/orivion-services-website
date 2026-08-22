@@ -45,7 +45,7 @@ export function OrivionEffects() {
     // custom cursor
     const dot = root.querySelector<HTMLElement>(".cur-dot");
     const ring = root.querySelector<HTMLElement>(".cur-ring");
-    if (dot && ring) {
+    if (dot && ring && window.matchMedia("(pointer: fine)").matches) {
       // Hide the native cursor only after the replacement cursor is ready.
       root.classList.add("cursor-hidden");
       cleanups.push(() => root.classList.remove("cursor-hidden"));

@@ -42,7 +42,21 @@ export const Route = createFileRoute("/")({
         content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
       },
     ],
-    links: [{ rel: "canonical", href: "https://orivion.ae/" }],
+    links: [
+      { rel: "canonical", href: "https://orivion.ae/" },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/media/orivion-hero-mobile-poster.webp",
+        media: "(max-width: 760px)",
+      },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/media/orivion-hero-desktop-poster.webp",
+        media: "(min-width: 761px)",
+      },
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -121,14 +135,36 @@ const steps = [
 // null during SSR / first paint, when the CSS poster background is shown instead.
 function useHeroVideoVariant() {
   const [variant, setVariant] = useState<"desktop" | "mobile" | null>(null);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    if (connection?.saveData || /(?:^|-)2g$/i.test(connection?.effectiveType || "")) return;
+
     const mq = window.matchMedia("(max-width: 760px)");
+    let timer = 0;
+
     const apply = () => setVariant(mq.matches ? "mobile" : "desktop");
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
+    const schedule = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(apply, 1200);
+    };
+    const onViewportChange = () => setVariant(mq.matches ? "mobile" : "desktop");
+
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    mq.addEventListener("change", onViewportChange);
+
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("load", schedule);
+      mq.removeEventListener("change", onViewportChange);
+    };
   }, []);
+
   return variant;
 }
 
@@ -160,7 +196,7 @@ function Home() {
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
               poster="/media/orivion-hero-desktop-poster.webp"
               tabIndex={-1}
             >
@@ -175,7 +211,7 @@ function Home() {
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="none"
               poster="/media/orivion-hero-mobile-poster.webp"
               tabIndex={-1}
             >

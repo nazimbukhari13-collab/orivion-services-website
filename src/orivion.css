@@ -11,16 +11,16 @@
   --bg: #f4f5f7;
   --bg2: #eceef1;
   --ink: #0e1116;
-  --muted: #6f7681;
-  --faint: #a7adb6;
+  --muted: #5f6670;
+  --faint: #656c77;
   --line: #e0e3e8;
   --blue: #6ea8ff;
   --violet: #9a7bff;
   --peach: #ff9d5c;
   --grad: linear-gradient(100deg, var(--blue), var(--violet) 50%, var(--peach));
-  --sans: "Space Grotesk", sans-serif;
+  --sans: "Space Grotesk Variable", "Space Grotesk", sans-serif;
   --serif: "Instrument Serif", serif;
-  --mono: "JetBrains Mono", monospace;
+  --mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   background: var(--bg);
@@ -2837,6 +2837,18 @@
   .orivion .home-hero-actions,
   .orivion h1 .l span {
     opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
+/* ---------- mobile rendering budget ---------- */
+@media (max-width: 760px), (pointer: coarse) {
+  .orivion::after {
+    animation: none;
+    opacity: 0.035;
+  }
+  .orivion .magnet {
     transform: none !important;
   }
 }

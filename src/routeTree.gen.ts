@@ -28,6 +28,7 @@ import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as JurisdictionsSlugRouteImport } from './routes/jurisdictions.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as ApiContactRouteImport } from './routes/api.contact'
 
 const WhyDubaiRoute = WhyDubaiRouteImport.update({
   id: '/why-dubai',
@@ -124,6 +125,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
+const ApiContactRoute = ApiContactRouteImport.update({
+  id: '/api/contact',
+  path: '/api/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/why-dubai': typeof WhyDubaiRoute
+  '/api/contact': typeof ApiContactRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/jurisdictions/$slug': typeof JurisdictionsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -157,6 +164,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/why-dubai': typeof WhyDubaiRoute
+  '/api/contact': typeof ApiContactRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/jurisdictions/$slug': typeof JurisdictionsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -179,6 +187,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/why-dubai': typeof WhyDubaiRoute
+  '/api/contact': typeof ApiContactRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/jurisdictions/$slug': typeof JurisdictionsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -202,6 +211,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/why-dubai'
+    | '/api/contact'
     | '/blog/$slug'
     | '/jurisdictions/$slug'
     | '/services/$slug'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/why-dubai'
+    | '/api/contact'
     | '/blog/$slug'
     | '/jurisdictions/$slug'
     | '/services/$slug'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/why-dubai'
+    | '/api/contact'
     | '/blog/$slug'
     | '/jurisdictions/$slug'
     | '/services/$slug'
@@ -263,6 +275,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   WhyDubaiRoute: typeof WhyDubaiRoute
+  ApiContactRoute: typeof ApiContactRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -400,6 +413,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/api/contact': {
+      id: '/api/contact'
+      path: '/api/contact'
+      fullPath: '/api/contact'
+      preLoaderRoute: typeof ApiContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -457,6 +477,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   WhyDubaiRoute: WhyDubaiRoute,
+  ApiContactRoute: ApiContactRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
