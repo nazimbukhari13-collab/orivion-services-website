@@ -1,4 +1,4 @@
-# Verify rebuilt production assets after source-triggered deploy
+# Recheck deployed performance build after source-triggered deploy
 name: Check live production version
 
 on:
