@@ -51,9 +51,14 @@ export function ConsultationFormSecure({ compact = false }: { compact?: boolean 
         throw new Error(result.error || "We could not send your enquiry. Please try again.");
       }
 
+      const selectedService = String(data.get("service") || "Not specified");
+      trackEvent("generate_lead", {
+        page_path: window.location.pathname,
+        service: selectedService,
+      });
       trackEvent("enquiry_form_success", {
         page_path: window.location.pathname,
-        service: String(data.get("service") || "Not specified"),
+        service: selectedService,
       });
       toast.success("Thanks! Your enquiry has been sent.");
       form.reset();
