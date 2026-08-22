@@ -11,16 +11,20 @@ export const Route = createFileRoute("/blog/$slug")({
     return { post };
   },
   head: ({ loaderData }) => {
-    const url = `https://orivion.ae/blog/${loaderData?.post.slug ?? ""}`;
+    const slug = loaderData?.post.slug ?? "";
+    const url = `https://orivion.ae/blog/${slug}`;
+    const image = `https://orivion.ae/media/insights/${slug}.jpg`;
     return {
       meta: [
-        { title: `${loaderData?.post.title ?? ""} — Orivion` },
+        { title: `${loaderData?.post.title ?? ""} | Orivion` },
         { name: "description", content: loaderData?.post.excerpt ?? "" },
         { property: "og:title", content: loaderData?.post.title ?? "" },
         { property: "og:description", content: loaderData?.post.excerpt ?? "" },
         { property: "og:type", content: "article" },
         { property: "og:url", content: url },
+        { property: "og:image", content: image },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: loaderData
@@ -29,14 +33,36 @@ export const Route = createFileRoute("/blog/$slug")({
               type: "application/ld+json",
               children: JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "Article",
-                headline: loaderData.post.title,
-                datePublished: loaderData.post.date,
-                articleSection: loaderData.post.category,
-                description: loaderData.post.excerpt,
-                mainEntityOfPage: url,
-                author: { "@type": "Organization", name: "Orivion", url: "https://orivion.ae/" },
-                publisher: { "@id": "https://orivion.ae/#organization" },
+                "@graph": [
+                  {
+                    "@type": "Article",
+                    headline: loaderData.post.title,
+                    datePublished: loaderData.post.date,
+                    articleSection: loaderData.post.category,
+                    description: loaderData.post.excerpt,
+                    image,
+                    mainEntityOfPage: url,
+                    author: {
+                      "@type": "Organization",
+                      name: "Orivion",
+                      url: "https://orivion.ae/",
+                    },
+                    publisher: { "@id": "https://orivion.ae/#organization" },
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    itemListElement: [
+                      { "@type": "ListItem", position: 1, name: "Home", item: "https://orivion.ae/" },
+                      {
+                        "@type": "ListItem",
+                        position: 2,
+                        name: "Insights",
+                        item: "https://orivion.ae/blog",
+                      },
+                      { "@type": "ListItem", position: 3, name: loaderData.post.title, item: url },
+                    ],
+                  },
+                ],
               }),
             },
           ]

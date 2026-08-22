@@ -80,22 +80,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Orivion — Business Setup & Digital Technology Services" },
+      { title: "Orivion | Business Setup and Digital Services in Dubai" },
       {
         name: "description",
         content:
           "UAE business setup, websites, custom software, CRM automation, digital marketing, social media and AI integration.",
       },
       { name: "author", content: "Orivion" },
-      { property: "og:title", content: "Orivion — Business Setup & Digital Technology Services" },
+      { property: "og:title", content: "Orivion | Business Setup and Digital Technology in Dubai" },
       {
         property: "og:description",
         content:
-          "Business setup and digital technology services through one connected team in Dubai.",
+          "Company formation, licensing, visas and digital services in Dubai, from one connected team.",
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: siteConfig.name },
+      { property: "og:image", content: `${siteConfig.url}/media/orivion-og.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Orivion business setup and digital technology in Dubai" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `${siteConfig.url}/media/orivion-og.jpg` },
       {
         name: "robots",
         content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",

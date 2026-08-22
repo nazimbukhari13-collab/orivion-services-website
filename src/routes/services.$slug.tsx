@@ -1,6 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { CheckCircle2, ArrowRight, ExternalLink, ChevronDown } from "lucide-react";
-import { services, siteConfig } from "@/lib/site-data";
+import { services, siteConfig, serviceSeo } from "@/lib/site-data";
 import { serviceDetails } from "@/lib/service-details";
 import { CTASection, OButton } from "@/components/orivion/ui";
 
@@ -14,17 +14,23 @@ export const Route = createFileRoute("/services/$slug")({
     const title = loaderData?.title ?? "Service";
     const slug = loaderData?.slug ?? "";
     const url = `${siteConfig.url}/services/${slug}`;
+    const seo = serviceSeo[slug];
+    const pageTitle = seo?.title ?? `${title} | Orivion`;
+    const description = seo?.description ?? loaderData?.summary ?? "";
+    const image = `${siteConfig.url}/media/services/${slug}.jpg`;
     return {
       meta: [
-        { title: `${title} — Orivion` },
-        { name: "description", content: loaderData?.summary ?? "" },
-        { property: "og:title", content: `${title} — Orivion` },
-        { property: "og:description", content: loaderData?.summary ?? "" },
+        { title: pageTitle },
+        { name: "description", content: description },
+        { property: "og:title", content: pageTitle },
+        { property: "og:description", content: description },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
+        { property: "og:image", content: image },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: `${title} — Orivion` },
-        { name: "twitter:description", content: loaderData?.summary ?? "" },
+        { name: "twitter:image", content: image },
+        { name: "twitter:title", content: pageTitle },
+        { name: "twitter:description", content: description },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: loaderData

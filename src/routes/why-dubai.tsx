@@ -13,7 +13,7 @@ import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion
 export const Route = createFileRoute("/why-dubai")({
   head: () => ({
     meta: [
-      { title: "Why Dubai — A hub for international business | Orivion" },
+      { title: "Why Set Up a Business in Dubai | Orivion" },
       {
         name: "description",
         content:

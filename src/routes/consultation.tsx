@@ -6,7 +6,7 @@ import { PageHero } from "@/components/orivion/ui";
 export const Route = createFileRoute("/consultation")({
   head: () => ({
     meta: [
-      { title: "Start a Conversation — Orivion" },
+      { title: "Book a Free Consultation | Orivion Dubai" },
       {
         name: "description",
         content:

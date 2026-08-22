@@ -6,7 +6,7 @@ import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion
 export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
-      { title: "Business Setup, Digital & Technology Services — Orivion" },
+      { title: "Business Setup and Digital Services in Dubai | Orivion" },
       {
         name: "description",
         content:

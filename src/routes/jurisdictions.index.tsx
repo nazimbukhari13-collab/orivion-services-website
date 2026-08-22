@@ -6,7 +6,7 @@ import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion
 export const Route = createFileRoute("/jurisdictions/")({
   head: () => ({
     meta: [
-      { title: "UAE Jurisdictions: Mainland, Free Zone & Offshore — Orivion" },
+      { title: "Mainland, Free Zone and Offshore in the UAE | Orivion" },
       {
         name: "description",
         content:

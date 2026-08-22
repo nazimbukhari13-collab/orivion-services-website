@@ -11,8 +11,10 @@ export const Route = createFileRoute("/jurisdictions/$slug")({
     return { j };
   },
   head: ({ loaderData }) => {
-    const url = `https://orivion.ae/jurisdictions/${loaderData?.j.slug ?? ""}`;
-    const title = `${loaderData?.j.title ?? ""} company setup in the UAE — Orivion`;
+    const slug = loaderData?.j.slug ?? "";
+    const url = `https://orivion.ae/jurisdictions/${slug}`;
+    const title = `${loaderData?.j.title ?? ""} Company Setup in the UAE | Orivion`;
+    const image = `https://orivion.ae/media/jurisdictions/${slug}.jpg`;
     return {
       meta: [
         { title },
@@ -20,6 +22,9 @@ export const Route = createFileRoute("/jurisdictions/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: loaderData?.j.short ?? "" },
         { property: "og:url", content: url },
+        { property: "og:image", content: image },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: loaderData

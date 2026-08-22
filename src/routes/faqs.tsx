@@ -8,7 +8,7 @@ export const Route = createFileRoute("/faqs")({
     const items = faqs.flatMap((c) => c.items);
     return {
       meta: [
-        { title: "FAQs — UAE Business Setup & Digital Technology | Orivion" },
+        { title: "UAE Business Setup and Digital FAQs | Orivion" },
         {
           name: "description",
           content:

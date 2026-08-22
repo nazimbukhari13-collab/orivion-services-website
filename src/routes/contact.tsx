@@ -7,15 +7,61 @@ import { PageHero } from "@/components/orivion/ui";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact Orivion — Business Setup & Digital Technology" },
+      { title: "Contact Orivion | Business Setup in Dubai" },
       {
         name: "description",
         content:
-          "Talk to Orivion about web design, software, marketing, social media or UAE corporate services.",
+          "Contact Orivion in Dubai for company formation, licensing, visas, accounting, websites, software and marketing. Call, email or WhatsApp.",
       },
+      { property: "og:title", content: "Contact Orivion | Business Setup in Dubai" },
       { property: "og:url", content: "https://orivion.ae/contact" },
     ],
     links: [{ rel: "canonical", href: "https://orivion.ae/contact" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "ProfessionalService",
+              "@id": `${siteConfig.url}/#localbusiness`,
+              name: "Orivion",
+              url: `${siteConfig.url}/`,
+              email: siteConfig.email,
+              telephone: siteConfig.phone,
+              image: `${siteConfig.url}/media/orivion-og.jpg`,
+              priceRange: "$$",
+              areaServed: "AE",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba",
+                addressLocality: "Dubai",
+                addressRegion: "Dubai",
+                addressCountry: "AE",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 25.1571,
+                longitude: 55.3021,
+              },
+            },
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: `${siteConfig.url}/` },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Contact",
+                  item: `${siteConfig.url}/contact`,
+                },
+              ],
+            },
+          ],
+        }),
+      },
+    ],
   }),
   component: Page,
 });

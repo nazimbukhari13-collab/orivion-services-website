@@ -26,7 +26,7 @@ export const siteConfig = {
   phone: "+971 55 516 6383",
   phoneHref: "tel:+971555166383",
   whatsappUrl: "https://wa.me/971555166383",
-  address: "Dubai, UAE",
+  address: "Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba, Dubai, UAE",
 };
 
 export const services = [
@@ -384,3 +384,78 @@ export const blogPosts = [
     category: "Tax",
   },
 ];
+
+// SEO overrides per service: keyword-tuned <title> and a trimmed meta description
+// (kept under ~155 chars, plain wording). Falls back to the service summary when absent.
+export const serviceSeo: Record<string, { title: string; description: string }> = {
+  "company-formation": {
+    title: "Company Formation in Dubai and the UAE | Orivion",
+    description:
+      "Set up a Mainland, Free Zone or Offshore company in the UAE, with the right structure chosen for your activity, owners and plans.",
+  },
+  "trade-licensing": {
+    title: "Trade Licensing in the UAE | Orivion",
+    description:
+      "New trade licences, renewals, activity changes and amendments across the relevant UAE authorities, matched to how your business trades.",
+  },
+  "pro-services": {
+    title: "PRO Services and Visas in Dubai | Orivion",
+    description:
+      "Visa processing and government paperwork in the UAE for companies, investors, employees and their families, handled from start to finish.",
+  },
+  compliance: {
+    title: "UAE Compliance and Corporate Tax | Orivion",
+    description:
+      "Corporate Tax registration, UBO records, AML and licence renewals kept on schedule so your UAE company stays in good standing.",
+  },
+  "accounting-tax": {
+    title: "Accounting and Tax Services in the UAE | Orivion",
+    description:
+      "Bookkeeping, VAT and Corporate Tax for UAE businesses, with clean records and every filing deadline met.",
+  },
+  banking: {
+    title: "UAE Business Bank Account Support | Orivion",
+    description:
+      "Help opening a UAE business bank account, with a clear application, full documentation and KYC ready for review.",
+  },
+  "office-solutions": {
+    title: "Office Space and Flexi Desk in Dubai | Orivion",
+    description:
+      "A registered office, flexi desk or physical workspace in the UAE that meets your licence and visa requirements.",
+  },
+  additional: {
+    title: "Corporate Support Services in the UAE | Orivion",
+    description:
+      "Company amendments, document attestation, restructuring and closures in the UAE, coordinated end to end.",
+  },
+  websites: {
+    title: "Website Design and Development in Dubai | Orivion",
+    description:
+      "Websites, portals and platforms that load fast, rank well and stay easy for your team to update.",
+  },
+  "custom-software": {
+    title: "Custom Software Development in Dubai | Orivion",
+    description:
+      "Custom applications, portals and internal tools built around how your business actually works.",
+  },
+  "crm-automation": {
+    title: "CRM and Automation Services in Dubai | Orivion",
+    description:
+      "CRM setup and workflow automation that cut repetitive work and give your team a clear view of every customer.",
+  },
+  "digital-marketing": {
+    title: "Digital Marketing Services in Dubai | Orivion",
+    description:
+      "Search, paid media and lifecycle campaigns measured against real leads and sales, not vanity metrics.",
+  },
+  "social-media": {
+    title: "Social Media Management in Dubai | Orivion",
+    description:
+      "Social media strategy, content and channel management that build a presence your audience trusts.",
+  },
+  "ai-integration": {
+    title: "AI Integration Services in Dubai | Orivion",
+    description:
+      "Practical AI assistants and document automation built into the tools your team already uses.",
+  },
+};

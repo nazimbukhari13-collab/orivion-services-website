@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2, Compass, FileSignature, Rocket, LifeBuoy } from "lucide-react";
 import {
@@ -13,22 +14,24 @@ import { OButton } from "@/components/orivion/ui";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Orivion — Business Setup & Digital Technology Services" },
+      { title: "Business Setup in Dubai and Digital Technology | Orivion" },
       {
         name: "description",
         content:
-          "UAE company formation and business setup, websites, custom software, CRM automation, digital marketing, social media and AI integration.",
+          "Company formation, trade licensing, visas, accounting and tax in the UAE, plus websites, software, marketing and AI, from one team in Dubai.",
       },
-      { property: "og:title", content: "Orivion — Business Setup & Digital Technology" },
+      { property: "og:title", content: "Business Setup in Dubai and Digital Technology | Orivion" },
       {
         property: "og:description",
         content:
-          "Business setup and digital technology services through one connected team in Dubai.",
+          "Company formation, licensing, visas and digital services in Dubai, from one connected team.",
       },
       { property: "og:url", content: "https://orivion.ae/" },
       { property: "og:site_name", content: "Orivion" },
+      { property: "og:image", content: "https://orivion.ae/media/orivion-og.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Orivion — Business Setup & Digital Technology" },
+      { name: "twitter:image", content: "https://orivion.ae/media/orivion-og.jpg" },
+      { name: "twitter:title", content: "Business Setup in Dubai and Digital Technology | Orivion" },
       {
         name: "twitter:description",
         content:
@@ -117,6 +120,22 @@ const steps = [
   },
 ];
 
+// Pick a single hero video for the current viewport so only one file is fetched
+// (not both), and skip video entirely when reduced motion is requested. Returns
+// null during SSR / first paint, when the CSS poster background is shown instead.
+function useHeroVideoVariant() {
+  const [variant, setVariant] = useState<"desktop" | "mobile" | null>(null);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const mq = window.matchMedia("(max-width: 760px)");
+    const apply = () => setVariant(mq.matches ? "mobile" : "desktop");
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+  return variant;
+}
+
 const marqueeItems = [
   "Company Formation",
   "Trade Licensing",
@@ -131,35 +150,42 @@ const marqueeItems = [
 ];
 
 function Home() {
+  const heroVideo = useHeroVideoVariant();
   return (
     <>
       {/* HERO */}
       <header className="home-hero">
         <div className="home-hero-media" aria-hidden="true">
-          <video
-            className="home-hero-video home-hero-video--desktop"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster="/media/orivion-hero-desktop-poster.webp"
-            tabIndex={-1}
-          >
-            <source src="/media/orivion-hero-desktop.mp4" type="video/mp4" />
-          </video>
-          <video
-            className="home-hero-video home-hero-video--mobile"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster="/media/orivion-hero-mobile-poster.webp"
-            tabIndex={-1}
-          >
-            <source src="/media/orivion-hero-mobile.mp4" type="video/mp4" />
-          </video>
+          {heroVideo === "desktop" && (
+            <video
+              key="desktop"
+              className="home-hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/media/orivion-hero-desktop-poster.webp"
+              tabIndex={-1}
+            >
+              <source src="/media/orivion-hero-desktop.mp4" type="video/mp4" />
+            </video>
+          )}
+          {heroVideo === "mobile" && (
+            <video
+              key="mobile"
+              className="home-hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/media/orivion-hero-mobile-poster.webp"
+              tabIndex={-1}
+            >
+              <source src="/media/orivion-hero-mobile.mp4" type="video/mp4" />
+            </video>
+          )}
           <div className="home-hero-scrim" />
         </div>
 
