@@ -1,3 +1,4 @@
+// Analytics is consent-gated and attribution remains first-party until submission.
 export type Attribution = {
   landingPage: string;
   referrer: string;
