@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { MapPin, Mail, MessageCircle, Phone } from "lucide-react";
+import { Linkedin, MapPin, Mail, MessageCircle, Phone } from "lucide-react";
 import { siteConfig, services } from "@/lib/site-data";
 
 export function Footer() {
@@ -15,6 +15,17 @@ export function Footer() {
             Business setup and digital technology services for companies that want fewer handoffs
             and clearer ownership.
           </p>
+          <div className="foot-social">
+            <a
+              href={siteConfig.linkedinUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="Orivion on LinkedIn"
+              title="Orivion on LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
 
         <div className="col">
@@ -66,7 +77,7 @@ export function Footer() {
             </li>
             <li>
               <MessageCircle className="h-4 w-4" />
-              <a href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">
+              <a href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer noopener">
                 WhatsApp
               </a>
             </li>
