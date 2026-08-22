@@ -1,0 +1,42 @@
+name: Check live production version
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/check-live-version.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect live response
+        run: |
+          curl --fail --location --max-time 30 https://orivion.ae/ -o /tmp/orivion.html
+          {
+            echo "Checked: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            if grep -q "fonts.googleapis.com" /tmp/orivion.html; then
+              echo "GoogleFonts: present"
+            else
+              echo "GoogleFonts: absent"
+            fi
+            echo "Assets:"
+            grep -oE '/assets/[A-Za-z0-9._-]+\.(js|css)' /tmp/orivion.html | sort -u || true
+            echo "Mobile video headers:"
+            curl -sI https://orivion.ae/media/orivion-hero-mobile.mp4 | grep -Ei '^(cache-control|content-length|etag|cf-cache-status):' || true
+            echo "Desktop video headers:"
+            curl -sI https://orivion.ae/media/orivion-hero-desktop.mp4 | grep -Ei '^(cache-control|content-length|etag|cf-cache-status):' || true
+          } > live-version-check.txt
+          cat live-version-check.txt
+      - name: Commit check
+        run: |
+          git config user.name "orivion-live-check"
+          git config user.email "actions@users.noreply.github.com"
+          git add live-version-check.txt
+          git commit -m "chore: record live production version" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
