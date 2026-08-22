@@ -49,7 +49,7 @@ function About() {
     <>
       <PageHero
         eyebrow="Our firm"
-        image="/media/pages/about.jpg"
+        image="/media/pages/about.webp"
         title={
           <>
             One connected team for <em>what comes next.</em>

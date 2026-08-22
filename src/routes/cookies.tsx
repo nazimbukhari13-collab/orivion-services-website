@@ -13,7 +13,7 @@ export const Route = createFileRoute("/cookies")({
     <>
       <PageHero
         eyebrow="Legal"
-        image="/media/pages/cookies.jpg"
+        image="/media/pages/cookies.webp"
         title="Cookie Policy"
         sub="What browser technologies this site uses and why."
       />

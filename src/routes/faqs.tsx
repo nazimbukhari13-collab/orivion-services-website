@@ -43,7 +43,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="FAQs"
-        image="/media/pages/faqs.jpg"
+        image="/media/pages/faqs.webp"
         title={
           <>
             The questions our clients <em>ask most.</em>

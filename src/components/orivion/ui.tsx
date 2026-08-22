@@ -67,7 +67,14 @@ export function PageHero({
     <section className={image ? "o-hero o-hero--media" : "o-hero"}>
       {image ? (
         <div className="o-hero-bg" aria-hidden="true">
-          <img src={image} alt={imageAlt} loading="eager" fetchPriority="high" />
+          <img
+            src={image}
+            alt={imageAlt}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            sizes="100vw"
+          />
           <div className="o-hero-veil" />
         </div>
       ) : (

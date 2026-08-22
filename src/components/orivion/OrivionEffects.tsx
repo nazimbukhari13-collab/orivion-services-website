@@ -16,13 +16,27 @@ export function OrivionEffects() {
     if (!root) return;
     const cleanups: Array<() => void> = [];
 
-    // preloader
+    // Keep the brand loader brief, show it once per session, and never rely on it
+    // to make the page usable. CSS also contains a no-JS fallback timeout.
     const loader = root.querySelector<HTMLElement>("#loader");
     if (loader) {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let seen = false;
+      try {
+        seen = window.sessionStorage.getItem("orivion-loader-seen") === "1";
+      } catch {
+        // Storage may be unavailable in privacy-restricted browser modes.
+      }
+      const delay = reducedMotion || seen ? 0 : 420;
       const t = window.setTimeout(() => {
         loader.classList.add("done");
         root.classList.add("loaded");
-      }, 1150);
+        try {
+          window.sessionStorage.setItem("orivion-loader-seen", "1");
+        } catch {
+          // Ignore storage failures.
+        }
+      }, delay);
       cleanups.push(() => window.clearTimeout(t));
     } else {
       root.classList.add("loaded");
@@ -32,6 +46,9 @@ export function OrivionEffects() {
     const dot = root.querySelector<HTMLElement>(".cur-dot");
     const ring = root.querySelector<HTMLElement>(".cur-ring");
     if (dot && ring) {
+      // Hide the native cursor only after the replacement cursor is ready.
+      root.classList.add("cursor-hidden");
+      cleanups.push(() => root.classList.remove("cursor-hidden"));
       let mx = window.innerWidth / 2,
         my = window.innerHeight / 2,
         rx = mx,

@@ -85,7 +85,7 @@ function Page() {
       <section className="o-hero o-hero--media">
         <div className="o-hero-bg" aria-hidden="true">
           <img
-            src={`/media/insights/${post.slug}.jpg`}
+            src={`/media/insights/${post.slug}.webp`}
             alt=""
             loading="eager"
             fetchPriority="high"

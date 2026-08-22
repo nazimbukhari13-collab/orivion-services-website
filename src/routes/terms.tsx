@@ -13,7 +13,7 @@ export const Route = createFileRoute("/terms")({
     <>
       <PageHero
         eyebrow="Legal"
-        image="/media/pages/terms.jpg"
+        image="/media/pages/terms.webp"
         title="Terms & Conditions"
         sub="The terms under which we provide our services."
       />

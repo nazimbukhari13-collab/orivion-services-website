@@ -2737,3 +2737,106 @@
   max-width: 640px;
   margin-inline: auto;
 }
+
+
+/* ---------- production hardening ---------- */
+.orivion #loader {
+  pointer-events: none;
+  animation: o-loader-fallback 0.25s ease 0.75s forwards;
+}
+.orivion #loader.done {
+  animation: none;
+}
+@keyframes o-loader-fallback {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.orivion .o-consent {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10020;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 20px 60px rgba(14, 17, 22, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.orivion .o-consent strong {
+  display: block;
+  margin-bottom: 5px;
+}
+.orivion .o-consent p {
+  margin: 0;
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.orivion .o-consent-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.orivion .o-consent-actions .btn {
+  white-space: nowrap;
+}
+.orivion .o-turnstile {
+  width: min(100%, 420px);
+  min-height: 65px;
+}
+.orivion .o-note a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .orivion .o-consent {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .orivion .o-consent-actions {
+    flex-wrap: wrap;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orivion,
+  .orivion * {
+    scroll-behavior: auto !important;
+  }
+  .orivion *,
+  .orivion *::before,
+  .orivion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .orivion #loader,
+  .orivion .cur-dot,
+  .orivion .cur-ring {
+    display: none !important;
+  }
+  .orivion.cursor-hidden,
+  .orivion.cursor-hidden a,
+  .orivion.cursor-hidden button {
+    cursor: auto !important;
+  }
+  .orivion .rv,
+  .orivion .proc,
+  .orivion .home-hero-sub,
+  .orivion .home-hero-actions,
+  .orivion h1 .l span {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

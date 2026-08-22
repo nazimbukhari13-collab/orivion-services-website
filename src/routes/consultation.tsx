@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2 } from "lucide-react";
-import { ConsultationForm } from "@/components/site/ConsultationForm";
+import { ConsultationFormSecure as ConsultationForm } from "@/components/site/ConsultationFormSecure";
 import { PageHero } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/consultation")({
@@ -31,7 +31,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Start a conversation"
-        image="/media/pages/consultation.jpg"
+        image="/media/pages/consultation.webp"
         title={
           <>
             Tell us what needs to <em>move forward.</em>

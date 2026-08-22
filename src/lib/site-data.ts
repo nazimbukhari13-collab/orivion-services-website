@@ -26,6 +26,7 @@ export const siteConfig = {
   phone: "+971 55 516 6383",
   phoneHref: "tel:+971555166383",
   whatsappUrl: "https://wa.me/971555166383",
+  linkedinUrl: "https://www.linkedin.com/company/144521943/",
   address: "Meydan Grandstand, 6th Floor, Meydan Road, Nad Al Sheba, Dubai, UAE",
 };
 

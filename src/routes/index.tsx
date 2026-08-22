@@ -8,7 +8,7 @@ import {
   SERVICE_CATEGORIES,
   siteConfig,
 } from "@/lib/site-data";
-import { ConsultationForm } from "@/components/site/ConsultationForm";
+import { ConsultationFormSecure as ConsultationForm } from "@/components/site/ConsultationFormSecure";
 import { OButton } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/")({
@@ -54,6 +54,8 @@ export const Route = createFileRoute("/")({
               "@id": "https://orivion.ae/#organization",
               name: "Orivion",
               url: "https://orivion.ae/",
+              logo: `${siteConfig.url}/favicon.svg`,
+              sameAs: [siteConfig.linkedinUrl],
               email: siteConfig.email,
               telephone: siteConfig.phone,
               description: "Business setup and digital technology services in Dubai.",
@@ -83,12 +85,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Home,
 });
-
-const stats = [
-  { n: "14", suf: "", l: "Defined services" },
-  { n: "2", suf: "", l: "Service tracks" },
-  { n: "1", suf: "", l: "Accountable team" },
-];
 
 const usps = [
   "One brief across business and digital work",
@@ -164,7 +160,7 @@ function Home() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster="/media/orivion-hero-desktop-poster.webp"
               tabIndex={-1}
             >
@@ -179,7 +175,7 @@ function Home() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster="/media/orivion-hero-mobile-poster.webp"
               tabIndex={-1}
             >
@@ -319,16 +315,6 @@ function Home() {
                 system today and marketing support next quarter. Orivion gives each discipline
                 proper attention while keeping the wider picture connected.
               </p>
-              <div className="intel-stats">
-                {stats.map((s) => (
-                  <div key={s.l}>
-                    <b data-count={s.n} data-suffix={s.suf}>
-                      0
-                    </b>
-                    <span>{s.l}</span>
-                  </div>
-                ))}
-              </div>
             </div>
             <div className="rv">
               <div className="o-feature">

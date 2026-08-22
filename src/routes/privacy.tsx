@@ -17,7 +17,7 @@ export const Route = createFileRoute("/privacy")({
     <>
       <PageHero
         eyebrow="Legal"
-        image="/media/pages/privacy.jpg"
+        image="/media/pages/privacy.webp"
         title="Privacy Policy"
         sub="How we collect, use and protect your information."
       />

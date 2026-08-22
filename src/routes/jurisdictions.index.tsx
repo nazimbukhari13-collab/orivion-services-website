@@ -54,7 +54,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Jurisdictions"
-        image="/media/pages/jurisdictions.jpg"
+        image="/media/pages/jurisdictions.webp"
         title={
           <>
             Mainland, Free Zone or Offshore: the <em>right structure</em> matters.

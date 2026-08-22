@@ -44,7 +44,7 @@ function ServicesIndex() {
     <>
       <PageHero
         eyebrow="Services"
-        image="/media/pages/services.jpg"
+        image="/media/pages/services.webp"
         title={
           <>
             Business setup and <em>digital technology.</em>

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-data";
-import { ConsultationForm } from "@/components/site/ConsultationForm";
+import { ConsultationFormSecure as ConsultationForm } from "@/components/site/ConsultationFormSecure";
 import { PageHero } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/contact")({
@@ -71,7 +71,7 @@ function Page() {
     <>
       <PageHero
         eyebrow="Contact"
-        image="/media/pages/contact.jpg"
+        image="/media/pages/contact.webp"
         title={
           <>
             Let's talk about what needs to <em>move forward.</em>
