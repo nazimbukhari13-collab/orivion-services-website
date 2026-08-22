@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Focus, Network, Scale, HeartHandshake } from "lucide-react";
 import { breadcrumbLd } from "@/lib/seo";
 import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion/ui";
+import { siteConfig } from "@/lib/site-data";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -41,6 +42,25 @@ const values = [
     icon: HeartHandshake,
     t: "Long-term",
     d: "We build working relationships, not one-off transactions.",
+  },
+];
+
+const trustPoints = [
+  {
+    title: "Public contact details",
+    body: "Our Dubai location, business email and direct phone number are published across the site so you know who you are dealing with.",
+  },
+  {
+    title: "Written scope before work",
+    body: "Deliverables, responsibilities, review points and commercial terms are defined before paid work begins.",
+  },
+  {
+    title: "Primary-source references",
+    body: "Business-setup service pages link to relevant authority and regulatory sources rather than presenting changing rules as fixed facts.",
+  },
+  {
+    title: "No invented guarantees",
+    body: "We do not promise authority approvals, bank approvals, search rankings or other outcomes controlled by third parties.",
   },
 ];
 
@@ -113,6 +133,35 @@ function About() {
                 <p>{v.d}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="wrap">
+          <SectionHead
+            tag="Before you engage"
+            title={<>Trust should be <em>checkable.</em></>}
+            note="We would rather show clear working practices and public details than fill the site with unverifiable claims."
+          />
+          <div className="o-grid cols-2" style={{ marginTop: "clamp(40px,5vw,64px)" }}>
+            {trustPoints.map((point) => (
+              <div className="o-feature rv" key={point.title}>
+                <h3>{point.title}</h3>
+                <p>{point.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="o-panel rv" style={{ marginTop: "22px" }}>
+            <div className="sec-tag">Public details</div>
+            <p style={{ marginTop: "12px" }}>{siteConfig.address}</p>
+            <p style={{ marginTop: "8px" }}>
+              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a> ·{" "}
+              <a href={siteConfig.phoneHref}>{siteConfig.phone}</a> ·{" "}
+              <a href={siteConfig.linkedinUrl} target="_blank" rel="noreferrer noopener">
+                LinkedIn
+              </a>
+            </p>
           </div>
         </div>
       </section>
