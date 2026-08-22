@@ -1,0 +1,84 @@
+name: Production performance pass
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/performance-pass.mjs"
+      - ".github/workflows/performance-pass.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install local font packages
+        run: |
+          npm install --save-exact \
+            @fontsource-variable/space-grotesk@5.3.0 \
+            @fontsource-variable/jetbrains-mono@5.3.0 \
+            @fontsource/instrument-serif@5.3.0
+
+      - name: Apply code performance pass
+        run: node scripts/performance-pass.mjs
+
+      - name: Optimize hero videos
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+
+          mkdir -p /tmp/orivion-video
+
+          ffmpeg -y -i public/media/orivion-hero-mobile.mp4 \
+            -vf "scale='min(720,iw)':-2" \
+            -c:v libx264 -preset slow -crf 29 -an -movflags +faststart \
+            /tmp/orivion-video/mobile.mp4
+
+          ffmpeg -y -i public/media/orivion-hero-desktop.mp4 \
+            -vf "scale='min(1280,iw)':-2" \
+            -c:v libx264 -preset slow -crf 28 -an -movflags +faststart \
+            /tmp/orivion-video/desktop.mp4
+
+          old_mobile=$(stat -c%s public/media/orivion-hero-mobile.mp4)
+          new_mobile=$(stat -c%s /tmp/orivion-video/mobile.mp4)
+          old_desktop=$(stat -c%s public/media/orivion-hero-desktop.mp4)
+          new_desktop=$(stat -c%s /tmp/orivion-video/desktop.mp4)
+
+          echo "Mobile: $old_mobile -> $new_mobile bytes"
+          echo "Desktop: $old_desktop -> $new_desktop bytes"
+
+          if [ "$new_mobile" -lt "$old_mobile" ]; then
+            cp /tmp/orivion-video/mobile.mp4 public/media/orivion-hero-mobile.mp4
+          fi
+          if [ "$new_desktop" -lt "$old_desktop" ]; then
+            cp /tmp/orivion-video/desktop.mp4 public/media/orivion-hero-desktop.mp4
+          fi
+
+      - name: Build production application
+        run: npm run build
+
+      - name: Commit optimized production assets
+        run: |
+          git config user.name "orivion-performance"
+          git config user.email "actions@users.noreply.github.com"
+          git add package.json package-lock.json src public scripts/performance-pass.mjs
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "perf: improve mobile loading and accessibility"
+          git pull --rebase origin main
+          git push origin HEAD:main
