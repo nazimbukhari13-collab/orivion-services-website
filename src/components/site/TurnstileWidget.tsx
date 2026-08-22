@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY?.trim() || "";
 
@@ -46,9 +46,31 @@ export function TurnstileWidget({
   resetKey: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    if (!SITE_KEY || !containerRef.current) return;
+    if (!SITE_KEY || !containerRef.current || shouldLoad) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShouldLoad(true);
+        observer.disconnect();
+      },
+      { rootMargin: "400px 0px" },
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
+
+  useEffect(() => {
+    if (!SITE_KEY || !shouldLoad || !containerRef.current) return;
 
     let cancelled = false;
     let widgetId = "";
@@ -82,9 +104,16 @@ export function TurnstileWidget({
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId);
       onTokenChange("");
     };
-  }, [onTokenChange, resetKey]);
+  }, [onTokenChange, resetKey, shouldLoad]);
 
   if (!SITE_KEY) return null;
 
-  return <div className="o-turnstile" ref={containerRef} aria-label="Spam protection" />;
+  return (
+    <div
+      className="o-turnstile"
+      ref={containerRef}
+      role="group"
+      aria-label="Spam protection"
+    />
+  );
 }
