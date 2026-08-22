@@ -3,7 +3,10 @@ import { PageHero } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
-    meta: [{ title: "Terms & Conditions — Orivion" }],
+    meta: [
+      { title: "Terms & Conditions — Orivion" },
+      { name: "robots", content: "noindex, follow" },
+    ],
     links: [{ rel: "canonical", href: "https://orivion.ae/terms" }],
   }),
   component: () => (
