@@ -13,7 +13,7 @@ import { OButton } from "@/components/orivion/ui";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Orivion — Business Setup & Digital Technology Services" },
+      { title: "Orivion" },
       {
         name: "description",
         content:
