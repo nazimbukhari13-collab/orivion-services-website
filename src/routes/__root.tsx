@@ -87,6 +87,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "UAE business setup, websites, custom software, CRM automation, digital marketing, social media and AI integration.",
       },
       { name: "author", content: "Orivion" },
+      {
+        name: "google-site-verification",
+        content: "GvszT9Iqf9dARWq0zFOarV2x4Bdw3kRlXVvx0nT3wOc",
+      },
       { property: "og:title", content: "Orivion | Business Setup and Digital Technology in Dubai" },
       {
         property: "og:description",
