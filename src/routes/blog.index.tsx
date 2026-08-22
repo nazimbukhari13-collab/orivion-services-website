@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { blogPosts } from "@/lib/site-data";
+import { breadcrumbLd } from "@/lib/seo";
 import { PageHero } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/blog/")({
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/blog/")({
       { property: "og:url", content: "https://orivion.ae/blog" },
     ],
     links: [{ rel: "canonical", href: "https://orivion.ae/blog" }],
+    scripts: [breadcrumbLd([{ name: "Insights", path: "/blog" }])],
   }),
   component: Page,
 });

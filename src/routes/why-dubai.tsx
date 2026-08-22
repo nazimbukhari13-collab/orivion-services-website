@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { breadcrumbLd } from "@/lib/seo";
 import {
   Globe2,
   TrendingUp,
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/why-dubai")({
       { property: "og:url", content: "https://orivion.ae/why-dubai" },
     ],
     links: [{ rel: "canonical", href: "https://orivion.ae/why-dubai" }],
+    scripts: [breadcrumbLd([{ name: "Why Dubai", path: "/why-dubai" }])],
   }),
   component: Page,
 });

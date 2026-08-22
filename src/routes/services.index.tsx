@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { services, SERVICE_CATEGORIES } from "@/lib/site-data";
+import { breadcrumbLd } from "@/lib/seo";
 import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/services/")({
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/services/")({
           })),
         }),
       },
+      breadcrumbLd([{ name: "Services", path: "/services" }]),
     ],
   }),
   component: ServicesIndex,

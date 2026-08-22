@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { jurisdictions } from "@/lib/site-data";
+import { breadcrumbLd } from "@/lib/seo";
 import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/jurisdictions/")({
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/jurisdictions/")({
       { property: "og:url", content: "https://orivion.ae/jurisdictions" },
     ],
     links: [{ rel: "canonical", href: "https://orivion.ae/jurisdictions" }],
+    scripts: [breadcrumbLd([{ name: "Jurisdictions", path: "/jurisdictions" }])],
   }),
   component: Page,
 });

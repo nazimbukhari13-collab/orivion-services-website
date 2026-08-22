@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { faqs } from "@/lib/site-data";
+import { breadcrumbLd } from "@/lib/seo";
 import { PageHero, CTASection, OButton } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/faqs")({
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/faqs")({
             })),
           }),
         },
+        breadcrumbLd([{ name: "FAQs", path: "/faqs" }]),
       ],
     };
   },

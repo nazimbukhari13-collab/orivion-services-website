@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Focus, Network, Scale, HeartHandshake } from "lucide-react";
+import { breadcrumbLd } from "@/lib/seo";
 import { PageHero, SectionHead, CTASection, OButton } from "@/components/orivion/ui";
 
 export const Route = createFileRoute("/about")({
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/about")({
       { property: "og:url", content: "https://orivion.ae/about" },
     ],
     links: [{ rel: "canonical", href: "https://orivion.ae/about" }],
+    scripts: [breadcrumbLd([{ name: "About", path: "/about" }])],
   }),
   component: About,
 });
