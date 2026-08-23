@@ -1,0 +1,77 @@
+/* Native cursor and footer alignment refinements. */
+
+/* Use the browser's normal cursor everywhere. */
+.orivion,
+.orivion * {
+  cursor: auto;
+}
+
+.orivion a,
+.orivion button,
+.orivion summary,
+.orivion [role="button"],
+.orivion .svc-row .top,
+.orivion .o-wa {
+  cursor: pointer;
+}
+
+.orivion .cur-dot,
+.orivion .cur-ring {
+  display: none !important;
+}
+
+/* Keep all footer columns aligned on the same row on desktop. */
+.orivion .foot-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(240px, 1.25fr)
+    minmax(150px, 0.85fr)
+    minmax(170px, 0.95fr)
+    minmax(140px, 0.75fr)
+    minmax(260px, 1.15fr);
+  align-items: start;
+  gap: clamp(28px, 3vw, 48px);
+}
+
+.orivion .foot-grid > * {
+  min-width: 0;
+}
+
+.orivion .foot-contact li {
+  align-items: flex-start;
+}
+
+.orivion .foot-contact li:first-child {
+  max-width: 320px;
+}
+
+@media (max-width: 1180px) {
+  .orivion .foot-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .orivion .foot-brand {
+    grid-column: span 3;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 760px) {
+  .orivion .foot-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .orivion .foot-brand {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .orivion .foot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .orivion .foot-brand {
+    grid-column: auto;
+  }
+}
