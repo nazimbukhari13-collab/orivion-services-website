@@ -1,0 +1,73 @@
+name: Quick Lighthouse verification
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/quick-lighthouse.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for production deployment
+        run: sleep 25
+
+      - name: Mobile Lighthouse
+        run: |
+          npx -y lighthouse https://orivion.ae/ \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=mobile.json
+
+      - name: Desktop Lighthouse
+        run: |
+          npx -y lighthouse https://orivion.ae/ \
+            --quiet \
+            --preset=desktop \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=desktop.json
+
+      - name: Write result
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const rows = [];
+          for (const [label, file] of [['Mobile','mobile.json'],['Desktop','desktop.json']]) {
+            const r = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const c = r.categories;
+            const a = r.audits;
+            const pct = x => Math.round((x || 0) * 100);
+            rows.push(`## ${label}`);
+            rows.push(`Performance: ${pct(c.performance.score)}`);
+            rows.push(`Accessibility: ${pct(c.accessibility.score)}`);
+            rows.push(`Best Practices: ${pct(c['best-practices'].score)}`);
+            rows.push(`SEO: ${pct(c.seo.score)}`);
+            rows.push(`FCP: ${a['first-contentful-paint']?.displayValue || 'n/a'}`);
+            rows.push(`LCP: ${a['largest-contentful-paint']?.displayValue || 'n/a'}`);
+            rows.push(`TBT: ${a['total-blocking-time']?.displayValue || 'n/a'}`);
+            rows.push(`CLS: ${a['cumulative-layout-shift']?.displayValue || 'n/a'}`);
+            rows.push(`Speed Index: ${a['speed-index']?.displayValue || 'n/a'}`);
+            rows.push('');
+          }
+          fs.writeFileSync('lighthouse-quick.md', `# Quick Lighthouse\n\nGenerated: ${new Date().toISOString()}\n\n${rows.join('\n')}`);
+          NODE
+
+      - name: Commit result
+        run: |
+          git config user.name "orivion-audit"
+          git config user.email "actions@users.noreply.github.com"
+          git add lighthouse-quick.md
+          git commit -m "chore: record quick Lighthouse result" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
