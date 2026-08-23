@@ -1,6 +1,6 @@
 # Orivion
 
-Orivion provides two connected service groups: UAE Business Setup Services and Digital & Technology services.
+> Orivion provides UAE Business Setup Services and Digital & Technology services through one connected team in Dubai.
 
 ## Business Setup Services
 
@@ -22,14 +22,18 @@ Orivion provides two connected service groups: UAE Business Setup Services and D
 - Social Media: Strategy, content production, channel management and reporting.
 - AI Integration: Assistants, document workflows, automation, evaluation and guardrails.
 
-## Important URLs
+## Important Pages
 
-- Homepage: https://orivion.ae/
-- Services: https://orivion.ae/services
-- UAE setup options: https://orivion.ae/jurisdictions
-- Why Dubai: https://orivion.ae/why-dubai
-- FAQs: https://orivion.ae/faqs
-- Insights: https://orivion.ae/blog
-- Contact: https://orivion.ae/contact
+- [Homepage](https://orivion.ae/): Overview of Orivion and its connected service model.
+- [Services](https://orivion.ae/services): Business setup and digital technology services.
+- [UAE Setup Options](https://orivion.ae/jurisdictions): Mainland, Free Zone and Offshore structures.
+- [Why Dubai](https://orivion.ae/why-dubai): Information for businesses considering Dubai.
+- [FAQs](https://orivion.ae/faqs): Frequently asked questions about Orivion services.
+- [Insights](https://orivion.ae/blog): Guides and articles on UAE business and digital topics.
+- [Contact](https://orivion.ae/contact): Contact Orivion or start an enquiry.
 
-Contact: contact@orivion.ae | +971 55 516 6383 | WhatsApp: https://wa.me/971555166383
+## Contact
+
+- [Email Orivion](mailto:contact@orivion.ae)
+- [WhatsApp Orivion](https://wa.me/971555166383)
+- Phone: +971 55 516 6383
