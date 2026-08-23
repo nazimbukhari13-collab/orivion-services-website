@@ -1,4 +1,4 @@
-# verification pass 4
+# verification pass 5
 name: Quick Lighthouse verification
 
 on:
@@ -17,8 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Wait for production deployment
-        run: sleep 45
+      - name: Wait for exact production build
+        run: |
+          for i in $(seq 1 30); do
+            html=$(curl -fsSL --max-time 20 "https://orivion.ae/?deploy_check=$(date +%s)" || true)
+            if printf '%s' "$html" | grep -q 'orivion-build.*perf-stable-v1'; then
+              echo "Expected production build is live."
+              exit 0
+            fi
+            echo "Production build not live yet ($i/30)."
+            sleep 10
+          done
+          echo "Expected production build did not become live in time."
+          exit 1
 
       - name: Mobile Lighthouse
         run: |
