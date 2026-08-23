@@ -62,6 +62,19 @@ function readAttribution(): Attribution | null {
   }
 }
 
+function ensureGoogleTagStub() {
+  if (typeof window === "undefined") return;
+
+  window.dataLayer = window.dataLayer || [];
+  if (!window.gtag) {
+    window.gtag = function gtag(..._args: unknown[]) {
+      // Match Google's supported gtag.js implementation exactly: commands are
+      // queued using the function's arguments object until gtag.js loads.
+      window.dataLayer?.push(arguments);
+    };
+  }
+}
+
 /**
  * Sends an analytics event only after Google Analytics has been initialized.
  * This intentionally does not queue pre-consent events for later transmission.
@@ -72,20 +85,30 @@ export function trackEvent(name: string, params: Record<string, string | number 
 }
 
 export function loadGoogleAnalytics(measurementId: string) {
-  if (typeof window === "undefined" || !measurementId || window.gtag) return;
+  if (typeof window === "undefined" || !measurementId) return;
 
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = (...args: unknown[]) => {
-    window.dataLayer?.push(args);
-  };
-  window.gtag("js", new Date());
-  window.gtag("config", measurementId, {
+  ensureGoogleTagStub();
+
+  // Queue the same commands used by Google's official gtag.js snippet, plus an
+  // explicit analytics consent grant because this function is called only
+  // after the visitor has selected "Allow analytics".
+  window.gtag?.("js", new Date());
+  window.gtag?.("consent", "update", {
+    analytics_storage: "granted",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+  window.gtag?.("config", measurementId, {
     send_page_view: false,
     anonymize_ip: true,
   });
 
+  if (document.querySelector(`script[data-orivion-ga4="${measurementId}"]`)) return;
+
   const script = document.createElement("script");
   script.async = true;
+  script.dataset.orivionGa4 = measurementId;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
   document.head.appendChild(script);
 }
