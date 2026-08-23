@@ -1,0 +1,112 @@
+name: Mobile hero performance experiment
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/mobile-video-perf.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-and-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Defer mobile video until real interaction
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const indexPath = 'src/routes/index.tsx';
+          let index = fs.readFileSync(indexPath, 'utf8');
+          index = index.replace(
+            '      window.removeEventListener("scroll", activateEarly);',
+            '      window.removeEventListener("scroll", activateEarly);\n      window.removeEventListener("pointermove", activateEarly);'
+          );
+          index = index.replace(
+            '        window.addEventListener("scroll", activateEarly, { once: true, passive: true });\n        timer = window.setTimeout(apply, 10000);',
+            '        window.addEventListener("scroll", activateEarly, { once: true, passive: true });\n        window.addEventListener("pointermove", activateEarly, { once: true, passive: true });'
+          );
+          fs.writeFileSync(indexPath, index);
+
+          const rootPath = 'src/routes/__root.tsx';
+          let root = fs.readFileSync(rootPath, 'utf8');
+          root = root.replace('perf-stable-v1', 'perf-mobile-interaction-v2');
+          fs.writeFileSync(rootPath, root);
+          NODE
+
+      - name: Commit optimization
+        run: |
+          git config user.name "orivion-performance"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/routes/index.tsx src/routes/__root.tsx
+          git commit -m "perf: load mobile hero video on interaction" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Wait for exact production build
+        run: |
+          for i in $(seq 1 36); do
+            html=$(curl -fsSL --max-time 20 "https://orivion.ae/?deploy_check=$(date +%s)" || true)
+            if printf '%s' "$html" | grep -q 'orivion-build.*perf-mobile-interaction-v2'; then
+              echo "Optimized production build is live."
+              exit 0
+            fi
+            echo "Waiting for optimized production build ($i/36)."
+            sleep 10
+          done
+          exit 1
+
+      - name: Run mobile Lighthouse
+        run: |
+          npx -y lighthouse https://orivion.ae/ \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=mobile.json
+
+      - name: Run desktop Lighthouse
+        run: |
+          npx -y lighthouse https://orivion.ae/ \
+            --quiet \
+            --preset=desktop \
+            --chrome-flags="--headless --no-sandbox" \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --output=json \
+            --output-path=desktop.json
+
+      - name: Record result
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const rows = [];
+          for (const [label, file] of [['Mobile','mobile.json'],['Desktop','desktop.json']]) {
+            const r = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const c = r.categories;
+            const a = r.audits;
+            const pct = x => Math.round((x || 0) * 100);
+            rows.push(`## ${label}`);
+            rows.push(`Performance: ${pct(c.performance.score)}`);
+            rows.push(`Accessibility: ${pct(c.accessibility.score)}`);
+            rows.push(`Best Practices: ${pct(c['best-practices'].score)}`);
+            rows.push(`SEO: ${pct(c.seo.score)}`);
+            rows.push(`FCP: ${a['first-contentful-paint']?.displayValue || 'n/a'}`);
+            rows.push(`LCP: ${a['largest-contentful-paint']?.displayValue || 'n/a'}`);
+            rows.push(`TBT: ${a['total-blocking-time']?.displayValue || 'n/a'}`);
+            rows.push(`CLS: ${a['cumulative-layout-shift']?.displayValue || 'n/a'}`);
+            rows.push(`Speed Index: ${a['speed-index']?.displayValue || 'n/a'}`);
+            rows.push('');
+          }
+          fs.writeFileSync('lighthouse-quick.md', `# Quick Lighthouse\n\nGenerated: ${new Date().toISOString()}\n\n${rows.join('\n')}`);
+          NODE
+
+          git config user.name "orivion-audit"
+          git config user.email "actions@users.noreply.github.com"
+          git add lighthouse-quick.md
+          git commit -m "chore: record mobile hero Lighthouse result" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
