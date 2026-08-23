@@ -87,7 +87,15 @@ async function patchHomepage() {
     content = content.replace(marker, component + marker);
   }
 
-  content = content.replace("<ConsultationForm compact />", "<DeferredConsultationForm />");
+  content = content.replace(
+    `<Suspense fallback={<div className="o-form-placeholder" aria-hidden="true" />}>\n          <DeferredConsultationForm />\n        </Suspense>`,
+    `<Suspense fallback={<div className="o-form-placeholder" aria-hidden="true" />}>\n          <ConsultationForm compact />\n        </Suspense>`,
+  );
+  content = content.replace(
+    `<div className="o-panel rv">\n              <ConsultationForm compact />\n            </div>`,
+    `<div className="o-panel rv">\n              <DeferredConsultationForm />\n            </div>`,
+  );
+
   content = content.replaceAll('preload="metadata"', 'preload="none"');
   await write(rel, content);
 }
