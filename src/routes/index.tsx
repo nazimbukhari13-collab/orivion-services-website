@@ -152,6 +152,7 @@ function useHeroVideoVariant() {
       window.removeEventListener("pointerdown", activateEarly);
       window.removeEventListener("keydown", activateEarly);
       window.removeEventListener("scroll", activateEarly);
+      window.removeEventListener("pointermove", activateEarly);
     };
     const apply = () => {
       removeEarlyActivation();
@@ -171,7 +172,7 @@ function useHeroVideoVariant() {
         window.addEventListener("pointerdown", activateEarly, { once: true, passive: true });
         window.addEventListener("keydown", activateEarly, { once: true });
         window.addEventListener("scroll", activateEarly, { once: true, passive: true });
-        timer = window.setTimeout(apply, 10000);
+        window.addEventListener("pointermove", activateEarly, { once: true, passive: true });
       } else {
         timer = window.setTimeout(apply, 4200);
       }
