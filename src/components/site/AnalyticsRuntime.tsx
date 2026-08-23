@@ -6,8 +6,12 @@ import {
   trackEvent,
 } from "@/lib/analytics";
 
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || "";
-const CONSENT_KEY = "orivion_analytics_consent";
+// Keep the public GA4 ID as a safe fallback so production tracking cannot be
+// disabled accidentally by a missing build variable. The environment variable
+// still takes precedence when present.
+const GA_MEASUREMENT_ID =
+  import.meta.env.VITE_GA_MEASUREMENT_ID?.trim() || "G-PLWXFPZR1Z";
+const CONSENT_KEY = "orivion_analytics_consent_v2";
 
 type Consent = "granted" | "denied" | null;
 
@@ -17,7 +21,6 @@ export function AnalyticsRuntime() {
 
   useEffect(() => {
     captureAttribution();
-    if (!GA_MEASUREMENT_ID) return;
 
     try {
       const stored = window.localStorage.getItem(CONSENT_KEY);
@@ -28,10 +31,12 @@ export function AnalyticsRuntime() {
   }, []);
 
   useEffect(() => {
-    if (!GA_MEASUREMENT_ID || consent !== "granted") return;
+    if (consent !== "granted") return;
+
     loadGoogleAnalytics(GA_MEASUREMENT_ID);
     trackEvent("page_view", {
       page_path: `${window.location.pathname}${window.location.search}`,
+      page_location: window.location.href,
       page_title: document.title,
     });
   }, [consent, pathname]);
@@ -68,7 +73,7 @@ export function AnalyticsRuntime() {
     }
   }
 
-  if (!GA_MEASUREMENT_ID || consent !== null) return null;
+  if (consent !== null) return null;
 
   return (
     <aside className="o-consent" aria-label="Analytics preferences" role="region">
