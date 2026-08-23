@@ -1,6 +1,6 @@
 # Orivion Lighthouse detailed findings
 
-Generated: 2026-08-23T18:03:20.732Z
+Generated: 2026-08-23T18:18:57.172Z
 
 ## Mobile
 
@@ -8,6 +8,10 @@ Generated: 2026-08-23T18:03:20.732Z
 
 Description: Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.12/aria-allowed-role).
 
+### Deprecated ARIA roles were not used `aria-deprecated-role`
+
+Description: Deprecated ARIA roles may not be processed correctly by assistive technology. [Learn more about deprecated ARIA roles](https://dequeuniversity.com/rules/axe/4.12/aria-deprecated-role).
+
 ### ARIA input fields have accessible names `aria-input-field-name`
 
 Description: When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more about input field labels](https://dequeuniversity.com/rules/axe/4.12/aria-input-field-name).
@@ -19,6 +23,10 @@ Description: When a meter element doesn't have an accessible name, screen reader
 ### ARIA `progressbar` elements have accessible names `aria-progressbar-name`
 
 Description: When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to label `progressbar` elements](https://dequeuniversity.com/rules/axe/4.12/aria-progressbar-name).
+
+### `[role]`s have all required `[aria-*]` attributes `aria-required-attr`
+
+Description: Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more about roles and required attributes](https://dequeuniversity.com/rules/axe/4.12/aria-required-attr).
 
 ### Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children. `aria-required-children`
 
@@ -46,24 +54,24 @@ Description: Custom interactive controls have appropriate ARIA roles. [Learn how
 
 ### Avoids enormous network payloads `total-byte-weight`
 
-Result: Total size was 258 KiB
+Result: Total size was 246 KiB
 Description: Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).
-- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=129381
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24165
-- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22790
-- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22671
+- url=https://orivion.ae/assets/index-DHYMbFIh.js | totalBytes=118482
+- url=https://orivion.ae/assets/app-2-ZX_Gwd.css | totalBytes=24168
+- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22789
+- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22667
 - url=https://orivion.ae/media/orivion-hero-mobile-poster.webp | totalBytes=13412
 - url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577
-- url=https://orivion.ae/ | totalBytes=11473
-- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10074
-- url=https://orivion.ae/assets/routes-CSdYE2RP.js | totalBytes=4844
-- url=https://orivion.ae/assets/link-ByfVX-v7.js | totalBytes=3762
+- url=https://orivion.ae/ | totalBytes=10550
+- url=https://orivion.ae/assets/ClientOnly-DtRt9ftW.js | totalBytes=5265
+- url=https://orivion.ae/assets/routes-DJVjn41T.js | totalBytes=4620
+- url=https://orivion.ae/assets/react-xd4aoMiW.js | totalBytes=3307
 
 ### Reduce unused JavaScript `unused-javascript`
 
-Result: Est savings of 45 KiB
+Result: Est savings of 42 KiB
 Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).
-- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=129078 | wastedBytes=46550
+- url=https://orivion.ae/assets/index-DHYMbFIh.js | totalBytes=118187 | wastedBytes=43382
 
 ### Use efficient cache lifetimes `cache-insight`
 
@@ -78,8 +86,8 @@ Description: [Avoid chaining critical requests](https://developer.chrome.com/doc
 ### Render-blocking requests `render-blocking-insight`
 
 Description: Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24165 | wastedMs=150
-- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=834
+- url=https://orivion.ae/assets/app-2-ZX_Gwd.css | totalBytes=24168 | wastedMs=150
+- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=906
 
 ## Desktop
 
@@ -87,6 +95,10 @@ Description: Requests are blocking the page's initial render, which may delay LC
 
 Description: Many HTML elements can only be assigned certain ARIA roles. Using ARIA roles where they are not allowed can interfere with the accessibility of the web page. [Learn more about ARIA roles](https://dequeuniversity.com/rules/axe/4.12/aria-allowed-role).
 
+### Deprecated ARIA roles were not used `aria-deprecated-role`
+
+Description: Deprecated ARIA roles may not be processed correctly by assistive technology. [Learn more about deprecated ARIA roles](https://dequeuniversity.com/rules/axe/4.12/aria-deprecated-role).
+
 ### ARIA input fields have accessible names `aria-input-field-name`
 
 Description: When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more about input field labels](https://dequeuniversity.com/rules/axe/4.12/aria-input-field-name).
@@ -98,6 +110,10 @@ Description: When a meter element doesn't have an accessible name, screen reader
 ### ARIA `progressbar` elements have accessible names `aria-progressbar-name`
 
 Description: When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to label `progressbar` elements](https://dequeuniversity.com/rules/axe/4.12/aria-progressbar-name).
+
+### `[role]`s have all required `[aria-*]` attributes `aria-required-attr`
+
+Description: Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more about roles and required attributes](https://dequeuniversity.com/rules/axe/4.12/aria-required-attr).
 
 ### Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children. `aria-required-children`
 
@@ -125,24 +141,24 @@ Description: Custom interactive controls have appropriate ARIA roles. [Learn how
 
 ### Avoids enormous network payloads `total-byte-weight`
 
-Result: Total size was 843 KiB
+Result: Total size was 253 KiB
 Description: Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).
-- url=https://orivion.ae/media/orivion-hero-desktop.mp4 | totalBytes=592572
-- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=129500
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24252
-- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22784
-- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22627
-- url=https://orivion.ae/media/orivion-hero-desktop-poster.webp | totalBytes=17342
-- url=https://orivion.ae/ | totalBytes=11660
+- url=https://orivion.ae/assets/index-DHYMbFIh.js | totalBytes=118667
+- url=https://orivion.ae/assets/app-2-ZX_Gwd.css | totalBytes=24349
+- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22788
+- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22623
+- url=https://orivion.ae/media/orivion-hero-desktop-poster.webp | totalBytes=17351
 - url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577
-- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10344
-- url=https://orivion.ae/assets/routes-CSdYE2RP.js | totalBytes=5075
+- url=https://orivion.ae/ | totalBytes=10512
+- url=https://orivion.ae/assets/ClientOnly-DtRt9ftW.js | totalBytes=5561
+- url=https://orivion.ae/assets/routes-DJVjn41T.js | totalBytes=4906
+- url=https://orivion.ae/assets/react-xd4aoMiW.js | totalBytes=3525
 
 ### Reduce unused JavaScript `unused-javascript`
 
-Result: Est savings of 44 KiB
+Result: Est savings of 42 KiB
 Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).
-- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=128980 | wastedBytes=45542
+- url=https://orivion.ae/assets/index-DHYMbFIh.js | totalBytes=118144 | wastedBytes=42964
 
 ### Use efficient cache lifetimes `cache-insight`
 
@@ -150,14 +166,17 @@ Result: Est savings of 5 KiB
 Description: A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).
 - url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577 | wastedBytes=4630.8 | cacheLifetimeMs=86400000
 
+### Forced reflow `forced-reflow-insight`
+
+Description: A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developer.chrome.com/docs/performance/insights/forced-reflow) and possible mitigations.
+
 ### Network dependency tree `network-dependency-tree-insight`
 
 Description: [Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.
 
 ### Render-blocking requests `render-blocking-insight`
 
-Result: Est savings of 100 ms
 Description: Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.
-- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=1042 | wastedMs=173
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24252 | wastedMs=173
+- url=https://orivion.ae/assets/app-2-ZX_Gwd.css | totalBytes=24349 | wastedMs=271
+- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=1042 | wastedMs=214
 
