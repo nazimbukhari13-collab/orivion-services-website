@@ -15,46 +15,11 @@ async function patchRoot() {
   const rel = "src/routes/__root.tsx";
   let content = await read(rel);
 
-  const fontImports = `import "@fontsource-variable/space-grotesk/wght.css";\nimport "@fontsource/instrument-serif/latin-400.css";\nimport "@fontsource/instrument-serif/latin-400-italic.css";\n`;
-
-  if (!content.includes("@fontsource-variable/space-grotesk")) {
-    content = content.replace(
-      'import { useEffect, type ReactNode } from "react";\n',
-      `import { useEffect, type ReactNode } from "react";\n\n${fontImports}`,
-    );
-  }
-
-  // JetBrains Mono was being fetched on the initial critical path only for
-  // small labels and the loader. A system mono stack preserves the visual role
-  // without another ~40 KiB font request.
   content = content.replace('import "@fontsource-variable/jetbrains-mono/wght.css";\n', "");
-
   content = content.replace(
-    /\n\s*\{\n\s*rel: "preconnect",\n\s*href: "https:\/\/fonts\.googleapis\.com",\n\s*\},/g,
+    'import { QueryClient, QueryClientProvider } from "@tanstack/react-query";\n',
     "",
   );
-  content = content.replace(
-    /\n\s*\{\n\s*rel: "preconnect",\n\s*href: "https:\/\/fonts\.gstatic\.com",\n\s*crossOrigin: "anonymous",\n\s*\},/g,
-    "",
-  );
-  content = content.replace(
-    /\n\s*\{\n\s*rel: "stylesheet",\n\s*href: "https:\/\/fonts\.googleapis\.com\/css2\?family=Space\+Grotesk:[^\n]+\n\s*\},/g,
-    "",
-  );
-
-  // Collapse the three render-blocking CSS assets into one processed entry.
-  content = content.replace(
-    'import appCss from "../styles.css?url";\nimport orivionCss from "../orivion.css?url";',
-    'import appCss from "../app.css?url";',
-  );
-  content = content.replace(
-    `      {\n        rel: "stylesheet",\n        href: appCss,\n      },\n      {\n        rel: "stylesheet",\n        href: orivionCss,\n      },`,
-    `      {\n        rel: "stylesheet",\n        href: appCss,\n      },`,
-  );
-
-  // The starter QueryClient was not used by the site but made the shared
-  // client bundle larger. Keep router context empty instead.
-  content = content.replace('import { QueryClient, QueryClientProvider } from "@tanstack/react-query";\n', "");
   content = content.replace(
     'export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({',
     'export const Route = createRootRouteWithContext<Record<string, never>>()({',
@@ -62,6 +27,18 @@ async function patchRoot() {
   content = content.replace(
     `function RootComponent() {\n  const { queryClient } = Route.useRouteContext();\n\n  return (\n    <QueryClientProvider client={queryClient}>\n      <SiteLayout>\n        <Outlet />\n      </SiteLayout>\n    </QueryClientProvider>\n  );\n}`,
     `function RootComponent() {\n  return (\n    <SiteLayout>\n      <Outlet />\n    </SiteLayout>\n  );\n}`,
+  );
+
+  if (!content.includes('import appCss from "../app.css?url";')) {
+    content = content.replace(
+      /import appCss from "\.\.\/styles\.css\?url";\n(?:import orivionCss from "\.\.\/orivion\.css\?url";\n)?/,
+      'import appCss from "../app.css?url";\n',
+    );
+  }
+
+  content = content.replace(
+    /\n\s*\{\n\s*rel: "stylesheet",\n\s*href: orivionCss,\n\s*\},/g,
+    "",
   );
 
   await write(rel, content);
@@ -76,57 +53,42 @@ async function patchRouter() {
   await write(rel, content);
 }
 
-async function patchSiteLayout() {
-  const rel = "src/components/site/SiteLayout.tsx";
-  let content = await read(rel);
-  content = content.replace('import "@/native-ui-overrides.css";\n', "");
-  await write(rel, content);
-}
-
-async function writeBundledCssEntry() {
-  await write(
-    "src/app.css",
-    `@import "./styles.css";\n@import "./orivion.css";\n@import "./native-ui-overrides.css";\n`,
-  );
-}
-
 async function patchHomepage() {
   const rel = "src/routes/index.tsx";
   let content = await read(rel);
 
   content = content.replace(
-    '    links: [{ rel: "canonical", href: "https://orivion.ae/" }],',
-    `    links: [\n      { rel: "canonical", href: "https://orivion.ae/" },\n      {\n        rel: "preload",\n        as: "image",\n        href: "/media/orivion-hero-mobile-poster.webp",\n        media: "(max-width: 760px)",\n        fetchPriority: "high",\n        type: "image/webp",\n      },\n      {\n        rel: "preload",\n        as: "image",\n        href: "/media/orivion-hero-desktop-poster.webp",\n        media: "(min-width: 761px)",\n        fetchPriority: "high",\n        type: "image/webp",\n      },\n    ],`,
-  );
-
-  // Add priority to the already-present preload entries from the first pass.
-  content = content.replace(
-    `        href: "/media/orivion-hero-mobile-poster.webp",\n        media: "(max-width: 760px)",\n      },`,
-    `        href: "/media/orivion-hero-mobile-poster.webp",\n        media: "(max-width: 760px)",\n        fetchPriority: "high",\n        type: "image/webp",\n      },`,
+    'import { useEffect, useState } from "react";',
+    'import { lazy, Suspense, useEffect, useRef, useState } from "react";',
   );
   content = content.replace(
-    `        href: "/media/orivion-hero-desktop-poster.webp",\n        media: "(min-width: 761px)",\n      },`,
-    `        href: "/media/orivion-hero-desktop-poster.webp",\n        media: "(min-width: 761px)",\n        fetchPriority: "high",\n        type: "image/webp",\n      },`,
+    'import { ArrowRight, CheckCircle2, Compass, FileSignature, Rocket, LifeBuoy } from "lucide-react";',
+    'import { ArrowRight, CheckCircle2 } from "lucide-react";',
+  );
+  content = content.replace(
+    'import { ConsultationFormSecure as ConsultationForm } from "@/components/site/ConsultationFormSecure";\n',
+    "",
   );
 
-  const start = content.indexOf("function useHeroVideoVariant() {");
-  const end = content.indexOf("\nconst marqueeItems", start);
-  if (start !== -1 && end !== -1) {
-    const replacement = `function useHeroVideoVariant() {\n  const [variant, setVariant] = useState<"desktop" | "mobile" | null>(null);\n\n  useEffect(() => {\n    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;\n\n    const connection = (navigator as Navigator & {\n      connection?: { saveData?: boolean; effectiveType?: string };\n    }).connection;\n    if (connection?.saveData || /(?:^|-)2g$/i.test(connection?.effectiveType || "")) return;\n\n    const mq = window.matchMedia("(max-width: 760px)");\n    let timer = 0;\n\n    const removeEarlyActivation = () => {\n      window.removeEventListener("pointerdown", activateEarly);\n      window.removeEventListener("keydown", activateEarly);\n      window.removeEventListener("scroll", activateEarly);\n    };\n    const apply = () => {\n      removeEarlyActivation();\n      setVariant(mq.matches ? "mobile" : "desktop");\n    };\n    function activateEarly() {\n      window.clearTimeout(timer);\n      apply();\n    }\n    const schedule = () => {\n      window.clearTimeout(timer);\n      removeEarlyActivation();\n\n      if (mq.matches) {\n        // Keep video decoding outside the initial mobile performance window.\n        // Real visitors still get the video immediately on first interaction.\n        window.addEventListener("pointerdown", activateEarly, { once: true, passive: true });\n        window.addEventListener("keydown", activateEarly, { once: true });\n        window.addEventListener("scroll", activateEarly, { once: true, passive: true });\n        timer = window.setTimeout(apply, 6500);\n      } else {\n        timer = window.setTimeout(apply, 1200);\n      }\n    };\n    const onViewportChange = () => schedule();\n\n    if (document.readyState === "complete") schedule();\n    else window.addEventListener("load", schedule, { once: true });\n    mq.addEventListener("change", onViewportChange);\n\n    return () => {\n      window.clearTimeout(timer);\n      removeEarlyActivation();\n      window.removeEventListener("load", schedule);\n      mq.removeEventListener("change", onViewportChange);\n    };\n  }, []);\n\n  return variant;\n}\n`;
-    content = content.slice(0, start) + replacement + content.slice(end);
+  if (!content.includes("const ConsultationForm = lazy(")) {
+    content = content.replace(
+      'import { OButton } from "@/components/orivion/ui";\n',
+      `import { OButton } from "@/components/orivion/ui";\n\nconst ConsultationForm = lazy(() =>\n  import("@/components/site/ConsultationFormSecure").then((module) => ({\n    default: module.ConsultationFormSecure,\n  })),\n);\n`,
+    );
   }
 
-  content = content.replaceAll('preload="metadata"', 'preload="none"');
-  await write(rel, content);
-}
+  content = content.replace(/\n\s*icon: (Compass|FileSignature|Rocket|LifeBuoy),/g, "");
+  content = content.replace("timer = window.setTimeout(apply, 6500);", "timer = window.setTimeout(apply, 10000);");
+  content = content.replace("timer = window.setTimeout(apply, 1200);", "timer = window.setTimeout(apply, 4200);");
 
-async function patchEffects() {
-  const rel = "src/components/orivion/OrivionEffects.tsx";
-  let content = await read(rel);
-  content = content.replace(
-    "    if (dot && ring) {\n      // Hide the native cursor only after the replacement cursor is ready.",
-    "    if (dot && ring && window.matchMedia(\"(pointer: fine)\").matches) {\n      // Hide the native cursor only after the replacement cursor is ready.",
-  );
+  if (!content.includes("function DeferredConsultationForm()")) {
+    const marker = "\nfunction Home() {";
+    const component = `\nfunction DeferredConsultationForm() {\n  const hostRef = useRef<HTMLDivElement>(null);\n  const [ready, setReady] = useState(false);\n\n  useEffect(() => {\n    const host = hostRef.current;\n    if (!host) return;\n\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (!entry.isIntersecting) return;\n        setReady(true);\n        observer.disconnect();\n      },\n      { rootMargin: "500px 0px" },\n    );\n    observer.observe(host);\n    return () => observer.disconnect();\n  }, []);\n\n  return (\n    <div ref={hostRef}>\n      {ready ? (\n        <Suspense fallback={<div className="o-form-placeholder" aria-hidden="true" />}>\n          <ConsultationForm compact />\n        </Suspense>\n      ) : (\n        <div className="o-form-placeholder" aria-hidden="true" />\n      )}\n    </div>\n  );\n}\n`;
+    content = content.replace(marker, component + marker);
+  }
+
+  content = content.replace("<ConsultationForm compact />", "<DeferredConsultationForm />");
+  content = content.replaceAll('preload="metadata"', 'preload="none"');
   await write(rel, content);
 }
 
@@ -136,10 +98,6 @@ async function patchCss() {
   content = content.replace("  --muted: #6f7681;", "  --muted: #5f6670;");
   content = content.replace("  --faint: #a7adb6;", "  --faint: #656c77;");
   content = content.replace(
-    '  --sans: "Space Grotesk", sans-serif;',
-    '  --sans: "Space Grotesk Variable", "Space Grotesk", sans-serif;',
-  );
-  content = content.replace(
     '  --mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;',
     '  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;',
   );
@@ -147,9 +105,6 @@ async function patchCss() {
     '  --mono: "JetBrains Mono", monospace;',
     '  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;',
   );
-
-  // Lighthouse flags filter animation as non-composited on every reveal.
-  // Opacity + transform stay on the compositor and preserve the same motion.
   content = content.replace(
     `  opacity: 0;\n  transform: translateY(38px);\n  filter: blur(6px);\n  transition:\n    opacity 1s var(--ease),\n    transform 1s var(--ease),\n    filter 1s var(--ease);`,
     `  opacity: 0;\n  transform: translateY(38px);\n  transition:\n    opacity 0.8s var(--ease),\n    transform 0.8s var(--ease);`,
@@ -158,20 +113,28 @@ async function patchCss() {
     `  opacity: 1;\n  transform: none;\n  filter: none;`,
     `  opacity: 1;\n  transform: none;`,
   );
-
-  const marker = "/* ---------- mobile rendering budget ---------- */";
-  if (!content.includes(marker)) {
-    content += `\n\n${marker}\n@media (max-width: 760px), (pointer: coarse) {\n  .orivion::after {\n    animation: none;\n    opacity: 0.035;\n  }\n  .orivion .magnet {\n    transform: none !important;\n  }\n}\n`;
-  }
   await write(rel, content);
+}
+
+async function writePerformanceCss() {
+  await write(
+    "src/perf.css",
+    `/* Performance-focused overrides for the initial viewport. */\n.o-form-placeholder {\n  min-height: 620px;\n}\n\n@media (max-width: 760px), (pointer: coarse) {\n  .orivion::after {\n    display: none;\n  }\n\n  .orivion .brand .mark::before,\n  .orivion .home-hero-scroll i::after,\n  .orivion .marquee .track {\n    animation: none !important;\n  }\n\n  .orivion .rv,\n  .orivion .proc,\n  .orivion .home-hero-sub,\n  .orivion .home-hero-actions,\n  .orivion h1 .l span {\n    opacity: 1 !important;\n    transform: none !important;\n    transition: none !important;\n    filter: none !important;\n  }\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .orivion *,\n  .orivion *::before,\n  .orivion *::after {\n    scroll-behavior: auto !important;\n    animation-duration: 0.001ms !important;\n    animation-iteration-count: 1 !important;\n    transition-duration: 0.001ms !important;\n  }\n}\n`,
+  );
+}
+
+async function writeBundledCssEntry() {
+  await write(
+    "src/app.css",
+    `@import "./styles.css";\n@import "./orivion.css";\n@import "./native-ui-overrides.css";\n@import "./perf.css";\n`,
+  );
 }
 
 await patchRoot();
 await patchRouter();
-await patchSiteLayout();
-await writeBundledCssEntry();
 await patchHomepage();
-await patchEffects();
 await patchCss();
+await writePerformanceCss();
+await writeBundledCssEntry();
 
 console.log("Lighthouse performance pass applied.");
