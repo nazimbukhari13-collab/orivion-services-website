@@ -1,3 +1,4 @@
+# verification pass 2
 name: Quick Lighthouse verification
 
 on:
@@ -17,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Wait for production deployment
-        run: sleep 25
+        run: sleep 45
 
       - name: Mobile Lighthouse
         run: |
