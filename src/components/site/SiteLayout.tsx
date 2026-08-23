@@ -9,23 +9,10 @@ import { AnalyticsRuntime } from "@/components/site/AnalyticsRuntime";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="orivion" id="top">
+    <div className="orivion loaded" id="top">
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-
-      <div id="loader">
-        <div className="word" aria-hidden="true">
-          {"ORIVION".split("").map((ch, i) => (
-            <span key={i} style={{ animationDelay: `${0.05 + i * 0.07}s` }}>
-              {ch}
-            </span>
-          ))}
-        </div>
-        <div className="bar">
-          <i />
-        </div>
-      </div>
 
       <HeaderAccessible />
       <main id="main-content">{children}</main>
