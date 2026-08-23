@@ -1,4 +1,4 @@
-# Recheck deployed performance build after source-triggered deploy
+# Recheck deployed performance build with build marker
 name: Check live production version
 
 on:
@@ -17,9 +17,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Inspect live response
         run: |
-          curl --fail --location --max-time 30 https://orivion.ae/ -o /tmp/orivion.html
+          curl --fail --location --max-time 30 "https://orivion.ae/?version_check=$(date +%s)" -o /tmp/orivion.html
           {
             echo "Checked: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            if grep -q 'orivion-build.*perf-stable-v1' /tmp/orivion.html; then
+              echo "BuildMarker: perf-stable-v1"
+            else
+              echo "BuildMarker: NOT_LIVE"
+            fi
             if grep -q "fonts.googleapis.com" /tmp/orivion.html; then
               echo "GoogleFonts: present"
             else
