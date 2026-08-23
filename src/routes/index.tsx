@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import {
@@ -10,11 +10,7 @@ import {
 } from "@/lib/site-data";
 import { OButton } from "@/components/orivion/ui";
 
-const ConsultationForm = lazy(() =>
-  import("@/components/site/ConsultationFormSecure").then((module) => ({
-    default: module.ConsultationFormSecure,
-  })),
-);
+import { ConsultationFormSecure as ConsultationForm } from "@/components/site/ConsultationFormSecure";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -209,39 +205,6 @@ const marqueeItems = [
   "Social Media",
   "AI Integration",
 ];
-
-function DeferredConsultationForm() {
-  const hostRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const host = hostRef.current;
-    if (!host) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setReady(true);
-        observer.disconnect();
-      },
-      { rootMargin: "500px 0px" },
-    );
-    observer.observe(host);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={hostRef}>
-      {ready ? (
-        <Suspense fallback={<div className="o-form-placeholder" aria-hidden="true" />}>
-          <ConsultationForm compact />
-        </Suspense>
-      ) : (
-        <div className="o-form-placeholder" aria-hidden="true" />
-      )}
-    </div>
-  );
-}
 
 function Home() {
   const heroVideo = useHeroVideoVariant();
@@ -616,7 +579,7 @@ function Home() {
               </ul>
             </div>
             <div className="o-panel rv">
-              <DeferredConsultationForm />
+              <ConsultationForm compact />
             </div>
           </div>
         </div>
