@@ -151,12 +151,35 @@ function useHeroVideoVariant() {
     const mq = window.matchMedia("(max-width: 760px)");
     let timer = 0;
 
-    const apply = () => setVariant(mq.matches ? "mobile" : "desktop");
+    const removeEarlyActivation = () => {
+      window.removeEventListener("pointerdown", activateEarly);
+      window.removeEventListener("keydown", activateEarly);
+      window.removeEventListener("scroll", activateEarly);
+    };
+    const apply = () => {
+      removeEarlyActivation();
+      setVariant(mq.matches ? "mobile" : "desktop");
+    };
+    function activateEarly() {
+      window.clearTimeout(timer);
+      apply();
+    }
     const schedule = () => {
       window.clearTimeout(timer);
-      timer = window.setTimeout(apply, 1200);
+      removeEarlyActivation();
+
+      if (mq.matches) {
+        // Keep video decoding outside the initial mobile performance window.
+        // Real visitors still get the video immediately on first interaction.
+        window.addEventListener("pointerdown", activateEarly, { once: true, passive: true });
+        window.addEventListener("keydown", activateEarly, { once: true });
+        window.addEventListener("scroll", activateEarly, { once: true, passive: true });
+        timer = window.setTimeout(apply, 6500);
+      } else {
+        timer = window.setTimeout(apply, 1200);
+      }
     };
-    const onViewportChange = () => setVariant(mq.matches ? "mobile" : "desktop");
+    const onViewportChange = () => schedule();
 
     if (document.readyState === "complete") schedule();
     else window.addEventListener("load", schedule, { once: true });
@@ -164,6 +187,7 @@ function useHeroVideoVariant() {
 
     return () => {
       window.clearTimeout(timer);
+      removeEarlyActivation();
       window.removeEventListener("load", schedule);
       mq.removeEventListener("change", onViewportChange);
     };
