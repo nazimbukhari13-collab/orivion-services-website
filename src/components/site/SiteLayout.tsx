@@ -1,50 +1,31 @@
-import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 import { MessageCircle } from "lucide-react";
 import { HeaderAccessible } from "@/components/orivion/HeaderAccessible";
 import { Footer } from "@/components/orivion/Footer";
 import { OrivionEffects } from "@/components/orivion/OrivionEffects";
 import { siteConfig } from "@/lib/site-data";
-
-const DeferredAnalytics = lazy(() =>
-  import("@/components/site/AnalyticsRuntime").then((module) => ({
-    default: module.AnalyticsRuntime,
-  })),
-);
-
-function AnalyticsAfterInitialLoad() {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const mobile = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
-    const activate = () => setReady(true);
-    const timer = window.setTimeout(activate, mobile ? 5000 : 3000);
-
-    window.addEventListener("pointerdown", activate, { once: true, passive: true });
-    window.addEventListener("keydown", activate, { once: true });
-
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("pointerdown", activate);
-      window.removeEventListener("keydown", activate);
-    };
-  }, []);
-
-  if (!ready) return null;
-
-  return (
-    <Suspense fallback={null}>
-      <DeferredAnalytics />
-    </Suspense>
-  );
-}
+import { AnalyticsRuntime } from "@/components/site/AnalyticsRuntime";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="orivion loaded" id="top">
+    <div className="orivion" id="top">
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
+
+      <div id="loader">
+        <div className="word" aria-hidden="true">
+          {"ORIVION".split("").map((ch, i) => (
+            <span key={i} style={{ animationDelay: `${0.05 + i * 0.07}s` }}>
+              {ch}
+            </span>
+          ))}
+        </div>
+        <div className="bar">
+          <i />
+        </div>
+      </div>
 
       <HeaderAccessible />
       <main id="main-content">{children}</main>
@@ -61,7 +42,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         <MessageCircle className="h-5 w-5" aria-hidden="true" />
       </a>
 
-      <AnalyticsAfterInitialLoad />
+      <AnalyticsRuntime />
       <OrivionEffects />
       <Toaster position="top-right" richColors />
     </div>
