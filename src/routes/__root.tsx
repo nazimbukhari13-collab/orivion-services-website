@@ -20,6 +20,19 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { siteConfig } from "@/lib/site-data";
 
+const criticalLayoutCss = `
+@media (min-width: 1200px) {
+  .orivion .home-hero h1 {
+    min-height: 2em;
+    text-wrap: wrap;
+  }
+
+  .orivion .home-hero h1 .l {
+    white-space: nowrap;
+  }
+}
+`;
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -152,6 +165,7 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <style>{criticalLayoutCss}</style>
       </head>
       <body>
         {children}
