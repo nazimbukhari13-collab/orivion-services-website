@@ -6,6 +6,7 @@ import { Footer } from "@/components/orivion/Footer";
 import { OrivionEffects } from "@/components/orivion/OrivionEffects";
 import { siteConfig } from "@/lib/site-data";
 import { AnalyticsRuntime } from "@/components/site/AnalyticsRuntime";
+import "@/native-ui-overrides.css";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
@@ -13,8 +14,6 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <div className="cur-dot" />
-      <div className="cur-ring" />
 
       <div id="loader">
         <div className="word" aria-hidden="true">
