@@ -1,37 +1,30 @@
 import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
+import { Toaster } from "sonner";
 import { MessageCircle } from "lucide-react";
 import { HeaderAccessible } from "@/components/orivion/HeaderAccessible";
 import { Footer } from "@/components/orivion/Footer";
+import { OrivionEffects } from "@/components/orivion/OrivionEffects";
 import { siteConfig } from "@/lib/site-data";
 
-const DeferredEffects = lazy(() =>
-  import("@/components/orivion/OrivionEffects").then((module) => ({
-    default: module.OrivionEffects,
-  })),
-);
 const DeferredAnalytics = lazy(() =>
   import("@/components/site/AnalyticsRuntime").then((module) => ({
     default: module.AnalyticsRuntime,
   })),
 );
-const DeferredToaster = lazy(() => import("sonner").then((module) => ({ default: module.Toaster })));
 
-function DeferredRuntimes() {
+function AnalyticsAfterInitialLoad() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    let timer = 0;
-    const activate = () => setReady(true);
     const mobile = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+    const activate = () => setReady(true);
+    const timer = window.setTimeout(activate, mobile ? 5000 : 3000);
 
-    window.addEventListener("scroll", activate, { once: true, passive: true });
     window.addEventListener("pointerdown", activate, { once: true, passive: true });
     window.addEventListener("keydown", activate, { once: true });
-    timer = window.setTimeout(activate, mobile ? 6000 : 3200);
 
     return () => {
       window.clearTimeout(timer);
-      window.removeEventListener("scroll", activate);
       window.removeEventListener("pointerdown", activate);
       window.removeEventListener("keydown", activate);
     };
@@ -42,8 +35,6 @@ function DeferredRuntimes() {
   return (
     <Suspense fallback={null}>
       <DeferredAnalytics />
-      <DeferredEffects />
-      <DeferredToaster position="top-right" richColors />
     </Suspense>
   );
 }
@@ -70,7 +61,9 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         <MessageCircle className="h-5 w-5" aria-hidden="true" />
       </a>
 
-      <DeferredRuntimes />
+      <AnalyticsAfterInitialLoad />
+      <OrivionEffects />
+      <Toaster position="top-right" richColors />
     </div>
   );
 }
