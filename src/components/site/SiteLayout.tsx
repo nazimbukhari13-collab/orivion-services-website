@@ -6,7 +6,6 @@ import { Footer } from "@/components/orivion/Footer";
 import { OrivionEffects } from "@/components/orivion/OrivionEffects";
 import { siteConfig } from "@/lib/site-data";
 import { AnalyticsRuntime } from "@/components/site/AnalyticsRuntime";
-import "@/native-ui-overrides.css";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (

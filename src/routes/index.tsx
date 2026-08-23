@@ -49,12 +49,16 @@ export const Route = createFileRoute("/")({
         as: "image",
         href: "/media/orivion-hero-mobile-poster.webp",
         media: "(max-width: 760px)",
+        fetchPriority: "high",
+        type: "image/webp",
       },
       {
         rel: "preload",
         as: "image",
         href: "/media/orivion-hero-desktop-poster.webp",
         media: "(min-width: 761px)",
+        fetchPriority: "high",
+        type: "image/webp",
       },
     ],
     scripts: [

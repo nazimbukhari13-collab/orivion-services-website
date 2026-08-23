@@ -20,7 +20,7 @@
   --grad: linear-gradient(100deg, var(--blue), var(--violet) 50%, var(--peach));
   --sans: "Space Grotesk Variable", "Space Grotesk", sans-serif;
   --serif: "Instrument Serif", serif;
-  --mono: "JetBrains Mono Variable", "JetBrains Mono", monospace;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   background: var(--bg);
@@ -1115,16 +1115,13 @@
 .orivion .rv {
   opacity: 0;
   transform: translateY(38px);
-  filter: blur(6px);
   transition:
-    opacity 1s var(--ease),
-    transform 1s var(--ease),
-    filter 1s var(--ease);
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease);
 }
 .orivion .rv.in {
   opacity: 1;
   transform: none;
-  filter: none;
 }
 
 /* ---------- services ---------- */

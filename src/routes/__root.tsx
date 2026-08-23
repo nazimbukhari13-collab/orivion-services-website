@@ -1,4 +1,3 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -12,10 +11,8 @@ import { useEffect, type ReactNode } from "react";
 import "@fontsource-variable/space-grotesk/wght.css";
 import "@fontsource/instrument-serif/latin-400.css";
 import "@fontsource/instrument-serif/latin-400-italic.css";
-import "@fontsource-variable/jetbrains-mono/wght.css";
 
-import appCss from "../styles.css?url";
-import orivionCss from "../orivion.css?url";
+import appCss from "../app.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { siteConfig } from "@/lib/site-data";
@@ -93,7 +90,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<Record<string, never>>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -148,10 +145,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      {
-        rel: "stylesheet",
-        href: orivionCss,
-      },
     ],
   }),
   shellComponent: RootShell,
@@ -176,13 +169,9 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <SiteLayout>
-        <Outlet />
-      </SiteLayout>
-    </QueryClientProvider>
+    <SiteLayout>
+      <Outlet />
+    </SiteLayout>
   );
 }
