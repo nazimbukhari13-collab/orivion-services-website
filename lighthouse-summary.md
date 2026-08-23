@@ -1,6 +1,6 @@
 # Orivion live Lighthouse audit
 
-Generated: 2026-08-23T17:58:55.498Z
+Generated: 2026-08-23T18:03:20.732Z
 
 Target: https://orivion.ae/
 
@@ -8,71 +8,69 @@ Target: https://orivion.ae/
 
 | Category | Score |
 | --- | ---: |
-| Performance | 56 |
+| Performance | 96 |
 | Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
 
 | Metric | Result |
 | --- | ---: |
-| First Contentful Paint | 3.0 s |
-| Largest Contentful Paint | 3.0 s |
-| Speed Index | 5.7 s |
-| Total Blocking Time | 2,410 ms |
+| First Contentful Paint | 1.8 s |
+| Largest Contentful Paint | 1.8 s |
+| Speed Index | 2.9 s |
+| Total Blocking Time | 170 ms |
 | Cumulative Layout Shift | 0.001 |
-| Time to Interactive | 6.2 s |
+| Time to Interactive | 2.8 s |
 
 ### Highest-impact opportunities
 
-- Initial server response time was short — Root document took 230 ms
-- Reduce unused JavaScript — Est savings of 44 KiB
+- Initial server response time was short — Root document took 240 ms
 
 ### Other failed or partial audits
 
-- Minimize main-thread work — 7.9 s
-- Reduce JavaScript execution time — 1.9 s
-- Reduce unused JavaScript — Est savings of 44 KiB
+- Minimize main-thread work — 2.3 s
 - Network dependency tree
-- Max Potential First Input Delay — 730 ms
-- Total Blocking Time — 2,410 ms
-- First Contentful Paint — 3.0 s
+- Max Potential First Input Delay — 300 ms
+- Reduce unused JavaScript — Est savings of 45 KiB
 - Use efficient cache lifetimes — Est savings of 5 KiB
 - Render-blocking requests
-- Speed Index — 5.7 s
-- Time to Interactive — 6.2 s
-- Largest Contentful Paint — 3.0 s
+- First Contentful Paint — 1.8 s
+- Total Blocking Time — 170 ms
+- Speed Index — 2.9 s
+- Time to Interactive — 2.8 s
+- Largest Contentful Paint — 1.8 s
 
 ## Desktop
 
 | Category | Score |
 | --- | ---: |
-| Performance | 99 |
+| Performance | 98 |
 | Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
 
 | Metric | Result |
 | --- | ---: |
-| First Contentful Paint | 0.7 s |
-| Largest Contentful Paint | 0.7 s |
-| Speed Index | 1.1 s |
-| Total Blocking Time | 0 ms |
+| First Contentful Paint | 0.8 s |
+| Largest Contentful Paint | 0.8 s |
+| Speed Index | 1.2 s |
+| Total Blocking Time | 10 ms |
 | Cumulative Layout Shift | 0.001 |
-| Time to Interactive | 0.7 s |
+| Time to Interactive | 0.9 s |
 
 ### Highest-impact opportunities
 
-- Initial server response time was short — Root document took 140 ms
-- Reduce unused JavaScript — Est savings of 45 KiB
+- Initial server response time was short — Root document took 210 ms
+- Reduce unused JavaScript — Est savings of 44 KiB
 
 ### Other failed or partial audits
 
-- Reduce unused JavaScript — Est savings of 45 KiB
-- Forced reflow
+- Reduce unused JavaScript — Est savings of 44 KiB
 - Network dependency tree
-- Render-blocking requests — Est savings of 90 ms
+- Render-blocking requests — Est savings of 100 ms
 - Use efficient cache lifetimes — Est savings of 5 KiB
-- Speed Index — 1.1 s
-- First Contentful Paint — 0.7 s
-- Largest Contentful Paint — 0.7 s
+- Speed Index — 1.2 s
+- First Contentful Paint — 0.8 s
+- Largest Contentful Paint — 0.8 s
+- Max Potential First Input Delay — 80 ms
 

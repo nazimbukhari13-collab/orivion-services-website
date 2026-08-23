@@ -1,6 +1,6 @@
 # Orivion Lighthouse detailed findings
 
-Generated: 2026-08-23T17:58:55.498Z
+Generated: 2026-08-23T18:03:20.732Z
 
 ## Mobile
 
@@ -46,24 +46,24 @@ Description: Custom interactive controls have appropriate ARIA roles. [Learn how
 
 ### Avoids enormous network payloads `total-byte-weight`
 
-Result: Total size was 606 KiB
+Result: Total size was 258 KiB
 Description: Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).
-- url=https://orivion.ae/media/orivion-hero-mobile.mp4 | totalBytes=356751
-- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129307
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24041
-- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22822
-- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22635
-- url=https://orivion.ae/media/orivion-hero-mobile-poster.webp | totalBytes=13516
+- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=129381
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24165
+- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22790
+- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22671
+- url=https://orivion.ae/media/orivion-hero-mobile-poster.webp | totalBytes=13412
 - url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577
-- url=https://orivion.ae/ | totalBytes=11528
-- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10069
-- url=https://orivion.ae/assets/routes-C-4F2j8G.js | totalBytes=4737
+- url=https://orivion.ae/ | totalBytes=11473
+- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10074
+- url=https://orivion.ae/assets/routes-CSdYE2RP.js | totalBytes=4844
+- url=https://orivion.ae/assets/link-ByfVX-v7.js | totalBytes=3762
 
 ### Reduce unused JavaScript `unused-javascript`
 
-Result: Est savings of 44 KiB
+Result: Est savings of 45 KiB
 Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).
-- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129025 | wastedBytes=45558
+- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=129078 | wastedBytes=46550
 
 ### Use efficient cache lifetimes `cache-insight`
 
@@ -78,8 +78,8 @@ Description: [Avoid chaining critical requests](https://developer.chrome.com/doc
 ### Render-blocking requests `render-blocking-insight`
 
 Description: Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24041 | wastedMs=150
-- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=911
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24165 | wastedMs=150
+- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=834
 
 ## Desktop
 
@@ -125,34 +125,30 @@ Description: Custom interactive controls have appropriate ARIA roles. [Learn how
 
 ### Avoids enormous network payloads `total-byte-weight`
 
-Result: Total size was 905 KiB
+Result: Total size was 843 KiB
 Description: Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).
-- url=https://orivion.ae/media/orivion-hero-desktop.mp4 | totalBytes=656026
-- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129591
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24251
-- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22787
-- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22619
-- url=https://orivion.ae/media/orivion-hero-desktop-poster.webp | totalBytes=17341
-- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11578
-- url=https://orivion.ae/ | totalBytes=11536
-- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10299
-- url=https://orivion.ae/assets/routes-C-4F2j8G.js | totalBytes=4930
+- url=https://orivion.ae/media/orivion-hero-desktop.mp4 | totalBytes=592572
+- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=129500
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24252
+- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22784
+- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22627
+- url=https://orivion.ae/media/orivion-hero-desktop-poster.webp | totalBytes=17342
+- url=https://orivion.ae/ | totalBytes=11660
+- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577
+- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10344
+- url=https://orivion.ae/assets/routes-CSdYE2RP.js | totalBytes=5075
 
 ### Reduce unused JavaScript `unused-javascript`
 
-Result: Est savings of 45 KiB
+Result: Est savings of 44 KiB
 Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).
-- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129066 | wastedBytes=45572
+- url=https://orivion.ae/assets/index-Dqd4V1Uq.js | totalBytes=128980 | wastedBytes=45542
 
 ### Use efficient cache lifetimes `cache-insight`
 
 Result: Est savings of 5 KiB
 Description: A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).
-- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11578 | wastedBytes=4631.2 | cacheLifetimeMs=86400000
-
-### Forced reflow `forced-reflow-insight`
-
-Description: A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developer.chrome.com/docs/performance/insights/forced-reflow) and possible mitigations.
+- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577 | wastedBytes=4630.8 | cacheLifetimeMs=86400000
 
 ### Network dependency tree `network-dependency-tree-insight`
 
@@ -160,8 +156,8 @@ Description: [Avoid chaining critical requests](https://developer.chrome.com/doc
 
 ### Render-blocking requests `render-blocking-insight`
 
-Result: Est savings of 90 ms
+Result: Est savings of 100 ms
 Description: Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.
-- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24251 | wastedMs=202
-- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=1044 | wastedMs=156
+- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=1042 | wastedMs=173
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24252 | wastedMs=173
 
