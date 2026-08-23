@@ -234,7 +234,7 @@ function DeferredConsultationForm() {
     <div ref={hostRef}>
       {ready ? (
         <Suspense fallback={<div className="o-form-placeholder" aria-hidden="true" />}>
-          <DeferredConsultationForm />
+          <ConsultationForm compact />
         </Suspense>
       ) : (
         <div className="o-form-placeholder" aria-hidden="true" />
@@ -616,7 +616,7 @@ function Home() {
               </ul>
             </div>
             <div className="o-panel rv">
-              <ConsultationForm compact />
+              <DeferredConsultationForm />
             </div>
           </div>
         </div>
