@@ -20,6 +20,13 @@
   display: none !important;
 }
 
+/* Increase contrast for the light-card labels and links flagged by Lighthouse. */
+.orivion #jurisdictions .o-feature .link,
+.orivion .o-alt .o-feature .link,
+.orivion #insights .o-post .cat {
+  color: #555c65;
+}
+
 /* Keep all footer columns aligned on the same row on desktop. */
 .orivion .foot-grid {
   display: grid;
