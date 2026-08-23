@@ -1,4 +1,4 @@
-# Post-optimization audit trigger: 2026-08-23
+# Post-optimization audit trigger: 2026-08-23 performance pass 2
 name: Live Lighthouse audit
 
 on:
