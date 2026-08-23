@@ -1,4 +1,8 @@
 /* Performance-focused overrides for the initial viewport. */
+.o-form-placeholder {
+  min-height: 620px;
+}
+
 @media (max-width: 760px), (pointer: coarse) {
   .orivion::after {
     display: none;
@@ -19,11 +23,6 @@
     transform: none !important;
     transition: none !important;
     filter: none !important;
-  }
-
-  .orivion .home-hero-media,
-  .orivion .home-hero-scrim {
-    will-change: auto;
   }
 }
 
