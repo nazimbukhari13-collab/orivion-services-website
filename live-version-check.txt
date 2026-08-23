@@ -1,11 +1,12 @@
-Checked: 2026-08-22T21:14:52Z
-GoogleFonts: present
+Checked: 2026-08-23T18:33:42Z
+BuildMarker: perf-stable-v1
+GoogleFonts: absent
 Assets:
 Mobile video headers:
-cf-cache-status: HIT
+cf-cache-status: MISS
 cache-control: public, max-age=2592000, stale-while-revalidate=86400
-etag: "3fe0c16bfe50365fbcdfc5681bd9f246"
+etag: "530738debae1eb1784296544366a2239"
 Desktop video headers:
 cf-cache-status: HIT
 cache-control: public, max-age=2592000, stale-while-revalidate=86400
-etag: "92db3cbd4076b7fe4b6d1cb5ae6db159"
+etag: "fd38ceddc04418426b9ebb860bdaaba0"
