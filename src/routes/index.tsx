@@ -510,6 +510,7 @@ function Home() {
                     day: "numeric",
                     month: "short",
                     year: "numeric",
+                    timeZone: "UTC",
                   })}{" "}
                   · {p.readMins} min read
                 </div>
