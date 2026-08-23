@@ -1,6 +1,6 @@
 # Orivion live Lighthouse audit
 
-Generated: 2026-08-22T21:05:34.050Z
+Generated: 2026-08-23T17:58:55.498Z
 
 Target: https://orivion.ae/
 
@@ -8,73 +8,71 @@ Target: https://orivion.ae/
 
 | Category | Score |
 | --- | ---: |
-| Performance | 71 |
-| Accessibility | 97 |
+| Performance | 56 |
+| Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
 
 | Metric | Result |
 | --- | ---: |
-| First Contentful Paint | 3.3 s |
-| Largest Contentful Paint | 3.5 s |
-| Speed Index | 4.0 s |
-| Total Blocking Time | 490 ms |
+| First Contentful Paint | 3.0 s |
+| Largest Contentful Paint | 3.0 s |
+| Speed Index | 5.7 s |
+| Total Blocking Time | 2,410 ms |
 | Cumulative Layout Shift | 0.001 |
-| Time to Interactive | 4.2 s |
+| Time to Interactive | 6.2 s |
 
 ### Highest-impact opportunities
 
-- Reduce unused JavaScript — Est savings of 51 KiB
-- Initial server response time was short — Root document took 30 ms
+- Initial server response time was short — Root document took 230 ms
+- Reduce unused JavaScript — Est savings of 44 KiB
 
 ### Other failed or partial audits
 
-- Minimize main-thread work — 3.9 s
-- Background and foreground colors do not have a sufficient contrast ratio.
-- Reduce unused JavaScript — Est savings of 51 KiB
-- LCP request discovery
+- Minimize main-thread work — 7.9 s
+- Reduce JavaScript execution time — 1.9 s
+- Reduce unused JavaScript — Est savings of 44 KiB
 - Network dependency tree
-- Render-blocking requests — Est savings of 950 ms
-- First Contentful Paint — 3.3 s
-- Max Potential First Input Delay — 270 ms
+- Max Potential First Input Delay — 730 ms
+- Total Blocking Time — 2,410 ms
+- First Contentful Paint — 3.0 s
 - Use efficient cache lifetimes — Est savings of 5 KiB
-- Total Blocking Time — 490 ms
-- Largest Contentful Paint — 3.5 s
-- Speed Index — 4.0 s
+- Render-blocking requests
+- Speed Index — 5.7 s
+- Time to Interactive — 6.2 s
+- Largest Contentful Paint — 3.0 s
 
 ## Desktop
 
 | Category | Score |
 | --- | ---: |
-| Performance | 97 |
-| Accessibility | 97 |
+| Performance | 99 |
+| Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
 
 | Metric | Result |
 | --- | ---: |
-| First Contentful Paint | 0.9 s |
-| Largest Contentful Paint | 0.9 s |
-| Speed Index | 1.2 s |
+| First Contentful Paint | 0.7 s |
+| Largest Contentful Paint | 0.7 s |
+| Speed Index | 1.1 s |
 | Total Blocking Time | 0 ms |
-| Cumulative Layout Shift | 0 |
-| Time to Interactive | 0.9 s |
+| Cumulative Layout Shift | 0.001 |
+| Time to Interactive | 0.7 s |
 
 ### Highest-impact opportunities
 
-- Initial server response time was short — Root document took 160 ms
-- Reduce unused JavaScript — Est savings of 51 KiB
+- Initial server response time was short — Root document took 140 ms
+- Reduce unused JavaScript — Est savings of 45 KiB
 
 ### Other failed or partial audits
 
-- Background and foreground colors do not have a sufficient contrast ratio.
-- Reduce unused JavaScript — Est savings of 51 KiB
-- LCP request discovery
+- Reduce unused JavaScript — Est savings of 45 KiB
+- Forced reflow
 - Network dependency tree
-- Render-blocking requests — Est savings of 240 ms
-- Avoid enormous network payloads — Total size was 3,072 KiB
+- Render-blocking requests — Est savings of 90 ms
 - Use efficient cache lifetimes — Est savings of 5 KiB
-- First Contentful Paint — 0.9 s
-- Speed Index — 1.2 s
-- Largest Contentful Paint — 0.9 s
+- Speed Index — 1.1 s
+- First Contentful Paint — 0.7 s
+- Largest Contentful Paint — 0.7 s
 

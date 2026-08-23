@@ -1,6 +1,6 @@
 # Orivion Lighthouse detailed findings
 
-Generated: 2026-08-22T21:05:34.050Z
+Generated: 2026-08-23T17:58:55.498Z
 
 ## Mobile
 
@@ -36,22 +36,6 @@ Description: When a tooltip element doesn't have an accessible name, screen read
 
 Description: When a `treeitem` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more about labeling `treeitem` elements](https://dequeuniversity.com/rules/axe/4.12/aria-treeitem-name).
 
-### Background and foreground colors do not have a sufficient contrast ratio. `color-contrast`
-
-Description: Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.12/color-contrast).
-- selector=main#main-content > div.marquee > div.track > span | snippet=<span> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=main#main-content > div.marquee > div.track > span | snippet=<span> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div.wrap > div.sec-head > div > div.sec-tag | snippet=<div class="sec-tag"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=section#services > div.wrap > div.sec-head > p.sec-note | snippet=<p class="sec-note"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=section#services > div.wrap > div > div.sec-tag | snippet=<div class="sec-tag rv in" style="margin-bottom:8px"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=section#services > div.wrap > div > div.sec-tag | snippet=<div class="sec-tag rv in" style="margin-bottom:8px"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div.wrap > div.sec-head > div > div.sec-tag | snippet=<div class="sec-tag"> | explanation=Fix any of the following: Element has insufficient color contrast of 3.94 (foreground color: #6f7681, background color: #eceef1, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=section.o-alt > div.wrap > div.sec-head > p.sec-note | snippet=<p class="sec-note"> | explanation=Fix any of the following: Element has insufficient color contrast of 3.94 (foreground color: #6f7681, background color: #eceef1, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div.wrap > div.proc-grid > div.proc > p | snippet=<p> | explanation=Fix any of the following: Element has insufficient color contrast of 3.94 (foreground color: #6f7681, background color: #eceef1, font size: 10.9pt (14.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div.wrap > div.proc-grid > div.proc > p | snippet=<p> | explanation=Fix any of the following: Element has insufficient color contrast of 3.94 (foreground color: #6f7681, background color: #eceef1, font size: 10.9pt (14.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div.wrap > div.proc-grid > div.proc > p | snippet=<p> | explanation=Fix any of the following: Element has insufficient color contrast of 3.94 (foreground color: #6f7681, background color: #eceef1, font size: 10.9pt (14.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div.wrap > div.proc-grid > div.proc > p | snippet=<p> | explanation=Fix any of the following: Element has insufficient color contrast of 3.94 (foreground color: #6f7681, background color: #eceef1, font size: 10.9pt (14.5px), font weight: normal). Expected contrast ratio of 4.5:1
-
 ### ARIA IDs are unique `duplicate-id-aria`
 
 Description: The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn how to fix duplicate ARIA IDs](https://dequeuniversity.com/rules/axe/4.12/duplicate-id-aria).
@@ -62,24 +46,24 @@ Description: Custom interactive controls have appropriate ARIA roles. [Learn how
 
 ### Avoids enormous network payloads `total-byte-weight`
 
-Result: Total size was 1,957 KiB
+Result: Total size was 606 KiB
 Description: Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).
-- url=https://orivion.ae/media/orivion-hero-mobile.mp4 | totalBytes=1708543
-- url=https://orivion.ae/assets/index-BWvPaEzq.js | totalBytes=136050
-- url=https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK0BNntkaToggR7BYZbNPxDcwgknk-4.woff2 | totalBytes=30973
-- url=https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2 | totalBytes=22349
-- url=https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjjH7Motmp5g.woff2 | totalBytes=15711
-- url=https://orivion.ae/media/orivion-hero-mobile-poster.webp | totalBytes=13590
-- url=https://orivion.ae/assets/styles-C7BVDUoQ.css | totalBytes=13442
+- url=https://orivion.ae/media/orivion-hero-mobile.mp4 | totalBytes=356751
+- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129307
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24041
+- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22822
+- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22635
+- url=https://orivion.ae/media/orivion-hero-mobile-poster.webp | totalBytes=13516
 - url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577
-- url=https://orivion.ae/ | totalBytes=11457
-- url=https://orivion.ae/assets/orivion-CSq5KBvZ.css | totalBytes=11177
+- url=https://orivion.ae/ | totalBytes=11528
+- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10069
+- url=https://orivion.ae/assets/routes-C-4F2j8G.js | totalBytes=4737
 
 ### Reduce unused JavaScript `unused-javascript`
 
-Result: Est savings of 51 KiB
+Result: Est savings of 44 KiB
 Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).
-- url=https://orivion.ae/assets/index-BWvPaEzq.js | totalBytes=135757 | wastedBytes=52140
+- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129025 | wastedBytes=45558
 
 ### Use efficient cache lifetimes `cache-insight`
 
@@ -87,21 +71,15 @@ Result: Est savings of 5 KiB
 Description: A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).
 - url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577 | wastedBytes=4630.8 | cacheLifetimeMs=86400000
 
-### LCP request discovery `lcp-discovery-insight`
-
-Description: [Optimize LCP](https://developer.chrome.com/docs/performance/insights/lcp-discovery) by making the LCP image discoverable from the HTML immediately, and avoiding lazy-loading
-
 ### Network dependency tree `network-dependency-tree-insight`
 
 Description: [Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load.
 
 ### Render-blocking requests `render-blocking-insight`
 
-Result: Est savings of 950 ms
 Description: Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.
-- url=https://orivion.ae/assets/styles-C7BVDUoQ.css | totalBytes=13442 | wastedMs=150
-- url=https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap | totalBytes=1415 | wastedMs=784
-- url=https://orivion.ae/assets/orivion-CSq5KBvZ.css | totalBytes=11177 | wastedMs=150
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24041 | wastedMs=150
+- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=911
 
 ## Desktop
 
@@ -137,22 +115,6 @@ Description: When a tooltip element doesn't have an accessible name, screen read
 
 Description: When a `treeitem` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more about labeling `treeitem` elements](https://dequeuniversity.com/rules/axe/4.12/aria-treeitem-name).
 
-### Background and foreground colors do not have a sufficient contrast ratio. `color-contrast`
-
-Description: Low-contrast text is difficult or impossible for many users to read. [Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.12/color-contrast).
-- selector=div#top > nav#nav > div.nav-links > a.active | snippet=<a class="active" href="/" data-status="active" aria-current="page"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=nav#nav > div.nav-links > div.nav-item > a | snippet=<a href="/services"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div#top > nav#nav > div.nav-links > a | snippet=<a href="/about"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div#top > nav#nav > div.nav-links > a | snippet=<a href="/jurisdictions"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div#top > nav#nav > div.nav-links > a | snippet=<a href="/why-dubai"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div#top > nav#nav > div.nav-links > a | snippet=<a href="/blog"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div#top > nav#nav > div.nav-links > a | snippet=<a href="/faqs"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=div#top > nav#nav > div.nav-links > a | snippet=<a href="/contact"> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 10.1pt (13.5px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=main#main-content > div.marquee > div.track > span | snippet=<span> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=main#main-content > div.marquee > div.track > span | snippet=<span> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=main#main-content > div.marquee > div.track > span | snippet=<span> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-- selector=main#main-content > div.marquee > div.track > span | snippet=<span> | explanation=Fix any of the following: Element has insufficient color contrast of 4.19 (foreground color: #6f7681, background color: #f4f5f7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1
-
 ### ARIA IDs are unique `duplicate-id-aria`
 
 Description: The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn how to fix duplicate ARIA IDs](https://dequeuniversity.com/rules/axe/4.12/duplicate-id-aria).
@@ -161,36 +123,36 @@ Description: The value of an ARIA ID must be unique to prevent other instances f
 
 Description: Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://developer.chrome.com/docs/lighthouse/accessibility/custom-control-roles/).
 
-### Avoid enormous network payloads `total-byte-weight`
+### Avoids enormous network payloads `total-byte-weight`
 
-Result: Total size was 3,072 KiB
+Result: Total size was 905 KiB
 Description: Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).
-- url=https://orivion.ae/media/orivion-hero-desktop.mp4 | totalBytes=2844167
-- url=https://orivion.ae/assets/index-BWvPaEzq.js | totalBytes=136274
-- url=https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yK0BNntkaToggR7BYZbNPxDcwgknk-4.woff2 | totalBytes=30973
-- url=https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2 | totalBytes=22349
-- url=https://orivion.ae/media/orivion-hero-desktop-poster.webp | totalBytes=17339
-- url=https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjjH7Motmp5g.woff2 | totalBytes=15711
-- url=https://orivion.ae/assets/styles-C7BVDUoQ.css | totalBytes=13642
-- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577
-- url=https://orivion.ae/assets/orivion-CSq5KBvZ.css | totalBytes=11306
-- url=https://orivion.ae/ | totalBytes=11304
+- url=https://orivion.ae/media/orivion-hero-desktop.mp4 | totalBytes=656026
+- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129591
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24251
+- url=https://orivion.ae/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2 | totalBytes=22787
+- url=https://orivion.ae/assets/instrument-serif-latin-400-italic-DKMiL14s.woff2 | totalBytes=22619
+- url=https://orivion.ae/media/orivion-hero-desktop-poster.webp | totalBytes=17341
+- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11578
+- url=https://orivion.ae/ | totalBytes=11536
+- url=https://orivion.ae/assets/useStore-DS0LvO1q.js | totalBytes=10299
+- url=https://orivion.ae/assets/routes-C-4F2j8G.js | totalBytes=4930
 
 ### Reduce unused JavaScript `unused-javascript`
 
-Result: Est savings of 51 KiB
+Result: Est savings of 45 KiB
 Description: Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).
-- url=https://orivion.ae/assets/index-BWvPaEzq.js | totalBytes=135750 | wastedBytes=52206
+- url=https://orivion.ae/assets/index-BtYaukho.js | totalBytes=129066 | wastedBytes=45572
 
 ### Use efficient cache lifetimes `cache-insight`
 
 Result: Est savings of 5 KiB
 Description: A long cache lifetime can speed up repeat visits to your page. [Learn more about caching](https://developer.chrome.com/docs/performance/insights/cache).
-- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11577 | wastedBytes=4630.8 | cacheLifetimeMs=86400000
+- url=https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496 | totalBytes=11578 | wastedBytes=4631.2 | cacheLifetimeMs=86400000
 
-### LCP request discovery `lcp-discovery-insight`
+### Forced reflow `forced-reflow-insight`
 
-Description: [Optimize LCP](https://developer.chrome.com/docs/performance/insights/lcp-discovery) by making the LCP image discoverable from the HTML immediately, and avoiding lazy-loading
+Description: A forced reflow occurs when JavaScript queries geometric properties (such as offsetWidth) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developer.chrome.com/docs/performance/insights/forced-reflow) and possible mitigations.
 
 ### Network dependency tree `network-dependency-tree-insight`
 
@@ -198,9 +160,8 @@ Description: [Avoid chaining critical requests](https://developer.chrome.com/doc
 
 ### Render-blocking requests `render-blocking-insight`
 
-Result: Est savings of 240 ms
+Result: Est savings of 90 ms
 Description: Requests are blocking the page's initial render, which may delay LCP. [Deferring or inlining](https://developer.chrome.com/docs/performance/insights/render-blocking) can move these network requests out of the critical path.
-- url=https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400&display=swap | totalBytes=1415 | wastedMs=226
-- url=https://orivion.ae/assets/orivion-CSq5KBvZ.css | totalBytes=11306 | wastedMs=214
-- url=https://orivion.ae/assets/styles-C7BVDUoQ.css | totalBytes=13642 | wastedMs=119
+- url=https://orivion.ae/assets/app-Do4fh507.css | totalBytes=24251 | wastedMs=202
+- url=https://orivion.ae/assets/index-DsN7f0_u.css | totalBytes=1044 | wastedMs=156
 
