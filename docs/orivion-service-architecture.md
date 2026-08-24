@@ -73,6 +73,36 @@ SEO, paid media, social, content, conversion, lifecycle marketing and digital-co
 
 This is a storytelling framework, not a replacement for the nine service families.
 
+## Leadership / Meet Our Team — Locked
+
+Orivion will include a dedicated leadership section within the About area of the website. The preferred navigation label is **Leadership** while the page may use **Meet Our Team** as supporting language where appropriate.
+
+The page is intended to establish credibility by introducing the people responsible for Orivion's direction, client work and specialist disciplines. It must not be a decorative headshot grid with generic biographies.
+
+Each senior profile should normally include:
+- full name and current Orivion role;
+- professional photograph;
+- concise professional introduction;
+- areas of expertise;
+- relevant career experience;
+- industries, functions or technology domains worked in where relevant;
+- qualifications, certifications or professional credentials where appropriate;
+- current responsibilities at Orivion;
+- selected professional experience or achievements that can be stated accurately;
+- LinkedIn or other professional profile where appropriate.
+
+Senior leaders may have individual profile pages when there is enough substantive material. Those pages can use an editorial structure combining portraiture, professional biography, career timeline, expertise, selected experience and current focus at Orivion.
+
+### Leadership content standard
+
+All leadership content must be factual, restrained and verifiable. Do not invent or inflate titles, years of experience, client relationships, project values, achievements, qualifications, awards or industry exposure.
+
+Avoid generic executive language such as “visionary leader”, “seasoned professional with an unparalleled track record”, “thought leader”, or similar unsupported praise.
+
+Profiles should instead explain concrete professional experience in precise language. Where an achievement depends on a figure, client name, employer, project or commercial result, it should only be published when the information can be supported and is appropriate to disclose.
+
+The page should feel senior, credible and editorial rather than promotional. Its purpose is to help a prospective client understand who is behind Orivion, what they know, what they have done and what responsibilities they hold today.
+
 ## Editorial and expertise standard
 
 Every service and sub-service must be written as if prepared by an experienced consultant who understands the business problem, the operating context and the technical or regulatory implications.
