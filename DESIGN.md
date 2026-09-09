@@ -1,16 +1,18 @@
 # Orivion DESIGN.md
 
+> **Visual direction (updated 9 Sep 2026):** Orivion uses a **light, Apple-inspired system** — white and warm-paper grounds, near-black ink type, deep negative space, soft-shadow depth, and a single restrained accent. The earlier dark bronze/porcelain palette is retired. Principles: **clarity, deference, depth** — the interface recedes so the work and the words lead. Structural rules below (layout, navigation, hero logic, motion, forms, accessibility, performance) are unchanged from the locked blueprint.
+
 ## 1. Brand Idea
 
-Orivion should feel like a modern operating partner for businesses: capable of helping a company become real, remain operational, and build the digital systems behind its growth.
+Orivion is a modern operating partner for businesses: it helps a company become real, stay operational, and build the digital systems behind its growth.
 
-The design language must connect business structure with technology.
+The design language must connect **business structure** with **technology** — and make the join itself the story. Orivion's real difference is that it does both halves: **establish the company and build the systems that run it.** The website experience should make that single seam visible, not state it as a slogan.
 
 Working brand line:
 
 > **Build the business. Build what powers it.**
 
-The visual system should feel precise, architectural, calm and intelligent. It must not look like a generic UAE business setup website or a generic AI agency.
+The visual system should feel precise, architectural, calm and intelligent — premium through restraint and space, not ornament. It must not look like a generic UAE business-setup website or a generic AI agency.
 
 ---
 
@@ -18,17 +20,16 @@ The visual system should feel precise, architectural, calm and intelligent. It m
 
 ### Core mood
 
-- dark architectural surfaces
-- warm neutral light
-- restrained metallic accents
-- large typography
-- deep negative space
+- light architectural surfaces (white and warm paper)
+- generous, confident negative space
+- near-black ink typography at large scale
+- depth from soft, low-contrast shadow on white — not gradients for their own sake
+- a single restrained accent, used sparingly
 - subtle motion everywhere, strong motion only where it helps the story
-- real visual depth rather than gradients for their own sake
 
 ### Keywords
 
-Architectural. Technical. Editorial. Quietly futuristic. Human-readable. Premium without looking luxurious for the sake of it.
+Architectural. Technical. Editorial. Quietly futuristic. Human-readable. Clear, deferential, precise — premium without looking luxurious for the sake of it.
 
 ### Avoid
 
@@ -43,38 +44,44 @@ Architectural. Technical. Editorial. Quietly futuristic. Human-readable. Premium
 - stock-photo handshakes
 - random Dubai skyline images in every section
 - decorative pseudo-system text such as “NODE 04” unless it has a real function
+- heavy dark full-bleed sections used only for drama
 
 ---
 
 ## 3. Color Palette
 
+A light, high-legibility system. Backgrounds are white and near-white; type is near-black; one accent carries links and primary actions.
+
 ### Core surfaces
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `ink` | `#090A0C` | primary page background |
-| `charcoal` | `#101216` | raised dark surfaces |
-| `graphite` | `#191C21` | cards, panels, secondary surfaces |
-| `smoke` | `#8B8E94` | secondary text and rules |
-| `porcelain` | `#F2EFE8` | primary light text / light surfaces |
-| `warm-white` | `#FAF8F3` | bright content surfaces |
-| `bronze` | `#B58A5A` | restrained brand accent |
-| `bronze-soft` | `#D0AD82` | hover/highlight accent |
-| `bronze-dark` | `#765838` | dark accent depth |
+| `white` | `#FFFFFF` | primary page background |
+| `paper` | `#F5F5F7` | alternating sections, raised surfaces |
+| `mist` | `#FBFBFD` | subtle panel tint |
+| `hairline` | `#D2D2D7` | borders, rules, dividers |
+| `ink` | `#1D1D1F` | primary text and the Split-O mark |
+| `slate` | `#424245` | mid-emphasis text, subheads |
+| `ash` | `#6E6E73` | secondary/supporting text |
+| `accent` | `#0071E3` | links and primary call to action |
+| `accent-soft` | `#0077ED` | hover/active accent |
+| `accent-deep` | `#0059B3` | pressed/accent depth |
 
 ### Usage rules
 
-- Bronze is a signal color, not a page fill.
-- Default dark page ratio should be roughly 80–90% neutral surfaces and 10–20% light/bronze emphasis.
-- Use porcelain instead of pure white for most text and surfaces.
-- Use warm white for editorial reading sections and legal/insight content.
-- Do not introduce arbitrary bright accents page by page.
+- The accent is a signal colour, not a page fill. Most of the page is white/paper with ink type.
+- Default page ratio: roughly 85–95% neutral (white/paper/ink) and 5–15% accent emphasis.
+- Use `paper` (not pure grey) to separate alternating sections; keep section joins quiet.
+- Use `white` for editorial reading bands and legal/insight content.
+- Express elevation with soft shadow on white, not borders alone and never with dark fills.
+- Do not introduce arbitrary bright accents page by page. One accent, used with discipline.
+- Meet WCAG AA on white: `ink` and `ash` both pass for body text.
 
 ---
 
 ## 4. Typography
 
-Use the fonts already present in the project where possible.
+Use the fonts already present in the project. The type system is retained; only its surfaces changed from dark to light.
 
 ### Display / headings
 
@@ -106,7 +113,7 @@ Use sparingly for:
 - editorial pull quote
 - transitional statement
 
-Never turn every heading into a serif/sans mix.
+Never turn every heading into a serif/sans mix. Do not use italic as a visual crutch.
 
 ### Technical / utility
 
@@ -168,7 +175,7 @@ Desktop: `120–220px` vertical breathing room depending on function.
 
 Mobile: `80–128px`.
 
-Do not solve weak hierarchy by putting everything in a card.
+Do not solve weak hierarchy by putting everything in a card. On a light system, whitespace and type scale carry hierarchy.
 
 ---
 
@@ -176,7 +183,7 @@ Do not solve weak hierarchy by putting everything in a card.
 
 ### Desktop
 
-Use a slim, quiet header over the hero.
+Use a slim, quiet header over the hero. On white it is near-transparent with an ink wordmark; it gains a hairline rule and a subtle backdrop blur once scrolled.
 
 Structure:
 
@@ -197,9 +204,7 @@ Business Setup and Digital & Technology use mega menus.
 
 ### Mega menu style
 
-Not a giant white box.
-
-Use a dark, architectural panel with:
+Not a giant flat box. Use a **light, architectural panel** (white/paper with a hairline edge and soft shadow) containing:
 
 - service list
 - one contextual description
@@ -208,7 +213,7 @@ Use a dark, architectural panel with:
 
 ### Mobile
 
-Use a full-screen navigation layer with large readable links. No tiny nested accordions.
+Use a full-screen navigation layer on a white/paper ground with large readable ink links. No tiny nested accordions.
 
 Business Setup and Digital & Technology can expand as sections with generous touch targets.
 
@@ -222,7 +227,7 @@ The Split-O must **not** become the hero object.
 
 Primary visual: **Orivion System**
 
-A 3D environment of connected business stages:
+A 3D environment of connected business stages, presented as a clean architectural model on a light ground:
 
 - Establish
 - Operate
@@ -230,15 +235,15 @@ A 3D environment of connected business stages:
 - Grow
 - Automate
 
-The scene should resemble an architectural model/data structure rather than floating sci-fi ornaments.
+The scene should resemble an architectural model / data structure sitting in bright space, with soft contact shadows — not floating sci-fi ornaments. It should read as the "one operating partner" idea made physical: business stages on one side, the digital systems that run them on the other, connected.
 
 Materials:
 
-- smoked glass used sparingly
-- dark metal
-- matte porcelain
-- bronze signal surfaces
-- subtle point lights
+- matte white and warm-paper surfaces
+- light brushed metal / aluminium
+- clear and lightly frosted glass used sparingly
+- soft point lights and gentle ambient occlusion
+- the accent used only as a signal highlight on active stages
 
 ### Motion
 
@@ -249,7 +254,7 @@ Materials:
 
 ### Mobile
 
-Prefer a simplified scene or pre-rendered visual sequence if device performance is weak.
+Prefer a simplified scene or pre-rendered visual sequence if device performance is weak. Keep the ground light and the headline readable immediately.
 
 ---
 
@@ -259,11 +264,11 @@ Image-first design should be used for visually important pages.
 
 ### Preferred imagery
 
-- architectural detail
+- architectural detail, bright and minimal
 - modern business environments
 - close crops of materials, screens and physical systems
 - editorial portraits when real people are available
-- custom AI-generated visual metaphors
+- custom visual metaphors rendered on light grounds
 - product/interface imagery for digital pages
 - Dubai used selectively and contextually
 
@@ -278,11 +283,11 @@ Image-first design should be used for visually important pages.
 
 ### Treatment
 
-- cinematic crops
-- strong shadows
-- low-saturation neutral grading
-- occasional bronze warmth
-- intentional grain
+- clean, bright editorial crops
+- soft, realistic shadow rather than heavy contrast
+- low-saturation neutral grading that sits on white
+- restraint with the accent — small, intentional
+- optional fine grain, kept subtle
 - image masks can be sharp, editorial or asymmetrical; do not round every image
 
 ---
@@ -324,7 +329,7 @@ Use GSAP + ScrollTrigger for:
 - text reveal
 - timeline progression
 
-Never hijack native scroll.
+Never hijack native scroll. Lenis-class smooth scroll may synchronise with ScrollTrigger while keeping native behaviour.
 
 ### 3D narrative
 
@@ -346,17 +351,17 @@ Desktop interactions should feel tactile.
 
 ### Cards
 
-Prefer transform/lighting changes over lifting every card with a large shadow.
+Prefer transform and soft-shadow changes over heavy lifts. On white, a small shadow and a 1–2px rise is enough.
 
 ### Buttons
 
 - magnetic motion limited to a few pixels
 - pointer/focus state must remain obvious
-- visible keyboard focus
+- visible keyboard focus (accent ring)
 
 ### Links
 
-Use animated line or directional arrow movement rather than color change alone.
+Use animated line or directional arrow movement rather than colour change alone.
 
 ---
 
@@ -364,7 +369,7 @@ Use animated line or directional arrow movement rather than color change alone.
 
 ### Primary
 
-Porcelain/light button on dark surfaces.
+Ink button on light surfaces (near-black fill, white label), or the accent for the single most important action on a page.
 
 - high contrast
 - medium radius, not full pill by default
@@ -373,11 +378,11 @@ Porcelain/light button on dark surfaces.
 
 ### Secondary
 
-Transparent/dark surface with visible border.
+Transparent surface with a hairline border and ink label.
 
-### Bronze
+### Accent
 
-Reserve bronze-filled actions for rare high-value moments, not every CTA.
+Reserve accent-filled actions for rare high-value moments (the primary consultation CTA), not every button.
 
 ### Shape
 
@@ -396,8 +401,8 @@ Use cards when the information is genuinely discrete.
 ### Preferred card behavior
 
 - one strong visual or information hierarchy
-- minimal border
-- subtle surface shift
+- minimal border (hairline) on white, or a quiet paper fill
+- subtle surface/shadow shift on hover
 - hover reveals extra detail when useful
 
 ### Avoid
@@ -470,9 +475,9 @@ Reading experience takes priority over effects.
 
 ### Layout
 
-- warm white or porcelain reading bands
+- white or warm-paper reading bands
 - strong headline hierarchy
-- dark navigation retained
+- the light header retained
 - large images
 - source/updated metadata clearly shown
 - inline diagrams or comparison blocks
@@ -541,8 +546,8 @@ When enabled:
 ## 18. Accessibility Rules
 
 - minimum touch target around 44px where practical
-- visible keyboard focus
-- sufficient text contrast
+- visible keyboard focus (accent ring at sufficient contrast on white)
+- sufficient text contrast (WCAG AA on the light ground)
 - never communicate status by color only
 - alt text for meaningful images
 - decorative visual layers hidden from assistive tech
@@ -628,7 +633,23 @@ Do not:
 
 ---
 
-## 23. Quality Gate
+## 23. Token Migration Note (dark → light)
+
+The CSS still carries the old dark tokens. Step 3 of the redesign remaps them to this light system. Mapping to apply in `src/orivion.css` / `app.css` / shadcn theme:
+
+| Old (dark) | New (light) | Note |
+| --- | --- | --- |
+| `ink` (bg) | `white` / `paper` grounds | background role moves to white/paper |
+| `charcoal`, `graphite` (dark surfaces) | `paper`, `mist` | raised/secondary surfaces become near-white |
+| `porcelain`, `warm-white` (light text) | `ink`, `slate` | text role becomes near-black |
+| `smoke` | `ash` | secondary text |
+| `bronze`, `bronze-soft`, `bronze-dark` | `accent`, `accent-soft`, `accent-deep` | single accent replaces bronze; used sparingly |
+
+Until the CSS is migrated, treat this document — not the live tokens — as the source of truth for colour.
+
+---
+
+## 24. Quality Gate
 
 Before a page is considered ready:
 
@@ -639,8 +660,9 @@ Before a page is considered ready:
 5. Is mobile intentionally designed?
 6. Are all claims supportable?
 7. Are regulated facts sourced and dated?
-8. Does it pass accessibility review?
+8. Does it pass accessibility review (AA contrast on the light ground)?
 9. Does it pass Vercel interface-guideline review?
 10. Does it pass a production Lighthouse/browser check?
+11. Is the palette the light system (white/paper grounds, ink type, single accent) with no dark bronze/porcelain surfaces remaining?
 
 If the answer to any important item is no, the page is not finished.
