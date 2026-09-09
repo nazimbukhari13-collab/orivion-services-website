@@ -14,12 +14,13 @@
   --muted: #5f6670;
   --faint: #656c77;
   --line: #e0e3e8;
-  --blue: #6ea8ff;
-  --violet: #9a7bff;
-  --peach: #ff9d5c;
+  /* single blue accent, expressed as a subtle blue ramp */
+  --blue: #0071e3;
+  --violet: #2b8bff;
+  --peach: #7ab8ff;
   --grad: linear-gradient(100deg, var(--blue), var(--violet) 50%, var(--peach));
-  --sans: "Space Grotesk Variable", "Space Grotesk", sans-serif;
-  --serif: "Instrument Serif", serif;
+  --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --serif: "Playfair Display", Georgia, serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
