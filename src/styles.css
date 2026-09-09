@@ -70,32 +70,35 @@
 
 :root {
   --radius: 0.5rem;
-  /* Brand */
-  --navy: oklch(0.235 0.075 265);        /* #0A1F44 */
-  --navy-deep: oklch(0.17 0.06 265);
-  --gold: oklch(0.745 0.12 85);          /* #C9A84C */
-  --gold-soft: oklch(0.88 0.07 88);
-  --surface: oklch(0.975 0.005 250);     /* #F5F7FA */
+  /* Brand — light system, single blue accent (#0071E3) */
+  --accent-blue: oklch(0.6 0.2 250);        /* #0071E3 */
+  --accent-blue-soft: oklch(0.64 0.18 250); /* #0077ED hover */
+  --accent-blue-deep: oklch(0.5 0.17 250);  /* #0059B3 pressed */
+  --navy: var(--accent-blue);               /* legacy alias -> blue accent */
+  --navy-deep: var(--accent-blue-deep);     /* legacy alias */
+  --gold: var(--accent-blue);               /* legacy alias -> single accent */
+  --gold-soft: var(--accent-blue-soft);     /* legacy alias */
+  --surface: oklch(0.97 0 0);               /* #F5F5F7 paper */
 
   --background: oklch(1 0 0);
-  --foreground: oklch(0.18 0.04 265);
+  --foreground: oklch(0.22 0 0);            /* #1D1D1F ink */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.04 265);
+  --card-foreground: oklch(0.22 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.04 265);
-  --primary: var(--navy);
-  --primary-foreground: oklch(0.98 0.005 250);
+  --popover-foreground: oklch(0.22 0 0);
+  --primary: var(--accent-blue);
+  --primary-foreground: oklch(1 0 0);
   --secondary: var(--surface);
-  --secondary-foreground: var(--navy);
+  --secondary-foreground: oklch(0.22 0 0);
   --muted: var(--surface);
-  --muted-foreground: oklch(0.5 0.03 260);
-  --accent: var(--gold);
-  --accent-foreground: var(--navy);
+  --muted-foreground: oklch(0.53 0 0);      /* #6E6E73 ash */
+  --accent: oklch(0.95 0.03 250);           /* subtle blue tint for hovers */
+  --accent-foreground: oklch(0.22 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.92 0.01 255);
-  --input: oklch(0.92 0.01 255);
-  --ring: var(--gold);
+  --border: oklch(0.86 0 0);                /* #D2D2D7 hairline */
+  --input: oklch(0.86 0 0);
+  --ring: var(--accent-blue);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

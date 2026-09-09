@@ -81,18 +81,16 @@ A light, high-legibility system. Backgrounds are white and near-white; type is n
 
 ## 4. Typography
 
-Use the fonts already present in the project. The type system is retained; only its surfaces changed from dark to light.
+Two-family system loaded via Google Fonts: **Playfair Display** (display) + **Inter** (body/UI). JetBrains Mono is kept for technical labels only.
 
 ### Display / headings
 
-**Space Grotesk Variable**
+**Playfair Display**
 
 Use for:
 
 - hero headlines
 - section headlines
-- navigation
-- buttons
 - service names
 
 Rules:
@@ -102,18 +100,20 @@ Rules:
 - avoid 5–6 line hero headings
 - default hero headline: 1–3 lines
 - large sizes should use controlled tracking, usually slightly negative
+- editorial serif contrast against Inter body — do not set long paragraphs in Playfair
 
-### Editorial accent
+### Body / UI
 
-**Instrument Serif**
+**Inter**
 
-Use sparingly for:
+Use for:
 
-- one word or phrase in a major heading
-- editorial pull quote
-- transitional statement
+- body and long-form copy
+- navigation
+- buttons and controls
+- labels, captions and UI text
 
-Never turn every heading into a serif/sans mix. Do not use italic as a visual crutch.
+Inter carries the working interface; Playfair carries the editorial voice.
 
 ### Technical / utility
 
