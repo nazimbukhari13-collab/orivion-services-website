@@ -26,3 +26,11 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
+        with:
+          name: orivion-redesign-build
+          path: .output
+          if-no-files-found: error
+          retention-days: 3
