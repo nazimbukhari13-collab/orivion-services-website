@@ -41,6 +41,17 @@
 }
 
 @media (max-width: 680px) {
+  .orivion.home-v2-active nav .nav-right .btn.fill {
+    display: none;
+  }
+
+  .orivion.home-v2-active .o-wa {
+    width: 48px;
+    height: 48px;
+    right: 14px;
+    bottom: 76px;
+  }
+
   .orivion.home-v2-active .ov2-intro,
   .orivion.home-v2-active .ov2-pathways,
   .orivion.home-v2-active .ov2-process,
