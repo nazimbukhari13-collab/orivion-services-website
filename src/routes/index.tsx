@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import {
   services,
   jurisdictions,
@@ -9,8 +9,8 @@ import {
   siteConfig,
 } from "@/lib/site-data";
 import { OButton } from "@/components/orivion/ui";
-
 import { ConsultationFormSecure as ConsultationForm } from "@/components/site/ConsultationFormSecure";
+import "@/home-v2.css";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,13 +19,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Company formation, trade licensing, visas, accounting and tax in the UAE, plus websites, software, marketing and AI, from one team in Dubai.",
+          "Company formation, trade licensing, visas, accounting and tax in the UAE, plus websites, software, marketing and AI, from one connected team.",
       },
       { property: "og:title", content: "Business Setup in Dubai and Digital Technology | Orivion" },
       {
         property: "og:description",
         content:
-          "Company formation, licensing, visas and digital services in Dubai, from one connected team.",
+          "UAE business setup and digital technology delivered through one accountable partner.",
       },
       { property: "og:url", content: "https://orivion.ae/" },
       { property: "og:site_name", content: "Orivion" },
@@ -105,35 +105,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const usps = [
-  "One brief across business and digital work",
-  "Clear scope, ownership and decision points",
-  "Specialist delivery without fragmented coordination",
-  "Support that can continue after launch or setup",
-];
-
-const steps = [
-  {
-    t: "Discover",
-    d: "We understand the business need, audience, constraints and desired outcome.",
-  },
-  {
-    t: "Define",
-    d: "You receive a clear scope, delivery path, responsibilities and commercial terms.",
-  },
-  {
-    t: "Deliver",
-    d: "The right specialists execute the work with visible progress and review points.",
-  },
-  {
-    t: "Continue",
-    d: "We support, improve and extend the work when the business is ready for its next move.",
-  },
-];
-
-// Pick a single hero video for the current viewport so only one file is fetched
-// (not both), and skip video entirely when reduced motion is requested. Returns
-// null during SSR / first paint, when the CSS poster background is shown instead.
 function useHeroVideoVariant() {
   const [variant, setVariant] = useState<"desktop" | "mobile" | null>(null);
 
@@ -152,7 +123,6 @@ function useHeroVideoVariant() {
       window.removeEventListener("pointerdown", activateEarly);
       window.removeEventListener("keydown", activateEarly);
       window.removeEventListener("scroll", activateEarly);
-      window.removeEventListener("pointermove", activateEarly);
     };
     const apply = () => {
       removeEarlyActivation();
@@ -165,16 +135,12 @@ function useHeroVideoVariant() {
     const schedule = () => {
       window.clearTimeout(timer);
       removeEarlyActivation();
-
       if (mq.matches) {
-        // Keep video decoding outside the initial mobile performance window.
-        // Real visitors still get the video immediately on first interaction.
         window.addEventListener("pointerdown", activateEarly, { once: true, passive: true });
         window.addEventListener("keydown", activateEarly, { once: true });
         window.addEventListener("scroll", activateEarly, { once: true, passive: true });
-        window.addEventListener("pointermove", activateEarly, { once: true, passive: true });
       } else {
-        timer = window.setTimeout(apply, 4200);
+        timer = window.setTimeout(apply, 1800);
       }
     };
     const onViewportChange = () => schedule();
@@ -194,30 +160,128 @@ function useHeroVideoVariant() {
   return variant;
 }
 
-const marqueeItems = [
-  "Company Formation",
-  "Trade Licensing",
-  "PRO Services",
-  "Compliance & Regulatory",
-  "Websites & Platforms",
-  "Custom Software",
-  "CRM & Automation",
-  "Digital Marketing",
-  "Social Media",
-  "AI Integration",
+const pathways = [
+  {
+    index: "01",
+    title: "Launch in the UAE",
+    copy: "Choose the right structure, secure the licence and coordinate the practical work around getting established.",
+    meta: "Formation · Licensing · PRO · Compliance",
+    to: "/jurisdictions",
+    image: "/media/services/company-formation.webp",
+  },
+  {
+    index: "02",
+    title: "Build a digital product",
+    copy: "Turn a commercial idea into a fast, useful and maintainable website, platform or software product.",
+    meta: "Websites · Platforms · Custom software",
+    to: "/services",
+    image: "/media/services/websites.webp",
+  },
+  {
+    index: "03",
+    title: "Automate the operation",
+    copy: "Connect data, CRM and workflows so routine work moves with less manual effort and better visibility.",
+    meta: "CRM · Automation · AI integration",
+    to: "/services",
+    image: "/media/services/crm-automation.webp",
+  },
+  {
+    index: "04",
+    title: "Create demand",
+    copy: "Build a coordinated digital presence that makes the business easier to discover, trust and choose.",
+    meta: "Digital marketing · Social media · SEO",
+    to: "/services",
+    image: "/media/services/digital-marketing.webp",
+  },
+];
+
+const process = [
+  {
+    number: "01",
+    title: "Frame the real problem",
+    copy: "We start with the business outcome, not a pre-selected service. That keeps scope focused and prevents unnecessary work.",
+  },
+  {
+    number: "02",
+    title: "Build the right team",
+    copy: "Corporate, design, engineering and growth specialists are brought in around the actual brief, with one clear owner.",
+  },
+  {
+    number: "03",
+    title: "Make progress visible",
+    copy: "Milestones, decisions and dependencies stay explicit so the work moves without disappearing into a black box.",
+  },
+  {
+    number: "04",
+    title: "Stay useful after launch",
+    copy: "When the business changes, the work can continue across setup, technology and growth without restarting the relationship.",
+  },
+];
+
+const trackEditorial = [
+  {
+    kicker: "UAE business setup",
+    title: "Establish the business with fewer loose ends.",
+    copy: "Formation is only one part of entering the UAE. Orivion coordinates the practical work around licensing, administration, compliance and the specialist support that follows.",
+  },
+  {
+    kicker: "Digital & technology",
+    title: "Build the systems customers and teams actually use.",
+    copy: "From the first public website to internal workflows and AI-enabled operations, we design and build digital work around the business rather than around a template.",
+  },
 ];
 
 function Home() {
   const heroVideo = useHeroVideoVariant();
+  const heroRef = useRef<HTMLElement>(null);
+  const [trackIndex, setTrackIndex] = useState(0);
+  const activeCategory = SERVICE_CATEGORIES[trackIndex] ?? SERVICE_CATEGORIES[0];
+  const activeServices = services.filter((service) => service.category === activeCategory);
+  const editorial = trackEditorial[trackIndex] ?? trackEditorial[0];
+
+  useEffect(() => {
+    const root = document.querySelector<HTMLElement>(".orivion");
+    const hero = heroRef.current;
+    if (!root) return;
+
+    root.classList.add("home-v2-active");
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (!hero) return;
+      const bounds = hero.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+      hero.style.setProperty("--ov2-mx", `${x}%`);
+      hero.style.setProperty("--ov2-my", `${y}%`);
+    };
+
+    const onScroll = () => {
+      const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      root.style.setProperty("--ov2-page-progress", `${Math.min(window.scrollY / max, 1)}`);
+    };
+
+    hero?.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      root.classList.remove("home-v2-active");
+      root.style.removeProperty("--ov2-page-progress");
+      hero?.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   return (
-    <>
-      {/* HERO */}
-      <header className="home-hero">
-        <div className="home-hero-media" aria-hidden="true">
+    <div className="ov2-home">
+      <div className="ov2-progress" aria-hidden="true" />
+
+      <header className="ov2-hero" ref={heroRef}>
+        <div className="ov2-hero-media" aria-hidden="true">
           {heroVideo === "desktop" && (
             <video
               key="desktop"
-              className="home-hero-video"
+              className="ov2-hero-video home-hero-video"
               autoPlay
               muted
               loop
@@ -232,7 +296,7 @@ function Home() {
           {heroVideo === "mobile" && (
             <video
               key="mobile"
-              className="home-hero-video"
+              className="ov2-hero-video home-hero-video"
               autoPlay
               muted
               loop
@@ -244,221 +308,150 @@ function Home() {
               <source src="/media/orivion-hero-mobile.mp4" type="video/mp4" />
             </video>
           )}
-          <div className="home-hero-scrim" />
+          <div className="ov2-hero-wash" />
+          <div className="ov2-hero-grid" />
+          <div className="ov2-hero-glow" />
         </div>
 
-        <div className="home-hero-inner">
-          <div className="home-hero-copy">
+        <div className="ov2-shell ov2-hero-shell">
+          <div className="ov2-hero-copy">
+            <p className="ov2-kicker">Independent business + technology partner</p>
             <h1>
-              <span className="l">
-                <span>Set up the business.</span>
-              </span>
-              <span className="l">
-                <span>
-                  Build what <em>moves it forward.</em>
-                </span>
-              </span>
+              Build one
+              <span>connected advantage.</span>
             </h1>
-            <div className="home-hero-foot">
-              <p className="home-hero-sub">
-                Business setup and digital technology delivered through one connected team. Start
-                with one service or bring both sides together.
-              </p>
-              <div className="home-hero-actions">
-                <OButton to="/consultation" variant="fillw" big>
-                  Start a conversation
-                </OButton>
-                <OButton to="/services" variant="light" big>
-                  Explore services
-                </OButton>
-              </div>
+            <p className="ov2-hero-lede">
+              Set up the business in the UAE. Build the technology behind it. Create the systems,
+              presence and growth engine that move it forward.
+            </p>
+            <div className="ov2-hero-actions">
+              <OButton to="/consultation" variant="fillw" big>
+                Start a project
+              </OButton>
+              <Link to="/services" className="ov2-text-link ov2-text-link-light">
+                Explore the system <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
+          </div>
+
+          <div className="ov2-orbit" aria-hidden="true">
+            <div className="ov2-orbit-ring ov2-orbit-ring-a" />
+            <div className="ov2-orbit-ring ov2-orbit-ring-b" />
+            <div className="ov2-orbit-core">
+              <span>ORIVION</span>
+              <b>Business × Technology</b>
+            </div>
+            <span className="ov2-orbit-label ov2-orbit-label-a">SET UP</span>
+            <span className="ov2-orbit-label ov2-orbit-label-b">BUILD</span>
+            <span className="ov2-orbit-label ov2-orbit-label-c">AUTOMATE</span>
+            <span className="ov2-orbit-label ov2-orbit-label-d">GROW</span>
           </div>
         </div>
 
-        <a className="home-hero-scroll" href="#services">
-          <span>Explore</span>
-          <i />
-        </a>
+        <div className="ov2-hero-foot ov2-shell">
+          <div>
+            <span>01</span>
+            <b>UAE Business Setup</b>
+          </div>
+          <div>
+            <span>02</span>
+            <b>Digital & Technology</b>
+          </div>
+          <div className="ov2-hero-location">Dubai, United Arab Emirates · Digital delivery worldwide</div>
+        </div>
       </header>
 
-      {/* MARQUEE */}
-      <div className="marquee home-marquee" aria-hidden="true">
-        <div className="track">
-          {[0, 1].map((rep) => marqueeItems.map((t) => <span key={`${rep}-${t}`}>{t}</span>))}
-        </div>
-      </div>
-
-      {/* SERVICES */}
-      <section id="services" className="home-services">
-        <div className="wrap">
-          <div className="sec-head rv">
-            <div>
-              <div className="sec-tag">What we do</div>
-              <h2>
-                Two service tracks. <em>Clearly defined.</em>
-              </h2>
-            </div>
-            <p className="sec-note">
-              Fourteen services with clear scope, organised around business setup and digital
-              technology.
+      <section className="ov2-intro">
+        <div className="ov2-shell ov2-intro-grid">
+          <p className="ov2-section-index rv">01 / Operating model</p>
+          <div className="ov2-intro-statement rv">
+            <p>
+              Most businesses do not experience their problems in neat service categories.
             </p>
-          </div>
-
-          {SERVICE_CATEGORIES.map((cat) => (
-            <div key={cat} style={{ marginTop: "clamp(40px,5vw,64px)" }}>
-              <div className="sec-tag rv" style={{ marginBottom: "8px" }}>
-                {cat}
-              </div>
-              <div className="svc rv">
-                {services
-                  .filter((s) => s.category === cat)
-                  .map((s) => (
-                    <div className="svc-row" data-svc key={s.slug}>
-                      <button className="top" type="button" aria-expanded="false">
-                        <span className="num">
-                          {String(services.indexOf(s) + 1).padStart(2, "0")}
-                        </span>
-                        <h3>{s.title}</h3>
-                        <span className="arrow">
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#0e1116"
-                            strokeWidth="1.6"
-                          >
-                            <path d="M7 17L17 7M9 7h8v8" />
-                          </svg>
-                        </span>
-                      </button>
-                      <div className="body">
-                        <div className="body-in">
-                          <div className="desc">
-                            {s.summary}
-                            <div className="tags">
-                              {s.bullets.map((b) => (
-                                <b key={b}>{b}</b>
-                              ))}
-                            </div>
-                            <div style={{ marginTop: "20px" }}>
-                              <Link
-                                to="/services/$slug"
-                                params={{ slug: s.slug }}
-                                className="link"
-                                style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
-                              >
-                                View service <ArrowRight className="h-3.5 w-3.5" />
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* WHY ORIVION */}
-      <section className="intel o-dark" id="why">
-        <div className="wrap">
-          <div className="intel-grid">
-            <div className="intel-copy rv">
-              <div className="sec-tag">Why Orivion</div>
-              <h2>
-                Two sides. <em>One accountable team.</em>
-              </h2>
-              <p>
-                A business can need a new website and a new licence at the same time. Or a software
-                system today and marketing support next quarter. Orivion gives each discipline
-                proper attention while keeping the wider picture connected.
-              </p>
-            </div>
-            <div className="rv">
-              <div className="o-feature">
-                <h3 style={{ color: "#fff", fontSize: "20px", marginBottom: "20px" }}>
-                  How the model works
-                </h3>
-                <ul className="o-checks">
-                  {usps.map((u) => (
-                    <li key={u}>
-                      <CheckCircle2 className="h-5 w-5" />
-                      {u}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <h2>
+              So we do not organise the relationship that way.
+              <em> We connect the work around the business.</em>
+            </h2>
           </div>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="o-alt">
-        <div className="wrap">
-          <div className="sec-head rv">
-            <div>
-              <div className="sec-tag">How it works</div>
-              <h2>
-                From first conversation to <em>working outcome.</em>
-              </h2>
-            </div>
-            <p className="sec-note">
-              The process stays clear whether the work is digital, corporate or connected.
-            </p>
-          </div>
-          <div className="proc-grid">
-            {steps.map((s) => (
-              <div className="proc rv" key={s.t}>
-                <span className="dot" />
-                <h3>{s.t}</h3>
-                <p>{s.d}</p>
-              </div>
+      <section className="ov2-tracks" id="services">
+        <div className="ov2-shell">
+          <div className="ov2-track-nav rv" role="tablist" aria-label="Orivion service tracks">
+            {SERVICE_CATEGORIES.map((category, index) => (
+              <button
+                type="button"
+                role="tab"
+                aria-selected={trackIndex === index}
+                className={trackIndex === index ? "is-active" : ""}
+                key={category}
+                onClick={() => setTrackIndex(index)}
+              >
+                <span>0{index + 1}</span>
+                {category}
+              </button>
             ))}
           </div>
+
+          <div className="ov2-track-stage">
+            <div className="ov2-track-editorial rv" key={`editorial-${trackIndex}`}>
+              <p className="ov2-kicker ov2-kicker-dark">{editorial.kicker}</p>
+              <h2>{editorial.title}</h2>
+              <p className="ov2-track-copy">{editorial.copy}</p>
+              <Link to="/services" className="ov2-text-link">
+                View all services <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            <div className="ov2-service-lines" key={`services-${trackIndex}`}>
+              {activeServices.map((service, index) => (
+                <Link
+                  key={service.slug}
+                  to="/services/$slug"
+                  params={{ slug: service.slug }}
+                  className="ov2-service-line rv"
+                >
+                  <span className="ov2-service-number">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="ov2-service-name">{service.title}</span>
+                  <span className="ov2-service-summary">{service.summary}</span>
+                  <span className="ov2-service-arrow">
+                    <ArrowUpRight className="h-5 w-5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* JURISDICTIONS */}
-      <section id="jurisdictions">
-        <div className="wrap">
-          <div className="sec-head rv">
-            <div>
-              <div className="sec-tag">Jurisdictions</div>
-              <h2>
-                Mainland, Free Zone or <em>Offshore?</em>
-              </h2>
-            </div>
-            <p className="sec-note">
-              Ownership, market access, visas and tax differ by route. Here is how they compare.
+      <section className="ov2-pathways">
+        <div className="ov2-shell">
+          <div className="ov2-section-head rv">
+            <p className="ov2-section-index">02 / Start with the outcome</p>
+            <h2>Choose the move, not the department.</h2>
+            <p>
+              A useful brief starts with what has to change. We assemble the services around that
+              outcome.
             </p>
           </div>
-          <div className="o-grid cols-3">
-            {jurisdictions.map((j) => (
-              <Link
-                key={j.slug}
-                to="/jurisdictions/$slug"
-                params={{ slug: j.slug }}
-                className="o-feature rv"
-              >
-                <h3>{j.title}</h3>
-                <p>{j.short}</p>
-                <ul className="o-checks" style={{ marginTop: "18px" }}>
-                  <li>
-                    <CheckCircle2 className="h-5 w-5" />
-                    {j.ownership}
-                  </li>
-                  <li>
-                    <CheckCircle2 className="h-5 w-5" />
-                    {j.market}
-                  </li>
-                </ul>
-                <span className="link">
-                  Details <ArrowRight className="h-3.5 w-3.5" />
+
+          <div className="ov2-path-list">
+            {pathways.map((path) => (
+              <Link to={path.to as never} className="ov2-path rv" key={path.index}>
+                <span className="ov2-path-index">{path.index}</span>
+                <div className="ov2-path-copy">
+                  <h3>{path.title}</h3>
+                  <p>{path.copy}</p>
+                  <small>{path.meta}</small>
+                </div>
+                <span
+                  className="ov2-path-image"
+                  style={{ backgroundImage: `url(${path.image})` }}
+                  aria-hidden="true"
+                />
+                <span className="ov2-path-arrow">
+                  <ArrowUpRight className="h-6 w-6" />
                 </span>
               </Link>
             ))}
@@ -466,125 +459,137 @@ function Home() {
         </div>
       </section>
 
-      {/* CONNECTED SERVICE MODEL */}
-      <section className="o-alt">
-        <div className="wrap">
-          <div className="sec-head rv">
-            <div>
-              <div className="sec-tag">Built to connect</div>
-              <h2>
-                Use one side, or <em>connect both.</em>
-              </h2>
-            </div>
-            <p className="sec-note">
-              A clear view of where each track fits and when they work better together.
+      <section className="ov2-uae">
+        <div className="ov2-uae-media" aria-hidden="true" />
+        <div className="ov2-uae-overlay" />
+        <div className="ov2-shell ov2-uae-inner">
+          <p className="ov2-section-index rv">03 / UAE market entry</p>
+          <div className="ov2-uae-copy rv">
+            <p className="ov2-kicker">Business setup</p>
+            <h2>Choose the structure around the business you want to build.</h2>
+            <p>
+              Mainland, Free Zone and Offshore structures solve different problems. We help frame
+              the decision around activity, ownership, visas, market access and operating needs.
             </p>
-          </div>
-          <div className="o-grid cols-2">
-            <article className="o-feature rv">
-              <span className="sec-tag">Digital & technology</span>
-              <h3>When the business needs to be seen, used or scaled.</h3>
-              <p>
-                Bring us in for a website, software product, campaign or the ongoing management of
-                your social channels.
-              </p>
-              <Link to="/services" className="link">
-                Explore digital & technology <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </article>
-            <article className="o-feature rv">
-              <span className="sec-tag">Business setup services</span>
-              <h3>When the business needs to be established or supported in the UAE.</h3>
-              <p>
-                Use Orivion for company setup, licensing, visas, administration and coordinated
-                specialist support.
-              </p>
-              <Link to="/jurisdictions" className="link">
-                Explore UAE setup <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* INSIGHTS */}
-      <section id="insights">
-        <div className="wrap">
-          <div className="sec-head rv">
-            <div>
-              <div className="sec-tag">Insights</div>
-              <h2>
-                UAE business <em>knowledge base.</em>
-              </h2>
-            </div>
-            <Link
-              to="/blog"
-              className="link"
-              style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
-            >
-              View all articles <ArrowRight className="h-3.5 w-3.5" />
+            <Link to="/why-dubai" className="ov2-text-link ov2-text-link-light">
+              Why Dubai <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="o-grid cols-3">
-            {blogPosts.slice(0, 3).map((p) => (
-              <Link key={p.slug} to="/blog/$slug" params={{ slug: p.slug }} className="o-post rv">
-                <span className="cat">{p.category}</span>
-                <h3>{p.title}</h3>
-                <p>{p.excerpt}</p>
-                <div className="date">
-                  {new Date(p.date).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                    timeZone: "UTC",
-                  })}{" "}
-                  · {p.readMins} min read
-                </div>
+
+          <div className="ov2-jurisdictions">
+            {jurisdictions.map((jurisdiction, index) => (
+              <Link
+                key={jurisdiction.slug}
+                to="/jurisdictions/$slug"
+                params={{ slug: jurisdiction.slug }}
+                className="ov2-jurisdiction rv"
+              >
+                <span>0{index + 1}</span>
+                <h3>{jurisdiction.title}</h3>
+                <p>{jurisdiction.short}</p>
+                <ArrowUpRight className="h-5 w-5" />
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CONTACT / CONSULTATION */}
-      <section id="contact">
-        <div className="wrap">
-          <div className="o-split">
-            <div className="rv">
-              <div className="sec-tag">Start a conversation</div>
-              <h2>
-                Tell us what needs to <em>move forward.</em>
-              </h2>
-              <p
-                style={{
-                  color: "var(--muted)",
-                  marginTop: "20px",
-                  maxWidth: "460px",
-                  lineHeight: 1.7,
-                }}
-              >
-                Share the project, business need or current obstacle. We will come back with the
-                right next step and the people needed to handle it.
-              </p>
-              <ul className="o-checks" style={{ marginTop: "26px" }}>
-                {[
-                  "A focused first conversation",
-                  "A clear recommendation and scope",
-                  "No obligation and no sales pressure",
-                ].map((t) => (
-                  <li key={t}>
-                    <CheckCircle2 className="h-5 w-5" />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="o-panel rv">
-              <ConsultationForm compact />
-            </div>
+      <section className="ov2-process">
+        <div className="ov2-shell ov2-process-layout">
+          <div className="ov2-process-sticky rv">
+            <p className="ov2-section-index">04 / How we work</p>
+            <h2>Clear enough to move quickly. Structured enough to stay accountable.</h2>
+            <p>
+              The process is deliberately simple. The quality comes from what happens inside each
+              stage.
+            </p>
+          </div>
+
+          <div className="ov2-process-list">
+            {process.map((step) => (
+              <article className="ov2-process-step rv" key={step.number}>
+                <span>{step.number}</span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.copy}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
-    </>
+
+      <section className="ov2-principle">
+        <div className="ov2-shell">
+          <p className="ov2-section-index rv">05 / The standard</p>
+          <blockquote className="rv">
+            <span>“</span>
+            The work should feel considered before anyone explains how much work went into it.
+          </blockquote>
+          <div className="ov2-principle-foot rv">
+            <p>
+              Fewer decorative layers. Better typography. Better hierarchy. Motion with a reason.
+              Technology that stays maintainable after launch.
+            </p>
+            <Link to="/about" className="ov2-text-link">
+              About Orivion <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="ov2-insights">
+        <div className="ov2-shell">
+          <div className="ov2-section-head ov2-section-head-wide rv">
+            <p className="ov2-section-index">06 / Insights</p>
+            <h2>Useful context for decisions that come before the paperwork.</h2>
+            <Link to="/blog" className="ov2-text-link">
+              All insights <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="ov2-insight-list">
+            {blogPosts.slice(0, 3).map((post, index) => (
+              <Link
+                key={post.slug}
+                to="/blog/$slug"
+                params={{ slug: post.slug }}
+                className="ov2-insight rv"
+              >
+                <span className="ov2-insight-index">0{index + 1}</span>
+                <div>
+                  <small>{post.category}</small>
+                  <h3>{post.title}</h3>
+                </div>
+                <p>{post.excerpt}</p>
+                <ArrowUpRight className="h-5 w-5" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="ov2-contact" id="contact">
+        <div className="ov2-shell ov2-contact-grid">
+          <div className="ov2-contact-copy rv">
+            <p className="ov2-section-index">07 / Start here</p>
+            <h2>Bring us the problem before you decide the solution.</h2>
+            <p>
+              Tell us what you are trying to launch, fix, automate or grow. We will come back with
+              a practical next step and the right people for it.
+            </p>
+            <div className="ov2-contact-direct">
+              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+              <a href={siteConfig.whatsappUrl} target="_blank" rel="noreferrer">
+                WhatsApp {siteConfig.phone}
+              </a>
+            </div>
+          </div>
+          <div className="ov2-contact-panel rv">
+            <ConsultationForm compact />
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
