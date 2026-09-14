@@ -1,3 +1,64 @@
 @import "./styles.css";
 @import "./orivion.css";
 @import "./native-ui-overrides.css";
+
+/* Homepage v2 isolation from legacy global section/header rules. */
+.orivion.home-v2-active .ov2-hero {
+  display: block;
+  justify-content: initial;
+}
+
+.orivion.home-v2-active .ov2-intro {
+  padding: clamp(100px, 13vw, 210px) 0 clamp(90px, 11vw, 180px);
+}
+
+.orivion.home-v2-active .ov2-tracks {
+  padding: 0 0 clamp(110px, 14vw, 220px);
+}
+
+.orivion.home-v2-active .ov2-pathways {
+  padding: clamp(105px, 13vw, 210px) 0;
+}
+
+.orivion.home-v2-active .ov2-uae {
+  padding: 0;
+}
+
+.orivion.home-v2-active .ov2-process {
+  padding: clamp(110px, 14vw, 220px) 0;
+}
+
+.orivion.home-v2-active .ov2-principle {
+  padding: clamp(110px, 14vw, 220px) 0;
+}
+
+.orivion.home-v2-active .ov2-insights {
+  padding: clamp(110px, 13vw, 200px) 0;
+}
+
+.orivion.home-v2-active .ov2-contact {
+  padding: clamp(110px, 13vw, 190px) 0;
+}
+
+@media (max-width: 680px) {
+  .orivion.home-v2-active nav .nav-right .btn.fill {
+    display: none;
+  }
+
+  .orivion.home-v2-active .o-wa {
+    width: 48px;
+    height: 48px;
+    right: 14px;
+    bottom: 76px;
+  }
+
+  .orivion.home-v2-active .ov2-intro,
+  .orivion.home-v2-active .ov2-pathways,
+  .orivion.home-v2-active .ov2-process,
+  .orivion.home-v2-active .ov2-principle,
+  .orivion.home-v2-active .ov2-insights,
+  .orivion.home-v2-active .ov2-contact {
+    padding-top: 94px;
+    padding-bottom: 94px;
+  }
+}
