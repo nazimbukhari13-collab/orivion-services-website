@@ -33,4 +33,5 @@ jobs:
           name: orivion-redesign-build
           path: .output
           if-no-files-found: error
+          include-hidden-files: true
           retention-days: 3
